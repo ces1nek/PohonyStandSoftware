@@ -41,13 +41,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  18 .debug_line   0004926d  00000000  00000000  000acb07  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0014af67  00000000  00000000  000f5d74  2**0
+ 19 .debug_str    0014afae  00000000  00000000  000f5d74  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      0000006e  00000000  00000000  00240cdb  2**0
+ 20 .comment      0000006e  00000000  00000000  00240d22  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00005908  00000000  00000000  00240d4c  2**2
+ 21 .debug_frame  00005908  00000000  00000000  00240d90  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 0000005b  00000000  00000000  00246654  2**0
+ 22 .debug_line_str 0000005b  00000000  00000000  00246698  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -20710,7 +20710,7 @@ void X2C_Init(void)
     x2cModel.blocks.bOmega.V = 0.10471975511965977;
  8007cf2:	4aea      	ldr	r2, [pc, #936]	@ (800809c <X2C_Init+0x3e8>)
  8007cf4:	f8c4 2130 	str.w	r2, [r4, #304]	@ 0x130
-    x2cModel.blocks.bPhi2Rpm.b = 897.8844097010327;
+    x2cModel.blocks.bPhi2Rpm.b = 8792.823966176633;
  8007cf8:	4ae9      	ldr	r2, [pc, #932]	@ (80080a0 <X2C_Init+0x3ec>)
  8007cfa:	f8c4 218c 	str.w	r2, [r4, #396]	@ 0x18c
     x2cModel.blocks.bCurrentDesired.Toggle = 1;
@@ -20719,7 +20719,7 @@ void X2C_Init(void)
  8007d02:	2300      	movs	r3, #0
     x2cModel.blocks.bCurrentReg.enable_old = 0;
  8007d04:	2500      	movs	r5, #0
-    x2cModel.blocks.bPhi2Rpm.a0 = -0.9952986882245174;
+    x2cModel.blocks.bPhi2Rpm.a0 = -0.9539608813725853;
  8007d06:	4ae7      	ldr	r2, [pc, #924]	@ (80080a4 <X2C_Init+0x3f0>)
     x2cModel.blocks.bCurrentDesired.Toggle = 1;
  8007d08:	f884 c08c 	strb.w	ip, [r4, #140]	@ 0x8c
@@ -20753,7 +20753,7 @@ void X2C_Init(void)
  8007d36:	f8c4 3198 	str.w	r3, [r4, #408]	@ 0x198
     x2cModel.blocks.bPulseGenDCVal.K = 0;
  8007d3a:	f8c4 31c0 	str.w	r3, [r4, #448]	@ 0x1c0
-    x2cModel.blocks.bPhi2Rpm.a0 = -0.9952986882245174;
+    x2cModel.blocks.bPhi2Rpm.a0 = -0.9539608813725853;
  8007d3e:	f8c4 2190 	str.w	r2, [r4, #400]	@ 0x190
     x2cModel.blocks.bCurrentReg.enable_old = 0;
  8007d42:	f884 50e0 	strb.w	r5, [r4, #224]	@ 0xe0
@@ -20770,11 +20770,11 @@ void X2C_Init(void)
  8007d4e:	f8c4 31fc 	str.w	r3, [r4, #508]	@ 0x1fc
     x2cModel.blocks.bPulseGenSin.phi = 0;
  8007d52:	f8c4 3200 	str.w	r3, [r4, #512]	@ 0x200
-    /* Kp = 465.288035450517                                                                                          */
-    /* Ki = 387740.0295420975                                                                                         */
+    /* Kp = 0.7                                                                                                       */
+    /* Ki = 5.01                                                                                                      */
     /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bSpeedReg.b0 = 19.387001477104874;
-    x2cModel.blocks.bSpeedReg.b1 = 465.288035450517;
+    x2cModel.blocks.bSpeedReg.b0 = 0.0002505;
+    x2cModel.blocks.bSpeedReg.b1 = 0.7;
     x2cModel.blocks.bSpeedReg.i_old = 0;
  8007d56:	f8c4 329c 	str.w	r3, [r4, #668]	@ 0x29c
     /******************************************************************************************************************/
@@ -20819,9 +20819,9 @@ void X2C_Init(void)
  8007d90:	eddf 5aca 	vldr	s11, [pc, #808]	@ 80080bc <X2C_Init+0x408>
     x2cModel.blocks.bSpeedDesiredConst.K = 50;
  8007d94:	ed9f 6aca 	vldr	s12, [pc, #808]	@ 80080c0 <X2C_Init+0x40c>
-    x2cModel.blocks.bSpeedReg.b0 = 19.387001477104874;
+    x2cModel.blocks.bSpeedReg.b0 = 0.0002505;
  8007d98:	eddf 6aca 	vldr	s13, [pc, #808]	@ 80080c4 <X2C_Init+0x410>
-    x2cModel.blocks.bSpeedReg.b1 = 465.288035450517;
+    x2cModel.blocks.bSpeedReg.b1 = 0.7;
  8007d9c:	ed9f 7aca 	vldr	s14, [pc, #808]	@ 80080c8 <X2C_Init+0x414>
     x2cModel.blocks.bAdd1.In1 =
  8007da0:	6063      	str	r3, [r4, #4]
@@ -20855,9 +20855,9 @@ void X2C_Init(void)
  8007dc8:	f884 c268 	strb.w	ip, [r4, #616]	@ 0x268
     x2cModel.blocks.bSpeedDesiredConst.K = 50;
  8007dcc:	ed84 6a9d 	vstr	s12, [r4, #628]	@ 0x274
-    x2cModel.blocks.bSpeedReg.b0 = 19.387001477104874;
+    x2cModel.blocks.bSpeedReg.b0 = 0.0002505;
  8007dd0:	edc4 6aa5 	vstr	s13, [r4, #660]	@ 0x294
-    x2cModel.blocks.bSpeedReg.b1 = 465.288035450517;
+    x2cModel.blocks.bSpeedReg.b1 = 0.7;
  8007dd4:	ed84 7aa6 	vstr	s14, [r4, #664]	@ 0x298
     x2cModel.blocks.bRateLimiter.RateUp = 0.0005;
  8007dd8:	edc4 7a86 	vstr	s15, [r4, #536]	@ 0x218
@@ -21243,8 +21243,8 @@ void X2C_Init(void)
  8008094:	3d294d24 	.word	0x3d294d24
  8008098:	3fe8ca12 	.word	0x3fe8ca12
  800809c:	3dd67750 	.word	0x3dd67750
- 80080a0:	4460789a 	.word	0x4460789a
- 80080a4:	bf7ecbe5 	.word	0xbf7ecbe5
+ 80080a0:	4609634c 	.word	0x4609634c
+ 80080a4:	bf7436c8 	.word	0xbf7436c8
  80080a8:	41200000 	.word	0x41200000
  80080ac:	3a03126f 	.word	0x3a03126f
  80080b0:	39a4b5be 	.word	0x39a4b5be
@@ -21252,8 +21252,8 @@ void X2C_Init(void)
  80080b8:	bf7fffef 	.word	0xbf7fffef
  80080bc:	42700000 	.word	0x42700000
  80080c0:	42480000 	.word	0x42480000
- 80080c4:	419b1894 	.word	0x419b1894
- 80080c8:	43e8a4de 	.word	0x43e8a4de
+ 80080c4:	3983558a 	.word	0x3983558a
+ 80080c8:	3f333333 	.word	0x3f333333
  80080cc:	f7fd ffda 	bl	8006084 <Sub_Float32_Init>
     TFlipFlop_Bool_Init(&x2cModel.blocks.bTFlipFlop);
  80080d0:	f504 7031 	add.w	r0, r4, #708	@ 0x2c4
@@ -21768,6 +21768,11 @@ void stand_im_periodic_isr(void) {
  8008400:	f8c3 2370 	str.w	r2, [r3, #880]	@ 0x370
   SET_BIT(SPIx->CR1, SPI_CR1_SPE);
  8008404:	4ba6      	ldr	r3, [pc, #664]	@ (80086a0 <stand_im_periodic_isr+0x2b4>)
+ *
+ * 	Call it at least 753 ns after AD2S1200_SampleStart.
+ */
+static inline void AD2S1200_SampleStop(void){
+	LL_SPI_Enable(AD2S1200_SPI);
 	AD2S1200_NSAMPLE_PORT->BSRR = AD2S1200_NSAMPLE_PIN;
  8008406:	49a7      	ldr	r1, [pc, #668]	@ (80086a4 <stand_im_periodic_isr+0x2b8>)
  8008408:	681a      	ldr	r2, [r3, #0]

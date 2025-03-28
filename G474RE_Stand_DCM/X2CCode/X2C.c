@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_DCM                                                                                                   */
-/* Date:  2025-03-25 16:10                                                                                            */
+/* Date:  2025-03-28 16:16                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -164,11 +164,11 @@ void X2C_Init(void)
     /* Block: Phi2Rpm                                                                                                 */
     /* n_max = 3000.0                                                                                                 */
     /* p = 1.0                                                                                                        */
-    /* fc = 15.0                                                                                                      */
+    /* fc = 150.0                                                                                                     */
     /* ts_fact = 1.0                                                                                                  */
     /* method = tustin                                                                                                */
-    x2cModel.blocks.bPhi2Rpm.b = 897.8844097010327;
-    x2cModel.blocks.bPhi2Rpm.a0 = -0.9952986882245174;
+    x2cModel.blocks.bPhi2Rpm.b = 8792.823966176633;
+    x2cModel.blocks.bPhi2Rpm.a0 = -0.9539608813725853;
     x2cModel.blocks.bPhi2Rpm.phi_old = 0;
     x2cModel.blocks.bPhi2Rpm.n_old = 0;
 
@@ -233,11 +233,11 @@ void X2C_Init(void)
     x2cModel.blocks.bSpeedDesiredConst.K = 50;
 
     /* Block: SpeedReg                                                                                                */
-    /* Kp = 465.288035450517                                                                                          */
-    /* Ki = 387740.0295420975                                                                                         */
+    /* Kp = 0.7                                                                                                       */
+    /* Ki = 5.01                                                                                                      */
     /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bSpeedReg.b0 = 19.387001477104874;
-    x2cModel.blocks.bSpeedReg.b1 = 465.288035450517;
+    x2cModel.blocks.bSpeedReg.b0 = 0.0002505;
+    x2cModel.blocks.bSpeedReg.b1 = 0.7;
     x2cModel.blocks.bSpeedReg.i_old = 0;
     x2cModel.blocks.bSpeedReg.enable_old = 0;
 

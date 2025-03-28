@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_DCM                                                                                                   */
-/* Date:  2025-03-25 16:05                                                                                            */
+/* Date:  2025-03-25 16:10                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -104,6 +104,16 @@ void X2C_Init(void)
     /* Toggle = 1.0                                                                                                   */
     x2cModel.blocks.bCurrentDesired.Toggle = 1;
 
+    /* Block: CurrentIaFilter                                                                                         */
+    /* V = 1.0                                                                                                        */
+    /* fc = 10.0                                                                                                      */
+    /* ts_fact = 1.0                                                                                                  */
+    /* method = zoh                                                                                                   */
+    x2cModel.blocks.bCurrentIaFilter.b0 = 0.00313666301504589;
+    x2cModel.blocks.bCurrentIaFilter.b1 = 0;
+    x2cModel.blocks.bCurrentIaFilter.a0 = -0.9968633369849541;
+    x2cModel.blocks.bCurrentIaFilter.in_old = 0;
+
     /* Block: CurrentLimit                                                                                            */
     /* Value = 30.0                                                                                                   */
     x2cModel.blocks.bCurrentLimit.K = 30;
@@ -130,6 +140,16 @@ void X2C_Init(void)
     /* Block: Omega                                                                                                   */
     /* Gain = 0.10471975511965977                                                                                     */
     x2cModel.blocks.bOmega.V = 0.10471975511965977;
+
+    /* Block: OmegaFilter                                                                                             */
+    /* V = 1.0                                                                                                        */
+    /* fc = 10.0                                                                                                      */
+    /* ts_fact = 1.0                                                                                                  */
+    /* method = zoh                                                                                                   */
+    x2cModel.blocks.bOmegaFilter.b0 = 0.00313666301504589;
+    x2cModel.blocks.bOmegaFilter.b1 = 0;
+    x2cModel.blocks.bOmegaFilter.a0 = -0.9968633369849541;
+    x2cModel.blocks.bOmegaFilter.in_old = 0;
 
     /* Block: Or                                                                                                      */
 
@@ -283,6 +303,10 @@ void X2C_Init(void)
     x2cModel.blocks.bCurrentDesired.In2 =
         &x2cModel.blocks.bPulseGenOutput.Out;
 
+    /* Block CurrentIaFilter                                                                                          */
+    x2cModel.blocks.bCurrentIaFilter.In =
+        &x2cModel.inports.bInIa;
+
     /* Block CurrentLimit                                                                                             */
 
     /* Block CurrentReg                                                                                               */
@@ -322,6 +346,10 @@ void X2C_Init(void)
     /* Block Omega                                                                                                    */
     x2cModel.blocks.bOmega.In =
         &x2cModel.blocks.bPhi2Rpm.n;
+
+    /* Block OmegaFilter                                                                                              */
+    x2cModel.blocks.bOmegaFilter.In =
+        &x2cModel.blocks.bOmega.Out;
 
     /* Block Or                                                                                                       */
     x2cModel.blocks.bOr.In1 =
@@ -446,6 +474,7 @@ void X2C_Init(void)
     Constant_Float32_Init(&x2cModel.blocks.bConstCurrentInit);
     Constant_Float32_Init(&x2cModel.blocks.bConstSpeedInit);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bCurrentDesired);
+    PT1_Float32_Init(&x2cModel.blocks.bCurrentIaFilter);
     Constant_Float32_Init(&x2cModel.blocks.bCurrentLimit);
     PILimit_Float32_Init(&x2cModel.blocks.bCurrentReg);
     Div_Float32_Init(&x2cModel.blocks.bDiv2);
@@ -454,6 +483,7 @@ void X2C_Init(void)
     Negation_Float32_Init(&x2cModel.blocks.bNegation3);
     Not_Bool_Init(&x2cModel.blocks.bNot);
     Gain_Float32_Init(&x2cModel.blocks.bOmega);
+    PT1_Float32_Init(&x2cModel.blocks.bOmegaFilter);
     Or_Bool_Init(&x2cModel.blocks.bOr);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bOutputVoltage);
     Constant_Float32_Init(&x2cModel.blocks.bOutputVoltasgeLimit);
@@ -510,6 +540,8 @@ void X2C_Update_1(void)
     Or_Bool_Update(&x2cModel.blocks.bOr);
     Gain_Float32_Update(&x2cModel.blocks.bCFiIa);
     Gain_Float32_Update(&x2cModel.blocks.bCFiOmega);
+    PT1_Float32_Update(&x2cModel.blocks.bCurrentIaFilter);
+    PT1_Float32_Update(&x2cModel.blocks.bOmegaFilter);
     TFlipFlop_Bool_Update(&x2cModel.blocks.bTFlipFlop);
     And_Bool_Update(&x2cModel.blocks.bAnd);
     RateLimiter_Float32_Update(&x2cModel.blocks.bRateLimiter);
