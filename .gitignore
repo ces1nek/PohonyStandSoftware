@@ -1,6 +1,8 @@
 # Prerequisites
 *.d
 
+*.cyclo
+
 # Object files
 *.o
 *.ko
@@ -50,3 +52,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Matlab-simulink cache files
+*.slxc
