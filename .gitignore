@@ -56,3 +56,6 @@ dkms.conf
 # Matlab-simulink cache files
 *.slxc
 slprj*
+G474RE_Stand_IM/Debug/
+G474RE_Stand_DCM/Debug/
+

@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_IM                                                                                                    */
-/* Date:  2025-03-18 19:37                                                                                            */
+/* Date:  2025-11-13 17:39                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -172,11 +172,11 @@ void X2C_Init(void)
     /* Block: Phi2Speed                                                                                               */
     /* n_max = 3000.0                                                                                                 */
     /* p = 1.0                                                                                                        */
-    /* fc = 15.0                                                                                                      */
+    /* fc = 150.0                                                                                                     */
     /* ts_fact = 1.0                                                                                                  */
     /* method = tustin                                                                                                */
-    x2cModel.blocks.bPhi2Speed.b = 897.8844097010327;
-    x2cModel.blocks.bPhi2Speed.a0 = -0.9952986882245174;
+    x2cModel.blocks.bPhi2Speed.b = 8792.823966176633;
+    x2cModel.blocks.bPhi2Speed.a0 = -0.9539608813725853;
     x2cModel.blocks.bPhi2Speed.phi_old = 0;
     x2cModel.blocks.bPhi2Speed.n_old = 0;
 
@@ -193,12 +193,12 @@ void X2C_Init(void)
     x2cModel.blocks.bSaturation2.min = -0.999;
 
     /* Block: Skluz                                                                                                   */
-    /* Value = 10.0                                                                                                   */
-    x2cModel.blocks.bSkluz.K = 10;
+    /* Value = 7.0                                                                                                    */
+    x2cModel.blocks.bSkluz.K = 7;
 
     /* Block: Skluz1                                                                                                  */
-    /* Value = -5.0                                                                                                   */
-    x2cModel.blocks.bSkluz1.K = -5;
+    /* Value = -4.0                                                                                                   */
+    x2cModel.blocks.bSkluz1.K = -4;
 
     /* Block: Space Vector Modulation                                                                                 */
     /* method = Alternating reversing                                                                                 */

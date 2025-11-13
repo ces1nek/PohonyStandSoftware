@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_DCM                                                                                                   */
-/* Date:  2025-03-28 16:16                                                                                            */
+/* Date:  2025-11-13 18:01                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -101,8 +101,8 @@ void X2C_Init(void)
     x2cModel.blocks.bConstSpeedInit.K = 0;
 
     /* Block: CurrentDesired                                                                                          */
-    /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bCurrentDesired.Toggle = 1;
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.bCurrentDesired.Toggle = 0;
 
     /* Block: CurrentIaFilter                                                                                         */
     /* V = 1.0                                                                                                        */
@@ -154,8 +154,8 @@ void X2C_Init(void)
     /* Block: Or                                                                                                      */
 
     /* Block: OutputVoltage                                                                                           */
-    /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bOutputVoltage.Toggle = 1;
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.bOutputVoltage.Toggle = 0;
 
     /* Block: OutputVoltasgeLimit                                                                                     */
     /* Value = 25.0                                                                                                   */
@@ -173,24 +173,24 @@ void X2C_Init(void)
     x2cModel.blocks.bPhi2Rpm.n_old = 0;
 
     /* Block: PulseGenAmplitude                                                                                       */
-    /* Gain = 1.0                                                                                                     */
-    x2cModel.blocks.bPulseGenAmplitude.V = 1;
+    /* Gain = 10.0                                                                                                    */
+    x2cModel.blocks.bPulseGenAmplitude.V = 10;
 
     /* Block: PulseGenConst1                                                                                          */
     /* Value = 1.0                                                                                                    */
     x2cModel.blocks.bPulseGenConst1.K = 1;
 
     /* Block: PulseGenDCVal                                                                                           */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bPulseGenDCVal.K = 0;
+    /* Value = 52.36                                                                                                  */
+    x2cModel.blocks.bPulseGenDCVal.K = 52.36;
 
     /* Block: PulseGenFreq                                                                                            */
     /* Value = 0.2                                                                                                    */
     x2cModel.blocks.bPulseGenFreq.K = 0.2;
 
     /* Block: PulseGenOutput                                                                                          */
-    /* Toggle = 0.0                                                                                                   */
-    x2cModel.blocks.bPulseGenOutput.Toggle = 0;
+    /* Toggle = 1.0                                                                                                   */
+    x2cModel.blocks.bPulseGenOutput.Toggle = 1;
 
     /* Block: PulseGenSin                                                                                             */
     /* fmax = 1000.0                                                                                                  */
@@ -233,11 +233,11 @@ void X2C_Init(void)
     x2cModel.blocks.bSpeedDesiredConst.K = 50;
 
     /* Block: SpeedReg                                                                                                */
-    /* Kp = 0.7                                                                                                       */
-    /* Ki = 5.01                                                                                                      */
+    /* Kp = 1.0                                                                                                       */
+    /* Ki = 60.0                                                                                                      */
     /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bSpeedReg.b0 = 0.0002505;
-    x2cModel.blocks.bSpeedReg.b1 = 0.7;
+    x2cModel.blocks.bSpeedReg.b0 = 0.003;
+    x2cModel.blocks.bSpeedReg.b1 = 1;
     x2cModel.blocks.bSpeedReg.i_old = 0;
     x2cModel.blocks.bSpeedReg.enable_old = 0;
 
