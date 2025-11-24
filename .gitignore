@@ -60,3 +60,6 @@ slprj*
 # Debug files:
 G474RE_Stand_IM/Debug/
 G474RE_Stand_DCM/Debug/
+
+*.log
+*.snap
