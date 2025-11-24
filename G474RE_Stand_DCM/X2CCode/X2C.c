@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_DCM                                                                                                   */
-/* Date:  2025-11-13 18:01                                                                                            */
+/* Date:  2025-11-24 14:06                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -68,8 +68,6 @@ void X2C_Init(void)
     /**                                          Initialize Block Parameters                                         **/
     /******************************************************************************************************************/
 
-    /* Block: Add1                                                                                                    */
-
     /* Block: And                                                                                                     */
 
     /* Block: CFiIa                                                                                                   */
@@ -79,10 +77,6 @@ void X2C_Init(void)
     /* Block: CFiOmega                                                                                                */
     /* Gain = 0.0677                                                                                                  */
     x2cModel.blocks.bCFiOmega.V = 0.0677;
-
-    /* Block: CoPulseGenOffset                                                                                        */
-    /* Value = 1.0                                                                                                    */
-    x2cModel.blocks.bCoPulseGenOffset.K = 1;
 
     /* Block: Const0                                                                                                  */
     /* Value = 0.0                                                                                                    */
@@ -154,8 +148,8 @@ void X2C_Init(void)
     /* Block: Or                                                                                                      */
 
     /* Block: OutputVoltage                                                                                           */
-    /* Toggle = 0.0                                                                                                   */
-    x2cModel.blocks.bOutputVoltage.Toggle = 0;
+    /* Toggle = 1.0                                                                                                   */
+    x2cModel.blocks.bOutputVoltage.Toggle = 1;
 
     /* Block: OutputVoltasgeLimit                                                                                     */
     /* Value = 25.0                                                                                                   */
@@ -173,24 +167,24 @@ void X2C_Init(void)
     x2cModel.blocks.bPhi2Rpm.n_old = 0;
 
     /* Block: PulseGenAmplitude                                                                                       */
-    /* Gain = 10.0                                                                                                    */
-    x2cModel.blocks.bPulseGenAmplitude.V = 10;
+    /* Gain = 2.0                                                                                                     */
+    x2cModel.blocks.bPulseGenAmplitude.V = 2;
 
     /* Block: PulseGenConst1                                                                                          */
     /* Value = 1.0                                                                                                    */
     x2cModel.blocks.bPulseGenConst1.K = 1;
 
     /* Block: PulseGenDCVal                                                                                           */
-    /* Value = 52.36                                                                                                  */
-    x2cModel.blocks.bPulseGenDCVal.K = 52.36;
+    /* Value = 1.1                                                                                                    */
+    x2cModel.blocks.bPulseGenDCVal.K = 1.1;
 
     /* Block: PulseGenFreq                                                                                            */
     /* Value = 0.2                                                                                                    */
     x2cModel.blocks.bPulseGenFreq.K = 0.2;
 
     /* Block: PulseGenOutput                                                                                          */
-    /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bPulseGenOutput.Toggle = 1;
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.bPulseGenOutput.Toggle = 0;
 
     /* Block: PulseGenSin                                                                                             */
     /* fmax = 1000.0                                                                                                  */
@@ -215,6 +209,12 @@ void X2C_Init(void)
     /* min = -0.999999                                                                                                */
     x2cModel.blocks.bSaturation.max = 0.999999;
     x2cModel.blocks.bSaturation.min = -0.999999;
+
+    /* Block: Saturation1                                                                                             */
+    /* max = 1.0                                                                                                      */
+    /* min = 0.0                                                                                                      */
+    x2cModel.blocks.bSaturation1.max = 1;
+    x2cModel.blocks.bSaturation1.min = 0;
 
     /* Block: Saturation2                                                                                             */
     /* max = 60.0                                                                                                     */
@@ -267,12 +267,6 @@ void X2C_Init(void)
     /**                                               Link Block Inputs                                              **/
     /******************************************************************************************************************/
 
-    /* Block Add1                                                                                                     */
-    x2cModel.blocks.bAdd1.In1 =
-        &x2cModel.blocks.bSign.Out;
-    x2cModel.blocks.bAdd1.In2 =
-        &x2cModel.blocks.bCoPulseGenOffset.Out;
-
     /* Block And                                                                                                      */
     x2cModel.blocks.bAnd.In1 =
         &x2cModel.blocks.bOr.Out;
@@ -286,8 +280,6 @@ void X2C_Init(void)
     /* Block CFiOmega                                                                                                 */
     x2cModel.blocks.bCFiOmega.In =
         &x2cModel.blocks.bOmega.Out;
-
-    /* Block CoPulseGenOffset                                                                                         */
 
     /* Block Const0                                                                                                   */
 
@@ -371,7 +363,7 @@ void X2C_Init(void)
 
     /* Block PulseGenAmplitude                                                                                        */
     x2cModel.blocks.bPulseGenAmplitude.In =
-        &x2cModel.blocks.bAdd1.Out;
+        &x2cModel.blocks.bSaturation1.Out;
 
     /* Block PulseGenConst1                                                                                           */
 
@@ -402,6 +394,10 @@ void X2C_Init(void)
     /* Block Saturation                                                                                               */
     x2cModel.blocks.bSaturation.In =
         &x2cModel.blocks.bDiv2.Out;
+
+    /* Block Saturation1                                                                                              */
+    x2cModel.blocks.bSaturation1.In =
+        &x2cModel.blocks.bSign.Out;
 
     /* Block Saturation2                                                                                              */
     x2cModel.blocks.bSaturation2.In =
@@ -464,11 +460,9 @@ void X2C_Init(void)
     /******************************************************************************************************************/
     /**                                           Run Block Init Functions                                           **/
     /******************************************************************************************************************/
-    Add_Float32_Init(&x2cModel.blocks.bAdd1);
     And_Bool_Init(&x2cModel.blocks.bAnd);
     Gain_Float32_Init(&x2cModel.blocks.bCFiIa);
     Gain_Float32_Init(&x2cModel.blocks.bCFiOmega);
-    Constant_Float32_Init(&x2cModel.blocks.bCoPulseGenOffset);
     Constant_Float32_Init(&x2cModel.blocks.bConst0);
     Constant_Float32_Init(&x2cModel.blocks.bConst6);
     Constant_Float32_Init(&x2cModel.blocks.bConstCurrentInit);
@@ -496,6 +490,7 @@ void X2C_Init(void)
     SinGen_Float32_Init(&x2cModel.blocks.bPulseGenSin);
     RateLimiter_Float32_Init(&x2cModel.blocks.bRateLimiter);
     Saturation_Float32_Init(&x2cModel.blocks.bSaturation);
+    Saturation_Float32_Init(&x2cModel.blocks.bSaturation1);
     Saturation_Float32_Init(&x2cModel.blocks.bSaturation2);
     Sign_Float32_Init(&x2cModel.blocks.bSign);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bSpeedDesired);
@@ -529,7 +524,7 @@ void X2C_Update_1(void)
 {
     SinGen_Float32_Update(&x2cModel.blocks.bPulseGenSin);
     Sign_Float32_Update(&x2cModel.blocks.bSign);
-    Add_Float32_Update(&x2cModel.blocks.bAdd1);
+    Saturation_Float32_Update(&x2cModel.blocks.bSaturation1);
     Gain_Float32_Update(&x2cModel.blocks.bPulseGenAmplitude);
     Phi2Speed_Float32_Update(&x2cModel.blocks.bPhi2Rpm);
     Gain_Float32_Update(&x2cModel.blocks.bOmega);
