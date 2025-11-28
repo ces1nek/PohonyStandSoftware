@@ -66,6 +66,7 @@
 									<listOptionValue builtIn="false" value="&quot;${X2CDirPath}/Controller/Common&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${X2CDirPath}/Library/MotorControl/Controller/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${X2CDirPath}/Library/StateControl/Controller/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${X2CDirPath}/Library/Filter/Controller/inc&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1808891691" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>

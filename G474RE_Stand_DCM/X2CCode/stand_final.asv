@@ -55,8 +55,7 @@ w0 = 310.59;            %jm. uhlova rychlost, [rad/s]
 % Parametry zmerene na DC motoru
 %Ra = 0.11;              %armature resistance (odpor kotvy), [Ohm]
 %La = 250e-6;            %armature inductance (indukcnost vinuti), [H]
-% cfi = 0.0677;             %back-emf constant (konstanta motoru), [Vs/rad]
-cfi = 0.0661;
+cfi = 0.0677;             %back-emf constant (konstanta motoru), [Vs/rad]
 
 % Parametry urcene z identifikace v X2C
 ta = 2.2e-3; % ms
@@ -65,9 +64,7 @@ Ra = 0.124; % Ohm
 
 %Mechanical:
 % Jm = 0.00241;            %rotor inertia (moment setrvacnosti), [kg.m2]
-% Jm = 0.0189;
-Jm = 1.1e-3;
-% Jm = 2.41e-3;
+Jm = 0.0189;
 
 %% Regulator proudu kotvy DC motoru:
 Kmen = 1;               %zesileni menince
@@ -87,7 +84,9 @@ CurrentRegI = 1/(2*t_sigma*Ks);   %integracni slozka
 
 %% Regulator otacek DC motoru:
 % nahradni souctova casova konstanta podrizene proudove smycky
-t_sigmaI = t_men * 4 + 1/(30*2*pi);
+t_sigmaI = t_men * 4 + 1/(100*2*pi);
+cfi=0.0661;
+J = 1e-3;
 
 % regulator podle SO
 SpeedRegP = Jm/cfi/2/t_sigmaI;

@@ -51,6 +51,11 @@
 			<locationURI>X2C_ROOT/Library/General/Controller/src/And_Bool.c</locationURI>
 		</link>
 		<link>
+			<name>X2C-Blocks/AutoSwitch_Float32.c</name>
+			<type>1</type>
+			<locationURI>X2C_ROOT/Library/General/Controller/src/AutoSwitch_Float32.c</locationURI>
+		</link>
+		<link>
 			<name>X2C-Blocks/Constant_Bool.c</name>
 			<type>1</type>
 			<locationURI>X2C_ROOT/Library/General/Controller/src/Constant_Bool.c</locationURI>
@@ -84,6 +89,11 @@
 			<name>X2C-Blocks/Limitation_Float32.c</name>
 			<type>1</type>
 			<locationURI>X2C_ROOT/Library/General/Controller/src/Limitation_Float32.c</locationURI>
+		</link>
+		<link>
+			<name>X2C-Blocks/LowpassBiQ_Float32.c</name>
+			<type>1</type>
+			<locationURI>X2C_ROOT/Library/Filter/Controller/src/LowpassBiQ_Float32.c</locationURI>
 		</link>
 		<link>
 			<name>X2C-Blocks/ManualSwitch_Bool.c</name>
