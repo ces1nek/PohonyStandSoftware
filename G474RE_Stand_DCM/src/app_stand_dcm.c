@@ -48,7 +48,7 @@ uint8_t faultHrtim;
 uint8_t inBtn;
 uint8_t inEnable;
 
-#define ADCOffsetShift 4
+#define ADCOffsetShift 6
 uint32_t ADCOffsetCntr = 1 << ADCOffsetShift;
 uint32_t ADCOffsetAccum[2];
 
@@ -187,9 +187,10 @@ void stand_im_periodic_isr(void) {
 	x2cModel.inports.bInEnable = readEnable();
 	x2cModel.inports.bInPwmFault = readHrtimPWM_Fault();
 
-	x2cModel.inports.bInIc = -((float) (rawAdcData[0].adc1.samples.Ic)
+	// Pri zapnutem oversamplingu je nutne offset odecitat rucne
+	x2cModel.inports.bInIc = -((float) (rawAdcData[0].adc1.samples.Ic - (int32_t)ADCOffsetAccum[0])
 			* ADC_CURRENT_GAIN);
-	x2cModel.inports.bInIa = -((float) (rawAdcData[0].adc2.samples.Ia)
+	x2cModel.inports.bInIa = -((float) (rawAdcData[0].adc2.samples.Ia - (int32_t)ADCOffsetAccum[1])
 			* ADC_CURRENT_GAIN);
 	x2cModel.inports.bInVdc = ((float) (rawAdcData[0].adc3.samples.Vdc)
 			* ADC_VOLTAGE_GAIN);
@@ -209,10 +210,13 @@ void stand_im_periodic_isr(void) {
 			ADCOffsetAccum[1] >>= ADCOffsetShift;
 
 			// Nastaveni Offsetu
+			// Offset nelze pouzit, kdyz je zapnuty oversampling
+			/*
 			hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
 			hadc1.Instance->OFR1 |= ADCOffsetAccum[0] & ADC_OFR1_OFFSET1;
 			hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
 			hadc2.Instance->OFR1 |= ADCOffsetAccum[1] & ADC_OFR1_OFFSET1;
+			*/
 			HrtimEnDis.In = x2cModel.outports.bOutPWMEnable;
 			TableStruct->DSPState = RUN_STATE_POWER_OFF;
 		}
