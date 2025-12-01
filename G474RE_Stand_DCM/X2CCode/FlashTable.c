@@ -1,6 +1,6 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
-/* Date:  2025-11-28 09:38                                                                                            */
+/* Date:  2025-12-01 10:44                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */

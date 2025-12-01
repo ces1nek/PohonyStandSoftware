@@ -75,7 +75,7 @@ Kci = 1;                %zesileni cidla proudu
 Ks = Kmen*Kci/Ra;       %zesileni soustavy
 
 f_pwm = Fpwm;           %frekvence PWM [Hz]
-f = 1.5;                %kompenzacni faktor
+f = 0.75;                %kompenzacni faktor
 t_men = (1/f_pwm)*f;    %casova konstanta menice
 
 % ta = La/Ra;             %casova konstanta kotvy
