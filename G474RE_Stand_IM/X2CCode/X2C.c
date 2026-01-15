@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_IM                                                                                                    */
-/* Date:  2025-11-13 18:01                                                                                            */
+/* Date:  2025-12-10 13:39                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -97,6 +97,10 @@ void X2C_Init(void)
 
     /* Block: EnableSwitch                                                                                            */
 
+    /* Block: Freq                                                                                                    */
+    /* Value = 10.0                                                                                                   */
+    x2cModel.blocks.bFreq.K = 10;
+
     /* Block: Gain1                                                                                                   */
     /* Gain = 1.4142                                                                                                  */
     x2cModel.blocks.bGain1.V = 1.4142;
@@ -120,6 +124,16 @@ void X2C_Init(void)
     x2cModel.blocks.bInit.K = 0;
 
     /* Block: InvPark                                                                                                 */
+
+    /* Block: LimitFreq                                                                                               */
+    /* max = 50.0                                                                                                     */
+    /* min = -50.0                                                                                                    */
+    x2cModel.blocks.bLimitFreq.max = 50;
+    x2cModel.blocks.bLimitFreq.min = -50;
+
+    /* Block: ManualSwitch                                                                                            */
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.bManualSwitch.Toggle = 0;
 
     /* Block: Mult                                                                                                    */
 
@@ -314,13 +328,15 @@ void X2C_Init(void)
     x2cModel.blocks.bEnableSwitch.In3 =
         &x2cModel.blocks.bSkluz1.Out;
 
+    /* Block Freq                                                                                                     */
+
     /* Block Gain1                                                                                                    */
     x2cModel.blocks.bGain1.In =
         &x2cModel.blocks.bMult.Out;
 
     /* Block Gain2                                                                                                    */
     x2cModel.blocks.bGain2.In =
-        &x2cModel.blocks.bAdd1.Out;
+        &x2cModel.blocks.bManualSwitch.Out;
 
     /* Block Gain4                                                                                                    */
     x2cModel.blocks.bGain4.In =
@@ -343,6 +359,16 @@ void X2C_Init(void)
         &x2cModel.blocks.bAmplitude1.Out;
     x2cModel.blocks.bInvPark.phi =
         &x2cModel.blocks.buI1.Out;
+
+    /* Block LimitFreq                                                                                                */
+    x2cModel.blocks.bLimitFreq.In =
+        &x2cModel.blocks.bAdd1.Out;
+
+    /* Block ManualSwitch                                                                                             */
+    x2cModel.blocks.bManualSwitch.In1 =
+        &x2cModel.blocks.bFreq.Out;
+    x2cModel.blocks.bManualSwitch.In2 =
+        &x2cModel.blocks.bLimitFreq.Out;
 
     /* Block Mult                                                                                                     */
     x2cModel.blocks.bMult.In1 =
@@ -466,7 +492,7 @@ void X2C_Init(void)
 
     /* Block f_to_per                                                                                                 */
     x2cModel.blocks.bf_to_per.In =
-        &x2cModel.blocks.bAdd1.Out;
+        &x2cModel.blocks.bManualSwitch.Out;
 
     /* Block uGain                                                                                                    */
     x2cModel.blocks.buGain.In =
@@ -507,6 +533,7 @@ void X2C_Init(void)
     Div_Float32_Init(&x2cModel.blocks.bDiv2);
     Constant_Bool_Init(&x2cModel.blocks.bEnable);
     EnableSwitch_Float32_Init(&x2cModel.blocks.bEnableSwitch);
+    Constant_Float32_Init(&x2cModel.blocks.bFreq);
     Gain_Float32_Init(&x2cModel.blocks.bGain1);
     Gain_Float32_Init(&x2cModel.blocks.bGain2);
     Gain_Float32_Init(&x2cModel.blocks.bGain4);
@@ -514,6 +541,8 @@ void X2C_Init(void)
     Sqrt_Float32_Init(&x2cModel.blocks.bI1rms);
     Constant_Float32_Init(&x2cModel.blocks.bInit);
     InvPark_Float32_Init(&x2cModel.blocks.bInvPark);
+    Saturation_Float32_Init(&x2cModel.blocks.bLimitFreq);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.bManualSwitch);
     Mult_Float32_Init(&x2cModel.blocks.bMult);
     Mult_Float32_Init(&x2cModel.blocks.bMult1);
     Mult_Float32_Init(&x2cModel.blocks.bMult2);
@@ -584,6 +613,8 @@ void X2C_Update_1(void)
     Negation_Float32_Update(&x2cModel.blocks.bNegation3);
     AutoSwitch_Float32_Update(&x2cModel.blocks.bAutoSwitch);
     Add_Float32_Update(&x2cModel.blocks.bAdd1);
+    Saturation_Float32_Update(&x2cModel.blocks.bLimitFreq);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch);
     Gain_Float32_Update(&x2cModel.blocks.bGain2);
     Gain_Float32_Update(&x2cModel.blocks.bf_to_per);
     Mult_Float32_Update(&x2cModel.blocks.bMult);

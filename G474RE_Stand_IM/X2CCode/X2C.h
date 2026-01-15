@@ -2,7 +2,7 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2025-11-13 18:01
+ * Date:  2025-12-10 13:39
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
@@ -10,7 +10,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_IM                                                                                                    */
-/* Date:  2025-11-13 18:01                                                                                            */
+/* Date:  2025-12-10 13:39                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -27,6 +27,7 @@ extern "C" {
 /**********************************************************************************************************************/
 /* Common includes                                                                                                    */
 #include "Constant_Bool.h"
+#include "ManualSwitch_Float32.h"
 #include "Mult_Float32.h"
 #include "PT1_Float32.h"
 #include "Gain_Float32.h"
@@ -36,8 +37,8 @@ extern "C" {
 #include "Add_Float32.h"
 #include "SpaceVectorMod_Float32.h"
 #include "uGain_Float32.h"
-#include "Phi2Speed_Float32.h"
 #include "Saturation_Float32.h"
+#include "Phi2Speed_Float32.h"
 #include "And_Bool.h"
 #include "uI_Float32.h"
 #include "Not_Bool.h"
@@ -57,6 +58,7 @@ extern "C" {
 /**********************************************************************************************************************/
 #define FUNCTIONS \
     CONSTANT_BOOL_FUNCTIONS , \
+    MANUALSWITCH_FLOAT32_FUNCTIONS , \
     MULT_FLOAT32_FUNCTIONS , \
     PT1_FLOAT32_FUNCTIONS , \
     GAIN_FLOAT32_FUNCTIONS , \
@@ -66,8 +68,8 @@ extern "C" {
     ADD_FLOAT32_FUNCTIONS , \
     SPACEVECTORMOD_FLOAT32_FUNCTIONS , \
     UGAIN_FLOAT32_FUNCTIONS , \
-    PHI2SPEED_FLOAT32_FUNCTIONS , \
     SATURATION_FLOAT32_FUNCTIONS , \
+    PHI2SPEED_FLOAT32_FUNCTIONS , \
     AND_BOOL_FUNCTIONS , \
     UI_FLOAT32_FUNCTIONS , \
     NOT_BOOL_FUNCTIONS , \
@@ -92,62 +94,65 @@ extern "C" {
     { 8, &x2cModel.blocks.bDiv2 } , \
     { 9, &x2cModel.blocks.bEnable } , \
     { 10, &x2cModel.blocks.bEnableSwitch } , \
-    { 11, &x2cModel.blocks.bGain1 } , \
-    { 12, &x2cModel.blocks.bGain2 } , \
-    { 13, &x2cModel.blocks.bGain4 } , \
-    { 14, &x2cModel.blocks.bGain5 } , \
-    { 15, &x2cModel.blocks.bI1rms } , \
-    { 16, &x2cModel.blocks.bInit } , \
-    { 17, &x2cModel.blocks.bInvPark } , \
-    { 18, &x2cModel.blocks.bMult } , \
-    { 19, &x2cModel.blocks.bMult1 } , \
-    { 20, &x2cModel.blocks.bMult2 } , \
-    { 21, &x2cModel.blocks.bMult3 } , \
-    { 22, &x2cModel.blocks.bMult4 } , \
-    { 23, &x2cModel.blocks.bMult5 } , \
-    { 24, &x2cModel.blocks.bMult6 } , \
-    { 25, &x2cModel.blocks.bNToFreqReal } , \
-    { 26, &x2cModel.blocks.bNegation } , \
-    { 27, &x2cModel.blocks.bNegation1 } , \
-    { 28, &x2cModel.blocks.bNegation3 } , \
-    { 29, &x2cModel.blocks.bNot } , \
-    { 30, &x2cModel.blocks.bOr } , \
-    { 31, &x2cModel.blocks.bPT1 } , \
-    { 32, &x2cModel.blocks.bPT2 } , \
-    { 33, &x2cModel.blocks.bPhi2Speed } , \
-    { 34, &x2cModel.blocks.bSaturation1 } , \
-    { 35, &x2cModel.blocks.bSaturation2 } , \
-    { 36, &x2cModel.blocks.bSkluz } , \
-    { 37, &x2cModel.blocks.bSkluz1 } , \
-    { 38, &x2cModel.blocks.bSpace_Vector_Modulation } , \
-    { 39, &x2cModel.blocks.bSub1 } , \
-    { 40, &x2cModel.blocks.bSub2 } , \
-    { 41, &x2cModel.blocks.bTFlipFlop } , \
-    { 42, &x2cModel.blocks.bU12rms } , \
-    { 43, &x2cModel.blocks.bVoltage } , \
-    { 44, &x2cModel.blocks.bf_to_per } , \
-    { 45, &x2cModel.blocks.buGain } , \
-    { 46, &x2cModel.blocks.buI1 } , \
-    { 62, &x2cScope }
+    { 11, &x2cModel.blocks.bFreq } , \
+    { 12, &x2cModel.blocks.bGain1 } , \
+    { 13, &x2cModel.blocks.bGain2 } , \
+    { 14, &x2cModel.blocks.bGain4 } , \
+    { 15, &x2cModel.blocks.bGain5 } , \
+    { 16, &x2cModel.blocks.bI1rms } , \
+    { 17, &x2cModel.blocks.bInit } , \
+    { 18, &x2cModel.blocks.bInvPark } , \
+    { 19, &x2cModel.blocks.bLimitFreq } , \
+    { 20, &x2cModel.blocks.bManualSwitch } , \
+    { 21, &x2cModel.blocks.bMult } , \
+    { 22, &x2cModel.blocks.bMult1 } , \
+    { 23, &x2cModel.blocks.bMult2 } , \
+    { 24, &x2cModel.blocks.bMult3 } , \
+    { 25, &x2cModel.blocks.bMult4 } , \
+    { 26, &x2cModel.blocks.bMult5 } , \
+    { 27, &x2cModel.blocks.bMult6 } , \
+    { 28, &x2cModel.blocks.bNToFreqReal } , \
+    { 29, &x2cModel.blocks.bNegation } , \
+    { 30, &x2cModel.blocks.bNegation1 } , \
+    { 31, &x2cModel.blocks.bNegation3 } , \
+    { 32, &x2cModel.blocks.bNot } , \
+    { 33, &x2cModel.blocks.bOr } , \
+    { 34, &x2cModel.blocks.bPT1 } , \
+    { 35, &x2cModel.blocks.bPT2 } , \
+    { 36, &x2cModel.blocks.bPhi2Speed } , \
+    { 37, &x2cModel.blocks.bSaturation1 } , \
+    { 38, &x2cModel.blocks.bSaturation2 } , \
+    { 39, &x2cModel.blocks.bSkluz } , \
+    { 40, &x2cModel.blocks.bSkluz1 } , \
+    { 41, &x2cModel.blocks.bSpace_Vector_Modulation } , \
+    { 42, &x2cModel.blocks.bSub1 } , \
+    { 43, &x2cModel.blocks.bSub2 } , \
+    { 44, &x2cModel.blocks.bTFlipFlop } , \
+    { 45, &x2cModel.blocks.bU12rms } , \
+    { 46, &x2cModel.blocks.bVoltage } , \
+    { 47, &x2cModel.blocks.bf_to_per } , \
+    { 48, &x2cModel.blocks.buGain } , \
+    { 49, &x2cModel.blocks.buI1 } , \
+    { 65, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
-    { 47, 1, &x2cModel.inports.bInButton } , \
-    { 48, 1, &x2cModel.inports.bInEnable } , \
-    { 49, 4, &x2cModel.inports.bInIa } , \
-    { 50, 4, &x2cModel.inports.bInIb } , \
-    { 51, 4, &x2cModel.inports.bInIc } , \
-    { 52, 4, &x2cModel.inports.bInPositionEncoder1 } , \
-    { 53, 4, &x2cModel.inports.bInPositionEncoder2 } , \
-    { 54, 4, &x2cModel.inports.bInPositionResolver } , \
-    { 55, 1, &x2cModel.inports.bInPwmFault } , \
-    { 56, 4, &x2cModel.inports.bInVdc } 
+    { 50, 1, &x2cModel.inports.bInButton } , \
+    { 51, 1, &x2cModel.inports.bInEnable } , \
+    { 52, 4, &x2cModel.inports.bInIa } , \
+    { 53, 4, &x2cModel.inports.bInIb } , \
+    { 54, 4, &x2cModel.inports.bInIc } , \
+    { 55, 4, &x2cModel.inports.bInPositionEncoder1 } , \
+    { 56, 4, &x2cModel.inports.bInPositionEncoder2 } , \
+    { 57, 4, &x2cModel.inports.bInPositionResolver } , \
+    { 58, 1, &x2cModel.inports.bInPwmFault } , \
+    { 59, 4, &x2cModel.inports.bInVdc } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 57, 1, &x2cModel.outports.bOutErrClear } , \
-    { 58, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 59, 4, &x2cModel.outports.bOutPWMa } , \
-    { 60, 4, &x2cModel.outports.bOutPWMb } , \
-    { 61, 4, &x2cModel.outports.bOutPWMc } 
+    { 60, 1, &x2cModel.outports.bOutErrClear } , \
+    { 61, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 62, 4, &x2cModel.outports.bOutPWMa } , \
+    { 63, 4, &x2cModel.outports.bOutPWMb } , \
+    { 64, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -166,6 +171,7 @@ struct x2cModel {
         DIV_FLOAT32 bDiv2;
         CONSTANT_BOOL bEnable;
         ENABLESWITCH_FLOAT32 bEnableSwitch;
+        CONSTANT_FLOAT32 bFreq;
         GAIN_FLOAT32 bGain1;
         GAIN_FLOAT32 bGain2;
         GAIN_FLOAT32 bGain4;
@@ -173,6 +179,8 @@ struct x2cModel {
         SQRT_FLOAT32 bI1rms;
         CONSTANT_FLOAT32 bInit;
         INVPARK_FLOAT32 bInvPark;
+        SATURATION_FLOAT32 bLimitFreq;
+        MANUALSWITCH_FLOAT32 bManualSwitch;
         MULT_FLOAT32 bMult;
         MULT_FLOAT32 bMult1;
         MULT_FLOAT32 bMult2;
