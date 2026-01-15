@@ -63,3 +63,5 @@ G474RE_Stand_DCM/Debug/
 
 *.log
 *.snap
+.metadata/.plugins/org.eclipse.core.resources/.history/
+.metadata/.plugins/org.eclipse.core.resources/.projects/G474RE_Stand_DCM/.markers

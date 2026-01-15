@@ -56,8 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DMA_HandleTypeDef hdma_adc1;
-extern HRTIM_HandleTypeDef hhrtim1;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -187,7 +186,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -199,61 +198,6 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32g4xx.s).                    */
 /******************************************************************************/
-
-/**
-  * @brief This function handles DMA1 channel1 global interrupt.
-  */
-void DMA1_Channel1_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
-	//GPIOA->BSRR = GPIO_PIN_6;
-	stand_im_periodic_isr();
-	//GPIOA->BRR = GPIO_PIN_6;
-  /* USER CODE END DMA1_Channel1_IRQn 0 */
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-
-  /* USER CODE END DMA1_Channel1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles SPI1 global interrupt.
-  */
-void SPI1_IRQHandler(void)
-{
-  /* USER CODE BEGIN SPI1_IRQn 0 */
-	GPIOA->BSRR = GPIO_PIN_6;
-	AD2S1200_SPI_RXNE_ISR();
-	GPIOA->BRR = GPIO_PIN_6;
-  /* USER CODE END SPI1_IRQn 0 */
-  /* USER CODE BEGIN SPI1_IRQn 1 */
-
-  /* USER CODE END SPI1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles HRTIM master timer global interrupt.
-  */
-void HRTIM1_Master_IRQHandler(void)
-{
-  /* USER CODE BEGIN HRTIM1_Master_IRQn 0 */
-
-	GPIOA->BSRR = GPIO_PIN_6;
-	/*
-	 * Start Sample
-	 */
-	AD2S1200_SampleStart();
-
-	/*
-	 * Clear Flag
-	 */
-	__HAL_HRTIM_MASTER_CLEAR_IT(&hhrtim1, HRTIM_MASTER_IT_MCMP1);
-
-	GPIOA->BRR = GPIO_PIN_6;
-  /* USER CODE END HRTIM1_Master_IRQn 0 */
-  /* USER CODE BEGIN HRTIM1_Master_IRQn 1 */
-
-  /* USER CODE END HRTIM1_Master_IRQn 1 */
-}
 
 /* USER CODE BEGIN 1 */
 

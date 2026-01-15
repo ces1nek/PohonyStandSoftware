@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_DCM                                                                                                   */
-/* Date:  2025-12-01 10:44                                                                                            */
+/* Date:  2026-01-15 15:10                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -188,16 +188,16 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenDCVal.K = 0;
 
     /* Block: PulseGenFreq                                                                                            */
-    /* Value = 0.5                                                                                                    */
-    x2cModel.blocks.bPulseGenFreq.K = 0.5;
+    /* Value = 0.2                                                                                                    */
+    x2cModel.blocks.bPulseGenFreq.K = 0.2;
 
     /* Block: PulseGenHi                                                                                              */
     /* Value = 50.0                                                                                                   */
     x2cModel.blocks.bPulseGenHi.K = 50;
 
     /* Block: PulseGenLo                                                                                              */
-    /* Value = 100.0                                                                                                  */
-    x2cModel.blocks.bPulseGenLo.K = 100;
+    /* Value = 1.0                                                                                                    */
+    x2cModel.blocks.bPulseGenLo.K = 1;
 
     /* Block: PulseGenOutput                                                                                          */
     /* Toggle = 0.0                                                                                                   */

@@ -33,11 +33,11 @@ static uint8 bufferLNet[LNET_BUFFERSIZE];
 #define APPLICATION_VERSION (1U)
 
 /**********************/
-extern HRTIM_HandleTypeDef hhrtim1;
-extern TIM_HandleTypeDef htim2;
-extern ADC_HandleTypeDef hadc1;
-extern ADC_HandleTypeDef hadc2;
-extern ADC_HandleTypeDef hadc3;
+//extern HRTIM_HandleTypeDef hhrtim1;
+//extern TIM_HandleTypeDef htim2;
+//extern ADC_HandleTypeDef hadc1;
+//extern ADC_HandleTypeDef hadc2;
+//extern ADC_HandleTypeDef hadc3;
 /************************/
 adcData_typedef rawAdcData[CYCLES_TO_RUN];
 /**************************/
@@ -55,6 +55,9 @@ uint32_t ADCOffsetAccum[2];
 #define PositionEncoder1BitRes 11
 int16_t PositionEncoder1;
 
+/*********/
+uint32_t TestCntr1, TestCntr2, TestCntr3;
+
 /*********************************/
 
 /*
@@ -68,12 +71,9 @@ void stand_im_init_1(void) {
  * stand_im_init_2
  */
 void stand_im_init_2(void) {
-
 	/* X2C */
-
 	initTableStruct();
 	initVersionInfo(TableStruct, APPLICATION_VERSION);
-
 	initSerialGeneric(&interface);
 	initSerial(&interface);
 	linkSerial((tProtocol*) &protocol, &interface);
@@ -83,8 +83,7 @@ void stand_im_init_2(void) {
 	addBlockServices((tProtocol*) &protocol);
 	addTableStructProtocol((tProtocol*) &protocol);
 
-	KICK_DOG
-	;
+	KICK_DOG;
 
 	TableStruct->DSPState = PRG_LOADED_STATE;
 
@@ -93,22 +92,34 @@ void stand_im_init_2(void) {
 	//HrtimEnDis.In = (_Bool*) &GlobalEnable;
 	HrtimEnDis.In = x2cModel.outports.bOutPWMEnable;
 
+	/*
 	HAL_HRTIM_WaveformCountStart_IT(&hhrtim1,
 	HRTIM_TIMERID_MASTER |
 	HRTIM_TIMERID_TIMER_A |
 	HRTIM_TIMERID_TIMER_B |
 	HRTIM_TIMERID_TIMER_C);
+	 */
 
 
+	/*LL_HRTIM_EnableOutput(HRTIM1, \
+			LL_HRTIM_OUTPUT_TA1 | LL_HRTIM_OUTPUT_TA2 |\
+			LL_HRTIM_OUTPUT_TB1 | LL_HRTIM_OUTPUT_TB2 );
+	 */
 
 	/*
 	 * Spusteni kalibrace pro single-ended rezim.
 	 * Kdyby se pouzival differential, tak je to tu potreba zmenit.
 	 */
-	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
-	HAL_ADCEx_Calibration_Start(&hadc3, ADC_SINGLE_ENDED);
+	LL_ADC_StartCalibration(ADC1, LL_ADC_SINGLE_ENDED);
+	LL_ADC_StartCalibration(ADC2, LL_ADC_SINGLE_ENDED);
+	LL_ADC_StartCalibration(ADC3, LL_ADC_SINGLE_ENDED);
 
+	while(LL_ADC_IsCalibrationOnGoing(ADC1))
+			;
+	while(LL_ADC_IsCalibrationOnGoing(ADC2))
+			;
+	while(LL_ADC_IsCalibrationOnGoing(ADC3))
+		;
 	//HAL_ADC_EnableBufferSensor_Cmd(ENABLE);
 	//HAL_ADC_EnableBuffer_Cmd(ENABLE);
 
@@ -120,33 +131,65 @@ void stand_im_init_2(void) {
 
 	//HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc12,
 	//ADC12_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc1,
-	ADC1_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc2, (uint32_t*) &rawAdcData[0].adc2,
-	ADC2_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc3, (uint32_t*) &rawAdcData[0].adc3,
-	ADC3_NUM_OF_SAMPLES);
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)&rawAdcData[0].adc1);
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ADC1_NUM_OF_SAMPLES);
 
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t)&rawAdcData[0].adc2);
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_2, ADC2_NUM_OF_SAMPLES);
+
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t)&rawAdcData[0].adc3);
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, ADC3_NUM_OF_SAMPLES);
+
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1 );
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2 );
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3 );
+
+	/*HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc1, ADC1_NUM_OF_SAMPLES);
+	HAL_ADC_Start_DMA(&hadc2, (uint32_t*) &rawAdcData[0].adc2, ADC2_NUM_OF_SAMPLES);
+	HAL_ADC_Start_DMA(&hadc3, (uint32_t*) &rawAdcData[0].adc3, ADC3_NUM_OF_SAMPLES);
+*/
+	LL_ADC_Enable(ADC1);
+	LL_ADC_Enable(ADC2);
+	LL_ADC_Enable(ADC3);
+
+
+	LL_mDelay(1);
 	//__HAL_ADC_ENABLE_IT(&hadc1, ADC_IT_EOS);
 	/*
 	 * Zakazeme si zbytecna preruseni od DMA.
 	 * Povolene zustave pouze TC (transfer complete)
 	 * po skonceni sekvence prenosu
 	 */
-	__HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TE);
-	__HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
-	__HAL_DMA_DISABLE_IT(hadc3.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
+	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
+	//__HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TE);
+	//__HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
+	//__HAL_DMA_DISABLE_IT(hadc3.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
 
 	//__HAL_ADC_ENABLE_IT(&hadc3,(ADC_IT_EOS | ADC_IT_EOC));
 
 	// Vynulovani Offsetu
-	hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
-	hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+	//hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+	//hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+	ADC1->OFR1 &= ~ADC_OFR1_OFFSET1;
+	ADC2->OFR1 &= ~ADC_OFR1_OFFSET1;
+	LL_mDelay(1);
+
+	LL_ADC_REG_StartConversion(ADC1);
+	LL_ADC_REG_StartConversion(ADC2);
+	LL_ADC_REG_StartConversion(ADC3);
+
+	LL_mDelay(1);
+
+	LL_HRTIM_TIM_CounterEnable(HRTIM1, LL_HRTIM_TIMER_MASTER | LL_HRTIM_TIMER_A| LL_HRTIM_TIMER_B | LL_HRTIM_TIMER_C );
+	LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_MASTER, HRTIM_PERIOD/2);
+	LL_HRTIM_EnableIT_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
 
 	/*
 	 * TIM2: Simulovany enkoder z AD2S1200
 	 */
-	HAL_TIM_Base_Start(&htim2);
+	//HAL_TIM_Base_Start(&htim2);
+	LL_TIM_EnableCounter(TIM2);
+	LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2 | LL_TIM_CHANNEL_CH3);
 
 	TableStruct->DSPState = INIT_STATE;
 	//TableStruct->DSPState = RUN_STATE_POWER_ON;
@@ -168,15 +211,16 @@ void stand_im_loop(void) {
 /*
  *
  */
-void stand_im_periodic_isr(void) {
+void DMA1_Channel1_IRQHandler(void) {
 
 	//GPIOA->BSRR = GPIO_PIN_6;
-	__HAL_DMA_CLEAR_FLAG(hadc1.DMA_Handle, DMA_FLAG_TC1);
-
+	//__HAL_DMA_CLEAR_FLAG(hadc1.DMA_Handle, DMA_FLAG_TC1);
+	LL_DMA_ClearFlag_TC1(DMA1);
+	TestCntr3++;
 	/*
 	 * End of the low pulse on pin NSAMPLE
 	 */
-	AD2S1200_SampleStop();
+	//AD2S1200_SampleStop();
 
 	int16_t sTimCntTmp;
 	sTimCntTmp = (int16_t)(TIM2->CNT << (16-PositionEncoder1BitRes));
@@ -232,15 +276,35 @@ void stand_im_periodic_isr(void) {
 		break;
 	}
 
-	hhrtim1.Instance->sTimerxRegs[0].CMP1xR = modToCmp(
+	HRTIM1->sTimerxRegs[0].CMP1xR = modToCmp(
 			*x2cModel.outports.bOutPWMa);
-	hhrtim1.Instance->sTimerxRegs[1].CMP1xR = modToCmp(
+	HRTIM1->sTimerxRegs[1].CMP1xR = modToCmp(
 			*x2cModel.outports.bOutPWMb);
-	hhrtim1.Instance->sTimerxRegs[2].CMP1xR = modToCmp(
+	HRTIM1->sTimerxRegs[2].CMP1xR = modToCmp(
 			*x2cModel.outports.bOutPWMc);
 
 	writeErrClear(*x2cModel.outports.bOutErrClear);
 	controlHrtimPWM_EnDis(&HrtimEnDis);
 	//GPIOA->BRR = GPIO_PIN_6;
 
+}
+
+
+void SPI1_IRQHandler(void)
+{
+	GPIOA->BSRR = LL_GPIO_PIN_6;
+	AD2S1200_SPI_RXNE_ISR();
+	LL_SPI_ClearFlag_CRCERR(SPI1);
+	TestCntr2++;
+	GPIOA->BRR = LL_GPIO_PIN_6;
+}
+
+void HRTIM1_Master_IRQHandler(void)
+{
+	GPIOA->BSRR = LL_GPIO_PIN_6;
+//	AD2S1200_SampleStart();
+	//__HAL_HRTIM_MASTER_CLEAR_IT(&hhrtim1, HRTIM_MASTER_IT_MCMP1);
+	LL_HRTIM_ClearFlag_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
+	TestCntr1++;
+	GPIOA->BRR = LL_GPIO_PIN_6;
 }

@@ -36,8 +36,8 @@
 //#include "Target.h"
 #include "Hardware.h"
 
-extern UART_HandleTypeDef hlpuart1;
-extern UART_HandleTypeDef huart1;
+//extern UART_HandleTypeDef hlpuart1;
+//extern UART_HandleTypeDef huart1;
 
 /* private prototypes */
 static void sendSerial(tSerial* serial, uint8 data);
@@ -51,13 +51,15 @@ static uint8 isSendReady(tSerial* serial);
 #define pX2CHUART hlpuart1
 // dalsi UART (485)
 //#define pX2CHUART huart1
+#define X2CUART LPUART1
 
 /**
  * @brief Initialization of serial interface.
  */
 void initSerial(tSerial* serial)
 {
-	__HAL_UART_ENABLE(&pX2CHUART);
+	//__HAL_UART_ENABLE(&pX2CHUART);
+	LL_USART_Enable(X2CUART);
 
 	serial->send = (void (*)(tInterface*, uint8))sendSerial;
 	serial->receive = (uint8 (*)(tInterface*))receiveSerial;
@@ -75,8 +77,8 @@ void initSerial(tSerial* serial)
 static void sendSerial(tSerial* serial, uint8 data)
 {
   //LL_LPUART_TransmitData8(LPUART1, data);
-	pX2CHUART.Instance->TDR = data;
-	//LPUART1->TDR = data;
+	//pX2CHUART.Instance->TDR = data;
+	X2CUART->TDR = data;
 }
 
 
@@ -89,8 +91,9 @@ static void sendSerial(tSerial* serial, uint8 data)
 static uint8 receiveSerial(tSerial* serial)
 {
 	//uint8 data;
-	//data = LL_LPUART_ReceiveData8(LPUART1);
-	return (uint8_t)(pX2CHUART.Instance->RDR & 0xFFU);
+	// return LL_LPUART_ReceiveData8(X2CUART);
+	//return (uint8_t)(pX2CHUART.Instance->RDR & 0xFFU);
+	return (uint8_t)(X2CUART->RDR & 0xFFU);
 }
 
 
@@ -102,7 +105,8 @@ static uint8 receiveSerial(tSerial* serial)
  */
 static uint8 isReceiveDataAvailable(tSerial* serial)
 {
-	return ((pX2CHUART.Instance->ISR & USART_ISR_RXNE_RXFNE) ? 1UL : 0UL);
+	//return ((pX2CHUART.Instance->ISR & USART_ISR_RXNE_RXFNE) ? 1UL : 0UL);
+	return ((X2CUART->ISR & USART_ISR_RXNE_RXFNE) ? 1UL : 0UL);
 }
 
 
@@ -114,6 +118,7 @@ static uint8 isReceiveDataAvailable(tSerial* serial)
  */
 static uint8 isSendReady(tSerial* serial)
 {
-	return ((pX2CHUART.Instance->ISR & USART_ISR_TXE_TXFNF) ? 1UL : 0UL);
+	//return ((pX2CHUART.Instance->ISR & USART_ISR_TXE_TXFNF) ? 1UL : 0UL);
+	return ((X2CUART->ISR & USART_ISR_TXE_TXFNF) ? 1UL : 0UL);
 }
 
