@@ -122,6 +122,25 @@ void stand_im_init_2(void) {
 		;
 	//HAL_ADC_EnableBufferSensor_Cmd(ENABLE);
 	//HAL_ADC_EnableBuffer_Cmd(ENABLE);
+	/*HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc1, ADC1_NUM_OF_SAMPLES);
+	HAL_ADC_Start_DMA(&hadc2, (uint32_t*) &rawAdcData[0].adc2, ADC2_NUM_OF_SAMPLES);
+	HAL_ADC_Start_DMA(&hadc3, (uint32_t*) &rawAdcData[0].adc3, ADC3_NUM_OF_SAMPLES);
+*/
+	LL_ADC_Enable(ADC1);
+	LL_ADC_Enable(ADC2);
+	LL_ADC_Enable(ADC3);
+	LL_mDelay(1);
+	// Vynulovani Offsetu
+	//hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+	//hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+	//ADC1->OFR1 &= ~ADC_OFR1_OFFSET1;
+	//ADC2->OFR1 &= ~ADC_OFR1_OFFSET1;
+	//LL_mDelay(1);
+
+	LL_ADC_REG_StartConversion(ADC1);
+	LL_ADC_REG_StartConversion(ADC2);
+	LL_ADC_REG_StartConversion(ADC3);
+
 
 	/*
 	 * Spusti ADC v dualnim modu
@@ -132,51 +151,42 @@ void stand_im_init_2(void) {
 	//HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc12,
 	//ADC12_NUM_OF_SAMPLES);
 	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)&rawAdcData[0].adc1);
+	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t) &ADC1->DR);
 	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ADC1_NUM_OF_SAMPLES);
+	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PRIORITY_LOW);
 
 	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t)&rawAdcData[0].adc2);
+	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t) &ADC2->DR);
 	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_2, ADC2_NUM_OF_SAMPLES);
+	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_2, LL_DMA_PRIORITY_MEDIUM);
 
 	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t)&rawAdcData[0].adc3);
+	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t) &ADC3->DR);
 	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, ADC3_NUM_OF_SAMPLES);
+	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PRIORITY_HIGH);
 
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1 );
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2 );
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3 );
 
-	/*HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc1, ADC1_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc2, (uint32_t*) &rawAdcData[0].adc2, ADC2_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc3, (uint32_t*) &rawAdcData[0].adc3, ADC3_NUM_OF_SAMPLES);
-*/
-	LL_ADC_Enable(ADC1);
-	LL_ADC_Enable(ADC2);
-	LL_ADC_Enable(ADC3);
+	LL_DMA_ClearFlag_TC1(DMA1);
+	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
 
 
-	LL_mDelay(1);
 	//__HAL_ADC_ENABLE_IT(&hadc1, ADC_IT_EOS);
 	/*
 	 * Zakazeme si zbytecna preruseni od DMA.
 	 * Povolene zustave pouze TC (transfer complete)
 	 * po skonceni sekvence prenosu
 	 */
-	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
+
 	//__HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TE);
 	//__HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
 	//__HAL_DMA_DISABLE_IT(hadc3.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
 
 	//__HAL_ADC_ENABLE_IT(&hadc3,(ADC_IT_EOS | ADC_IT_EOC));
 
-	// Vynulovani Offsetu
-	//hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
-	//hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
-	ADC1->OFR1 &= ~ADC_OFR1_OFFSET1;
-	ADC2->OFR1 &= ~ADC_OFR1_OFFSET1;
-	LL_mDelay(1);
 
-	LL_ADC_REG_StartConversion(ADC1);
-	LL_ADC_REG_StartConversion(ADC2);
-	LL_ADC_REG_StartConversion(ADC3);
 
 	LL_mDelay(1);
 
