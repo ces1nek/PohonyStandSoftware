@@ -131,8 +131,6 @@ void stand_im_init_2(void) {
 	LL_ADC_Enable(ADC3);
 	LL_mDelay(1);
 	// Vynulovani Offsetu
-	//hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
-	//hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
 	//ADC1->OFR1 &= ~ADC_OFR1_OFFSET1;
 	//ADC2->OFR1 &= ~ADC_OFR1_OFFSET1;
 	//LL_mDelay(1);
@@ -150,15 +148,15 @@ void stand_im_init_2(void) {
 
 	//HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc12,
 	//ADC12_NUM_OF_SAMPLES);
-	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)&rawAdcData[0].adc1);
-	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t) &ADC1->DR);
-	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ADC1_NUM_OF_SAMPLES);
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)&rawAdcData[0].adc12);
+	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t) &ADC12_COMMON->CDR);
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ADC12_NUM_OF_SAMPLES);
 	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PRIORITY_LOW);
 
-	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t)&rawAdcData[0].adc2);
-	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t) &ADC2->DR);
-	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_2, ADC2_NUM_OF_SAMPLES);
-	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_2, LL_DMA_PRIORITY_MEDIUM);
+	//LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t)&rawAdcData[0].adc2);
+	//LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_2, (uint32_t) &ADC2->DR);
+	//LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_2, ADC2_NUM_OF_SAMPLES);
+	//LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_2, LL_DMA_PRIORITY_MEDIUM);
 
 	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t)&rawAdcData[0].adc3);
 	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t) &ADC3->DR);
@@ -173,26 +171,11 @@ void stand_im_init_2(void) {
 	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
 
 
-	//__HAL_ADC_ENABLE_IT(&hadc1, ADC_IT_EOS);
-	/*
-	 * Zakazeme si zbytecna preruseni od DMA.
-	 * Povolene zustave pouze TC (transfer complete)
-	 * po skonceni sekvence prenosu
-	 */
-
-	//__HAL_DMA_DISABLE_IT(hadc1.DMA_Handle, DMA_IT_HT | DMA_IT_TE);
-	//__HAL_DMA_DISABLE_IT(hadc2.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
-	//__HAL_DMA_DISABLE_IT(hadc3.DMA_Handle, DMA_IT_TC | DMA_IT_HT | DMA_IT_TE);
-
-	//__HAL_ADC_ENABLE_IT(&hadc3,(ADC_IT_EOS | ADC_IT_EOC));
-
-
-
 	LL_mDelay(1);
 
 	LL_HRTIM_TIM_CounterEnable(HRTIM1, LL_HRTIM_TIMER_MASTER | LL_HRTIM_TIMER_A| LL_HRTIM_TIMER_B | LL_HRTIM_TIMER_C );
 	LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_MASTER, HRTIM_PERIOD/2);
-	LL_HRTIM_EnableIT_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
+	//LL_HRTIM_EnableIT_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
 
 	/*
 	 * TIM2: Simulovany enkoder z AD2S1200
@@ -242,10 +225,20 @@ void DMA1_Channel1_IRQHandler(void) {
 	x2cModel.inports.bInPwmFault = readHrtimPWM_Fault();
 
 	// Pri zapnutem oversamplingu je nutne offset odecitat rucne
-	x2cModel.inports.bInIc = -((float) (rawAdcData[0].adc1.samples.Ic - (int32_t)ADCOffsetAccum[0])
+	float Ia;
+
+
+
+
+	float Ic;
+	Ia = -((float) (rawAdcData[0].adc12.samples.Ic1 - (int32_t)ADCOffsetAccum[0])
 			* ADC_CURRENT_GAIN);
-	x2cModel.inports.bInIa = -((float) (rawAdcData[0].adc2.samples.Ia - (int32_t)ADCOffsetAccum[1])
+	Ic = -((float) (rawAdcData[0].adc12.samples.Ia1 - (int32_t)ADCOffsetAccum[1])
 			* ADC_CURRENT_GAIN);
+
+	x2cModel.inports.bInIa = (Ia + Ic)/2;
+	x2cModel.inports.bInIb = 0.0f;
+	x2cModel.inports.bInIc = 0.0f;
 	x2cModel.inports.bInVdc = ((float) (rawAdcData[0].adc3.samples.Vdc)
 			* ADC_VOLTAGE_GAIN);
 
@@ -257,8 +250,8 @@ void DMA1_Channel1_IRQHandler(void) {
 		GlobalEnable = 0;
 
 		if (ADCOffsetCntr--) {
-			ADCOffsetAccum[0] += rawAdcData[0].adc1.samples.Ic;
-			ADCOffsetAccum[1] += rawAdcData[0].adc2.samples.Ia;
+			ADCOffsetAccum[0] += rawAdcData[0].adc12.samples.Ic1;
+			ADCOffsetAccum[1] += rawAdcData[0].adc12.samples.Ia1;
 		} else {
 			ADCOffsetAccum[0] >>= ADCOffsetShift;
 			ADCOffsetAccum[1] >>= ADCOffsetShift;
@@ -296,7 +289,7 @@ void DMA1_Channel1_IRQHandler(void) {
 	writeErrClear(*x2cModel.outports.bOutErrClear);
 	controlHrtimPWM_EnDis(&HrtimEnDis);
 	//GPIOA->BRR = GPIO_PIN_6;
-
+	//__WFI();
 }
 
 
@@ -317,4 +310,5 @@ void HRTIM1_Master_IRQHandler(void)
 	LL_HRTIM_ClearFlag_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
 	TestCntr1++;
 	GPIOA->BRR = LL_GPIO_PIN_6;
+
 }

@@ -111,7 +111,7 @@ static inline uint32_t modToCmp(float x){
 #define _CURRENT_DIV_GAIN_ ((_CURRENT_DIV_R2_)/(_CURRENT_DIV_R1_ + _CURRENT_DIV_R2_))
 #define _CURRENT_AMPL_GAIN_ ((_CURRENT_AMPL_R0_)/(_CURRENT_AMPL_R1_))
 #define _CURRENT_MAX_ ((_V_REF_)/(_CURRENT_LEM_GAIN_ * _CURRENT_DIV_GAIN_ * _CURRENT_AMPL_GAIN_))
-#define _CURRENT_RES_ (1<<12U)
+#define _CURRENT_RES_ (1<<13U)
 #define ADC_CURRENT_GAIN ((float)(_CURRENT_MAX_/_CURRENT_RES_))
 
 #define CURRENT_OFFSETx ((uint32_t)(((((_CURRENT_LEM_V_REF_ * _CURRENT_DIV_GAIN_) - _V_REF_2_) * _CURRENT_AMPL_GAIN_) + _V_REF_2_)*_CURRENT_RES_/_V_REF_))
@@ -123,9 +123,9 @@ static inline uint32_t modToCmp(float x){
 // Pocet PWM period pro spusteni vypoctu a vzorku ADC pro prumerovani
 #define CYCLES_TO_RUN 1
 // Pocet vzorku v AD sekvenci
-#define ADC1_NUM_OF_SAMPLES 1
-#define ADC2_NUM_OF_SAMPLES 1
+#define ADC12_NUM_OF_SAMPLES 1
 #define ADC3_NUM_OF_SAMPLES 1
+
 
 /*
  * _____|_______SMP1_____|
@@ -134,20 +134,19 @@ static inline uint32_t modToCmp(float x){
  * ADC3 | CH12: Vdc      |
  * _____|________________|
  *
+ * PC0 = I_1 = Ic = CH6
+ * PC1 = I_2 = Ia = CH7
+ * PB0 = Vdc = ADC3_IN12
+ *
  */
 typedef struct {
 	union {
 		struct {
-			int16_t Ic;
+			int16_t Ic1;
+			int16_t Ia1;
 		} samples;
-		uint16_t usData[ADC1_NUM_OF_SAMPLES];
-	} adc1;
-	union {
-		struct {
-			int16_t Ia;
-		} samples;
-		uint16_t usData[ADC2_NUM_OF_SAMPLES];
-	} adc2;
+		uint32_t ulData[ADC12_NUM_OF_SAMPLES];
+	} adc12;
 	union {
 		struct {
 			uint16_t Vdc;
