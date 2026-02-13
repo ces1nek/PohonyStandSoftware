@@ -63,10 +63,10 @@ G474RE_Stand_DCM/Debug/
 
 *.log
 *.snap
-.pdom
-.bkp
+*.pdom
+*.bkp
 
-.metadata/.plugins/org.eclipse.core.resources/.history/
+.metadata/.plugins/org.eclipse.core.resources/.history/*
 *history.*
 *.log
 *.markers
