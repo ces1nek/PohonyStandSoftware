@@ -71,3 +71,4 @@ G474RE_Stand_DCM/Debug/
 *.log
 *.markers
 *.tree
+.metadata/*.log
