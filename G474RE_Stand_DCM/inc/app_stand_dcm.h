@@ -104,7 +104,8 @@ static inline uint32_t modToCmp(float x){
 
 #define _CURRENT_DIV_R1_ (4700.0)
 #define _CURRENT_DIV_R2_ (9100.0)
-#define _CURRENT_AMPL_R0_ (3180.0)
+//#define _CURRENT_AMPL_R0_ (3180.0)
+#define _CURRENT_AMPL_R0_ (3000.0 + 2870.0)
 #define _CURRENT_AMPL_R1_ ((_CURRENT_DIV_R1_*_CURRENT_DIV_R2_)/(_CURRENT_DIV_R1_+_CURRENT_DIV_R2_))
 #define _CURRENT_LEM_GAIN_ (0.025)
 #define _CURRENT_LEM_V_REF_ (2.5)
