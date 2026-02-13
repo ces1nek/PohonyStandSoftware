@@ -72,3 +72,6 @@ G474RE_Stand_DCM/Debug/
 *.markers
 *.tree
 .metadata/*.log
+.metadata/.plugins/org.eclipse.ltk.core.refactoring/*
+.metadata/.plugins/org.eclipse.cdt.ui/*.log
+
