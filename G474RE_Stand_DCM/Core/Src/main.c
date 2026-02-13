@@ -60,6 +60,7 @@ static void MX_USART3_UART_Init(void);
 static void MX_LPUART1_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_IWDG_Init(void);
+static void MX_TIM5_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -75,7 +76,6 @@ static void MX_IWDG_Init(void);
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -119,6 +119,7 @@ int main(void)
   MX_LPUART1_UART_Init();
   MX_USART1_UART_Init();
   MX_IWDG_Init();
+  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
   stand_im_init_2();
   /* USER CODE END 2 */
@@ -1312,14 +1313,14 @@ static void MX_TIM2_Init(void)
   LL_TIM_IC_SetPrescaler(TIM2, LL_TIM_CHANNEL_CH2, LL_TIM_ICPSC_DIV1);
   LL_TIM_IC_SetFilter(TIM2, LL_TIM_CHANNEL_CH2, LL_TIM_IC_FILTER_FDIV1);
   LL_TIM_IC_SetPolarity(TIM2, LL_TIM_CHANNEL_CH2, LL_TIM_IC_POLARITY_RISING);
-  LL_TIM_SetTriggerOutput(TIM2, LL_TIM_TRGO_RESET);
+  LL_TIM_SetTriggerOutput(TIM2, LL_TIM_TRGO_ENCODERCLK);
   LL_TIM_DisableMasterSlaveMode(TIM2);
   LL_TIM_IC_SetActiveInput(TIM2, LL_TIM_CHANNEL_CH3, LL_TIM_ACTIVEINPUT_DIRECTTI);
   LL_TIM_IC_SetPrescaler(TIM2, LL_TIM_CHANNEL_CH3, LL_TIM_ICPSC_DIV1);
   LL_TIM_IC_SetFilter(TIM2, LL_TIM_CHANNEL_CH3, LL_TIM_IC_FILTER_FDIV1);
   LL_TIM_IC_SetPolarity(TIM2, LL_TIM_CHANNEL_CH3, LL_TIM_IC_POLARITY_RISING);
   LL_TIM_ConfigETR(TIM2, LL_TIM_ETR_POLARITY_NONINVERTED, LL_TIM_ETR_PRESCALER_DIV1, LL_TIM_ETR_FILTER_FDIV1);
-  LL_TIM_ConfigIDX(TIM2, LL_TIM_INDEX_ALL|LL_TIM_INDEX_POSITION_UP_DOWN
+  LL_TIM_ConfigIDX(TIM2, LL_TIM_INDEX_ALL|LL_TIM_INDEX_POSITION_DOWN_DOWN
                               |LL_TIM_INDEX_UP_DOWN);
   LL_TIM_EnableEncoderIndex(TIM2);
   /* USER CODE BEGIN TIM2_Init 2 */
@@ -1422,6 +1423,49 @@ static void MX_TIM3_Init(void)
 }
 
 /**
+  * @brief TIM5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM5_Init(void)
+{
+
+  /* USER CODE BEGIN TIM5_Init 0 */
+
+  /* USER CODE END TIM5_Init 0 */
+
+  LL_TIM_InitTypeDef TIM_InitStruct = {0};
+
+  /* Peripheral clock enable */
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM5);
+
+  /* USER CODE BEGIN TIM5_Init 1 */
+
+  /* USER CODE END TIM5_Init 1 */
+  TIM_InitStruct.Prescaler = 0;
+  TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
+  TIM_InitStruct.Autoreload = 4294967295;
+  TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
+  LL_TIM_Init(TIM5, &TIM_InitStruct);
+  LL_TIM_DisableARRPreload(TIM5);
+  LL_TIM_SetClockSource(TIM5, LL_TIM_CLOCKSOURCE_INTERNAL);
+  LL_TIM_SetTriggerInput(TIM5, LL_TIM_TS_ITR1);
+  LL_TIM_SetSlaveMode(TIM5, LL_TIM_SLAVEMODE_RESET);
+  LL_TIM_DisableIT_TRIG(TIM5);
+  LL_TIM_DisableDMAReq_TRIG(TIM5);
+  LL_TIM_SetTriggerOutput(TIM5, LL_TIM_TRGO_RESET);
+  LL_TIM_DisableMasterSlaveMode(TIM5);
+  LL_TIM_IC_SetActiveInput(TIM5, LL_TIM_CHANNEL_CH1, LL_TIM_ACTIVEINPUT_TRC);
+  LL_TIM_IC_SetPrescaler(TIM5, LL_TIM_CHANNEL_CH1, LL_TIM_ICPSC_DIV1);
+  LL_TIM_IC_SetFilter(TIM5, LL_TIM_CHANNEL_CH1, LL_TIM_IC_FILTER_FDIV1);
+  LL_TIM_IC_SetPolarity(TIM5, LL_TIM_CHANNEL_CH1, LL_TIM_IC_POLARITY_RISING);
+  /* USER CODE BEGIN TIM5_Init 2 */
+
+  /* USER CODE END TIM5_Init 2 */
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
@@ -1467,7 +1511,7 @@ static void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_15);
 
   /**/
-  LL_GPIO_ResetOutputPin(ERR_CLEAR_GPIO_Port, ERR_CLEAR_Pin);
+  LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_12);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
@@ -1503,12 +1547,12 @@ static void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = ERR_CLEAR_Pin;
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_12;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(ERR_CLEAR_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = LL_GPIO_PIN_5;

@@ -9,6 +9,7 @@
 
 #include "main.h"
 #include <stdbool.h>
+#include <math.h>
 
 /***************************************************************************/
 #define readBtn() ((GPIOC->IDR & GPIO_IDR_ID13)?1u:0u)
@@ -160,9 +161,66 @@ typedef struct {
 extern adcData_typedef rawAdcData[CYCLES_TO_RUN];
 /************************** Konec ADC ****************************************/
 
+#define TIM_BASE_FREQ 170000000
+#define ENCODER_RESOLUTION_BITS 11
+#define ENCODER_RESOLUTION (1<<ENCODER_RESOLUTION_BITS)
+#define EVAL_PERIOD 50e-6f
+
+typedef struct{
+	TIM_TypeDef *TIM_Position;
+	TIM_TypeDef *TIM_Period;
+	float Velocity1;
+	float Velocity2;
+	float Position;
+	uint32_t Period_old;
+	int16_t Position_old;
+}getVelocityPosition_typedef;
+static inline void getVelocityInit(getVelocityPosition_typedef *S){
+/*
+ 	 S->Velocity1 = 0;
+	S->Velocity2 = 0;
+	S->Position = 0;
+	S->Period_old = 0;
+	S->Position_old = 0;
+*/
+}
+static inline void getVelocity(getVelocityPosition_typedef *S){
+	int16_t Position = (int16_t) (S->TIM_Position->CNT << (16 - ENCODER_RESOLUTION_BITS));
+	uint32_t Period =  S->TIM_Period->CCR1;
+	int16_t PosDiff = Position - S->Position_old;
+
+	float Velo;
+	if(Period == 0){
+		Velo = 0;
+	}else{
+		Velo = (float)TIM_BASE_FREQ / (float)ENCODER_RESOLUTION / (float)Period;
+	}
+	if(S->TIM_Position->CR1 & TIM_CR1_DIR)
+	{
+		Velo = -Velo * 60;
+	}else{
+		Velo = Velo * 60;
+	}
+	if(PosDiff == 0)
+	{
+		//Velo = 0;
+	}
+	// Filtr
+	Velo = Velo * 0.1 + S->Velocity1 * 0.9;
+
+	S->Velocity1 = Velo;
+	S->Velocity2 = (float)PosDiff;
+
+	// Evaluate Position -PI..+PI
+	S->Position = Position * (float) (M_PI / (1 << 15));
+
+	// Save old values
+	S->Position_old = Position;
+	S->Period_old = Period;
+}
+
 /***************************************************************************/
 /* Function prototypes */
-
 void stand_im_init_1(void);
 void stand_im_init_2(void);
 void stand_im_loop(void);

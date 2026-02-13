@@ -46,8 +46,7 @@ uint8_t inEnable;
 uint32_t ADCOffsetCntr = 1 << ADCOffsetShift;
 uint32_t ADCOffsetAccum[2];
 
-#define PositionEncoder1BitRes 11
-int16_t PositionEncoder1;
+getVelocityPosition_typedef VelocityPosition = {.TIM_Period = TIM5, .TIM_Position = TIM2};
 
 /*********/
 uint32_t TestCntr1, TestCntr2, TestCntr3;
@@ -77,7 +76,8 @@ void stand_im_init_2(void) {
 	addBlockServices((tProtocol*) &protocol);
 	addTableStructProtocol((tProtocol*) &protocol);
 
-	KICK_DOG;
+	KICK_DOG
+	;
 
 	TableStruct->DSPState = PRG_LOADED_STATE;
 
@@ -94,11 +94,11 @@ void stand_im_init_2(void) {
 	LL_ADC_StartCalibration(ADC2, LL_ADC_SINGLE_ENDED);
 	LL_ADC_StartCalibration(ADC3, LL_ADC_SINGLE_ENDED);
 
-	while(LL_ADC_IsCalibrationOnGoing(ADC1))
-			;
-	while(LL_ADC_IsCalibrationOnGoing(ADC2))
-			;
-	while(LL_ADC_IsCalibrationOnGoing(ADC3))
+	while (LL_ADC_IsCalibrationOnGoing(ADC1))
+		;
+	while (LL_ADC_IsCalibrationOnGoing(ADC2))
+		;
+	while (LL_ADC_IsCalibrationOnGoing(ADC3))
 		;
 
 	LL_ADC_Enable(ADC1);
@@ -114,7 +114,6 @@ void stand_im_init_2(void) {
 	LL_ADC_REG_StartConversion(ADC2);
 	LL_ADC_REG_StartConversion(ADC3);
 
-
 	/*
 	 * Spusti ADC v dualnim modu
 	 * Pozor! Data Length neni v Bytech,
@@ -123,8 +122,10 @@ void stand_im_init_2(void) {
 
 	//HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc12,
 	//ADC12_NUM_OF_SAMPLES);
-	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)&rawAdcData[0].adc12);
-	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t) &ADC12_COMMON->CDR);
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1,
+			(uint32_t) &rawAdcData[0].adc12);
+	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1,
+			(uint32_t) &ADC12_COMMON->CDR);
 	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ADC12_NUM_OF_SAMPLES);
 	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PRIORITY_LOW);
 
@@ -133,14 +134,16 @@ void stand_im_init_2(void) {
 	//LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_2, ADC2_NUM_OF_SAMPLES);
 	//LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_2, LL_DMA_PRIORITY_MEDIUM);
 
-	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t)&rawAdcData[0].adc3);
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_3,
+			(uint32_t) &rawAdcData[0].adc3);
 	LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t) &ADC3->DR);
 	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, ADC3_NUM_OF_SAMPLES);
-	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PRIORITY_HIGH);
+	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_3,
+			LL_DMA_PRIORITY_HIGH);
 
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1 );
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2 );
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3 );
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3);
 
 	LL_DMA_ClearFlag_TC1(DMA1);
 	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
@@ -150,21 +153,32 @@ void stand_im_init_2(void) {
 	// Nutno zakazat blanking: CubeMX generuje povolovaci kod, ikdyz je to zakazano.
 	LL_HRTIM_FLT_DisableBlanking(HRTIM1, LL_HRTIM_FAULT_1);
 
-	LL_HRTIM_TIM_CounterEnable(HRTIM1, LL_HRTIM_TIMER_MASTER | LL_HRTIM_TIMER_A| LL_HRTIM_TIMER_B | LL_HRTIM_TIMER_C );
-	LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_MASTER, HRTIM_PERIOD/2);
+	LL_HRTIM_TIM_CounterEnable(HRTIM1,
+			LL_HRTIM_TIMER_MASTER | LL_HRTIM_TIMER_A | LL_HRTIM_TIMER_B
+					| LL_HRTIM_TIMER_C);
+	LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_MASTER, HRTIM_PERIOD / 2);
 	//LL_HRTIM_EnableIT_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
 
 	/*
 	 * TIM2: Simulovany enkoder z AD2S1200
 	 */
 	LL_TIM_EnableCounter(TIM2);
-	LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2 | LL_TIM_CHANNEL_CH3);
+	LL_TIM_CC_EnableChannel(TIM2,
+			LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2 | LL_TIM_CHANNEL_CH3);
+
+	/*
+	 * TIM5 : Mereni delky periody vstupniho enkoderoveho signalu
+	 */
+	LL_TIM_EnableCounter(TIM5);
+	LL_TIM_CC_EnableChannel(TIM5, LL_TIM_CHANNEL_CH1);
 
 	TableStruct->DSPState = INIT_STATE;
 	//TableStruct->DSPState = RUN_STATE_POWER_ON;
 
 	// Init SPI for AD2S1200:
-	AD2S1200_SPIInit();
+	//AD2S1200_SPIInit();
+
+	getVelocityInit(&VelocityPosition);
 }
 
 /*
@@ -191,10 +205,10 @@ void DMA1_Channel1_IRQHandler(void) {
 	 */
 	//AD2S1200_SampleStop();
 
-	int16_t sTimCntTmp;
-	sTimCntTmp = (int16_t)(TIM2->CNT << (16-PositionEncoder1BitRes));
-	PositionEncoder1 = sTimCntTmp;
-	x2cModel.inports.bInPositionEncoder1 =  sTimCntTmp * (float)(M_PI / (1<<15));
+	getVelocity(&VelocityPosition);
+	x2cModel.inports.bInVelocity = VelocityPosition.Velocity1;
+	x2cModel.inports.bInVelocity2  = VelocityPosition.Velocity2;
+	x2cModel.inports.bInPositionEncoder1 = VelocityPosition.Position;
 
 	x2cModel.inports.bInButton = readBtn();
 	x2cModel.inports.bInEnable = readEnable();
@@ -203,18 +217,16 @@ void DMA1_Channel1_IRQHandler(void) {
 	// Pri zapnutem oversamplingu je nutne offset odecitat rucne
 	float Ia;
 	float Ic;
-	Ia = -((float) (rawAdcData[0].adc12.samples.Ic1 - (int32_t)ADCOffsetAccum[0])
-			* ADC_CURRENT_GAIN);
-	Ic = -((float) (rawAdcData[0].adc12.samples.Ia1 - (int32_t)ADCOffsetAccum[1])
-			* ADC_CURRENT_GAIN);
+	Ia = -((float) (rawAdcData[0].adc12.samples.Ic1
+			- (int32_t) ADCOffsetAccum[0]) * ADC_CURRENT_GAIN);
+	Ic = -((float) (rawAdcData[0].adc12.samples.Ia1
+			- (int32_t) ADCOffsetAccum[1]) * ADC_CURRENT_GAIN);
 
-	x2cModel.inports.bInIa = (Ia + Ic)/2;
+	x2cModel.inports.bInIa = (Ia + Ic) / 2;
 	x2cModel.inports.bInIb = 0.0f;
 	x2cModel.inports.bInIc = 0.0f;
 	x2cModel.inports.bInVdc = ((float) (rawAdcData[0].adc3.samples.Vdc)
 			* ADC_VOLTAGE_GAIN);
-
-	x2cModel.inports.bInPositionResolver = AD2S1200_Data.Position * (float)(M_PI / (1<<15));
 
 	switch (TableStruct->DSPState) {
 	case INIT_STATE:
@@ -231,11 +243,11 @@ void DMA1_Channel1_IRQHandler(void) {
 			// Nastaveni Offsetu
 			// Offset nelze pouzit, kdyz je zapnuty oversampling
 			/*
-			hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
-			hadc1.Instance->OFR1 |= ADCOffsetAccum[0] & ADC_OFR1_OFFSET1;
-			hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
-			hadc2.Instance->OFR1 |= ADCOffsetAccum[1] & ADC_OFR1_OFFSET1;
-			*/
+			 hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+			 hadc1.Instance->OFR1 |= ADCOffsetAccum[0] & ADC_OFR1_OFFSET1;
+			 hadc2.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;
+			 hadc2.Instance->OFR1 |= ADCOffsetAccum[1] & ADC_OFR1_OFFSET1;
+			 */
 			HrtimEnDis.In = x2cModel.outports.bOutPWMEnable;
 			TableStruct->DSPState = RUN_STATE_POWER_OFF;
 		}
@@ -251,12 +263,9 @@ void DMA1_Channel1_IRQHandler(void) {
 		break;
 	}
 
-	HRTIM1->sTimerxRegs[0].CMP1xR = modToCmp(
-			*x2cModel.outports.bOutPWMa);
-	HRTIM1->sTimerxRegs[1].CMP1xR = modToCmp(
-			*x2cModel.outports.bOutPWMb);
-	HRTIM1->sTimerxRegs[2].CMP1xR = modToCmp(
-			*x2cModel.outports.bOutPWMc);
+	HRTIM1->sTimerxRegs[0].CMP1xR = modToCmp(*x2cModel.outports.bOutPWMa);
+	HRTIM1->sTimerxRegs[1].CMP1xR = modToCmp(*x2cModel.outports.bOutPWMb);
+	HRTIM1->sTimerxRegs[2].CMP1xR = modToCmp(*x2cModel.outports.bOutPWMc);
 
 	writeErrClear(*x2cModel.outports.bOutErrClear);
 	controlHrtimPWM_EnDis(&HrtimEnDis);
@@ -264,9 +273,7 @@ void DMA1_Channel1_IRQHandler(void) {
 	//__WFI();
 }
 
-
-void SPI1_IRQHandler(void)
-{
+void SPI1_IRQHandler(void) {
 	GPIOA->BSRR = LL_GPIO_PIN_6;
 	AD2S1200_SPI_RXNE_ISR();
 	LL_SPI_ClearFlag_CRCERR(SPI1);
@@ -274,8 +281,7 @@ void SPI1_IRQHandler(void)
 	GPIOA->BRR = LL_GPIO_PIN_6;
 }
 
-void HRTIM1_Master_IRQHandler(void)
-{
+void HRTIM1_Master_IRQHandler(void) {
 	GPIOA->BSRR = LL_GPIO_PIN_6;
 //	AD2S1200_SampleStart();
 	//__HAL_HRTIM_MASTER_CLEAR_IT(&hhrtim1, HRTIM_MASTER_IT_MCMP1);

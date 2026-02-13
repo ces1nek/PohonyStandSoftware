@@ -2,7 +2,7 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2026-02-13 14:18
+ * Date:  2026-02-13 17:23
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
@@ -10,7 +10,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-13 14:18                                                                                            */
+/* Date:  2026-02-13 17:23                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -114,7 +114,7 @@ extern "C" {
     { 38, &x2cModel.blocks.bSub1 } , \
     { 39, &x2cModel.blocks.bSub2 } , \
     { 40, &x2cModel.blocks.bTFlipFlop } , \
-    { 56, &x2cScope }
+    { 57, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
     { 41, 1, &x2cModel.inports.bInButton } , \
@@ -124,16 +124,17 @@ extern "C" {
     { 45, 4, &x2cModel.inports.bInIc } , \
     { 46, 4, &x2cModel.inports.bInPositionEncoder1 } , \
     { 47, 4, &x2cModel.inports.bInPositionEncoder2 } , \
-    { 48, 4, &x2cModel.inports.bInPositionResolver } , \
-    { 49, 1, &x2cModel.inports.bInPwmFault } , \
-    { 50, 4, &x2cModel.inports.bInVdc } 
+    { 48, 1, &x2cModel.inports.bInPwmFault } , \
+    { 49, 4, &x2cModel.inports.bInVdc } , \
+    { 50, 4, &x2cModel.inports.bInVelocity } , \
+    { 51, 4, &x2cModel.inports.bInVelocity2 } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 51, 1, &x2cModel.outports.bOutErrClear } , \
-    { 52, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 53, 4, &x2cModel.outports.bOutPWMa } , \
-    { 54, 4, &x2cModel.outports.bOutPWMb } , \
-    { 55, 4, &x2cModel.outports.bOutPWMc } 
+    { 52, 1, &x2cModel.outports.bOutErrClear } , \
+    { 53, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 54, 4, &x2cModel.outports.bOutPWMa } , \
+    { 55, 4, &x2cModel.outports.bOutPWMb } , \
+    { 56, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -192,9 +193,10 @@ struct x2cModel {
         float32 bInIc;
         float32 bInPositionEncoder1;
         float32 bInPositionEncoder2;
-        float32 bInPositionResolver;
         bool bInPwmFault;
         float32 bInVdc;
+        float32 bInVelocity;
+        float32 bInVelocity2;
     } inports;
 /*  Outports                                                                                                          */
     struct {

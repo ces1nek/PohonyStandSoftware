@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-13 14:18                                                                                            */
+/* Date:  2026-02-13 17:23                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -165,8 +165,8 @@ void X2C_Init(void)
     /* Block: Or                                                                                                      */
 
     /* Block: OutputVoltage                                                                                           */
-    /* Toggle = 0.0                                                                                                   */
-    x2cModel.blocks.bOutputVoltage.Toggle = 0;
+    /* Toggle = 1.0                                                                                                   */
+    x2cModel.blocks.bOutputVoltage.Toggle = 1;
 
     /* Block: OutputVoltasgeLimit                                                                                     */
     /* Value = 25.0                                                                                                   */
@@ -188,8 +188,8 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenConst1.K = 1;
 
     /* Block: PulseGenDCVal                                                                                           */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bPulseGenDCVal.K = 0;
+    /* Value = 20.0                                                                                                   */
+    x2cModel.blocks.bPulseGenDCVal.K = 20;
 
     /* Block: PulseGenFreq                                                                                            */
     /* Value = 0.4                                                                                                    */
@@ -204,8 +204,8 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenLo.K = 10;
 
     /* Block: PulseGenOutput                                                                                          */
-    /* Toggle = 0.0                                                                                                   */
-    x2cModel.blocks.bPulseGenOutput.Toggle = 0;
+    /* Toggle = 1.0                                                                                                   */
+    x2cModel.blocks.bPulseGenOutput.Toggle = 1;
 
     /* Block: PulseGenSin                                                                                             */
     /* fmax = 1000.0                                                                                                  */
@@ -275,9 +275,10 @@ void X2C_Init(void)
     x2cModel.inports.bInIc = (float32)0;
     x2cModel.inports.bInPositionEncoder1 = (float32)0;
     x2cModel.inports.bInPositionEncoder2 = (float32)0;
-    x2cModel.inports.bInPositionResolver = (float32)0;
     x2cModel.inports.bInPwmFault = false;
     x2cModel.inports.bInVdc = (float32)0;
+    x2cModel.inports.bInVelocity = (float32)0;
+    x2cModel.inports.bInVelocity2 = (float32)0;
 
     /******************************************************************************************************************/
     /**                                               Link Block Inputs                                              **/
