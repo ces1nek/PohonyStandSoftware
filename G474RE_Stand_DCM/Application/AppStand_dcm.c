@@ -173,6 +173,9 @@ void stand_im_init_2(void) {
 
 	LL_mDelay(1);
 
+	// Nutno zakazat blanking: CubeMX generuje povolovaci kod, ikdyz je to zakazano.
+	LL_HRTIM_FLT_DisableBlanking(HRTIM1, LL_HRTIM_FAULT_1);
+
 	LL_HRTIM_TIM_CounterEnable(HRTIM1, LL_HRTIM_TIMER_MASTER | LL_HRTIM_TIMER_A| LL_HRTIM_TIMER_B | LL_HRTIM_TIMER_C );
 	LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_MASTER, HRTIM_PERIOD/2);
 	//LL_HRTIM_EnableIT_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
