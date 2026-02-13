@@ -9,7 +9,13 @@
  * - ochrana vypne PWM vystup a po 1ms se maji PWM zase zapnout.
  * - funkce ochrany bude signalizovana do X2C
  *
- * TODO: Nastavit fault od saturacek jako neregenerativni.
+ * TODO: Doladit mereni rychlosti pomoci TIM2 a TIM5
+ * - Pridat dalsi timer, ktery bude s periodou asi 1ms vycitat data z techto dvou
+ * - Bude povolovat CAPTURE a ukladat data
+ * - po uspesnem CAPTURE preruseni, kve kterem se zakaze CAPTURE, aby se mohlo za necelou 1ms povolit
+ * - Pro prenos cap do pameti se pouzije DMA
+ * - Vyzkouset, jak funguje TIMx_CCxEN. tusim, ze by to fachat mohlo
+ * 
  */
 #include "AppStand_dcm.h"
 #include "ad2s1200_spi.h"
