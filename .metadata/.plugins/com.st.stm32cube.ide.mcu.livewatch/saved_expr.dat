@@ -1,2 +1,8 @@
 x2cModel.inports
 x2cModel.outports
+PositionEncoder1
+inRotationDir
+RotationPeriod
+Speed
+x2cModel.blocks.bPhi2Rpm.n
+VelocityPosition
