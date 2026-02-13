@@ -4,9 +4,8 @@
  *  Created on: 27. 2. 2023
  *      Author: knobloch
  */
-
-#ifndef INC_APP_STAND_IM_H_
-#define INC_APP_STAND_IM_H_
+#ifndef INC_APP_STAND_DCM_H_
+#define INC_APP_STAND_DCM_H_
 
 #include "main.h"
 #include <stdbool.h>
@@ -169,4 +168,4 @@ void stand_im_init_2(void);
 void stand_im_loop(void);
 void stand_im_periodic_isr(void);
 
-#endif /* INC_APP_STAND_IM_H_ */
+#endif /* INC_APP_STAND_DCM_H_ */

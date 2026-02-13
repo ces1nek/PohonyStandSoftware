@@ -11,7 +11,7 @@
  *
  * TODO: Nastavit fault od saturacek jako neregenerativni.
  */
-#include <app_stand_dcm.h>
+#include "AppStand_dcm.h"
 #include "ad2s1200_spi.h"
 
 #include "VersionInfo.h"
