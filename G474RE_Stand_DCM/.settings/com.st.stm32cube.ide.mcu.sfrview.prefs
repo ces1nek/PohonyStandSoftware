@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-sfrviewstate={"fFavorites"\:{"fLists"\:{}},"fProperties"\:{"fNodeProperties"\:{}}}
+sfrviewstate={"fFavorites"\:{"fLists"\:{}},"fProperties"\:{"fNodeProperties"\:{"STM32G474/GPIOA/IDR"\:{"fNodeProperties"\:{"autoupdate"\:"false"}},"STM32G474/HRTIM_Common/OENR"\:{"fNodeProperties"\:{"autoupdate"\:"false"}},"STM32G474/HRTIM_Common/ODSR"\:{"fNodeProperties"\:{"autoupdate"\:"false"}},"STM32G474/GPIOB/IDR"\:{"fNodeProperties"\:{"autoupdate"\:"true"}}}}}

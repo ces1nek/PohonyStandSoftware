@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-13 10:53                                                                                            */
+/* Date:  2026-02-13 14:18                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -96,6 +96,10 @@ void X2C_Init(void)
     /* Block: ConstCurrentInit                                                                                        */
     /* Value = 0.0                                                                                                    */
     x2cModel.blocks.bConstCurrentInit.K = 0;
+
+    /* Block: ConstFalse                                                                                              */
+    /* Value = 0.0                                                                                                    */
+    x2cModel.blocks.bConstFalse.K = 0;
 
     /* Block: ConstSpeedInit                                                                                          */
     /* Value = 0.0                                                                                                    */
@@ -307,6 +311,8 @@ void X2C_Init(void)
 
     /* Block ConstCurrentInit                                                                                         */
 
+    /* Block ConstFalse                                                                                               */
+
     /* Block ConstSpeedInit                                                                                           */
 
     /* Block CurrentDesired                                                                                           */
@@ -353,7 +359,7 @@ void X2C_Init(void)
 
     /* Block Not                                                                                                      */
     x2cModel.blocks.bNot.In =
-        &x2cModel.inports.bInPwmFault;
+        &x2cModel.blocks.bConstFalse.Out;
 
     /* Block Omega                                                                                                    */
     x2cModel.blocks.bOmega.In =
@@ -479,6 +485,7 @@ void X2C_Init(void)
     Constant_Float32_Init(&x2cModel.blocks.bConst0);
     Constant_Float32_Init(&x2cModel.blocks.bConst6);
     Constant_Float32_Init(&x2cModel.blocks.bConstCurrentInit);
+    Constant_Bool_Init(&x2cModel.blocks.bConstFalse);
     Constant_Float32_Init(&x2cModel.blocks.bConstSpeedInit);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bCurrentDesired);
     PT1_Float32_Init(&x2cModel.blocks.bCurrentIaFilter);

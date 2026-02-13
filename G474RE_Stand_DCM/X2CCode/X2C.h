@@ -2,7 +2,7 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2026-02-13 10:53
+ * Date:  2026-02-13 14:18
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
@@ -10,7 +10,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-13 10:53                                                                                            */
+/* Date:  2026-02-13 14:18                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -26,6 +26,7 @@ extern "C" {
 /**     Includes                                                                                                     **/
 /**********************************************************************************************************************/
 /* Common includes                                                                                                    */
+#include "Constant_Bool.h"
 #include "ManualSwitch_Float32.h"
 #include "PT1_Float32.h"
 #include "Gain_Float32.h"
@@ -51,6 +52,7 @@ extern "C" {
 /**     Defines                                                                                                      **/
 /**********************************************************************************************************************/
 #define FUNCTIONS \
+    CONSTANT_BOOL_FUNCTIONS , \
     MANUALSWITCH_FLOAT32_FUNCTIONS , \
     PT1_FLOAT32_FUNCTIONS , \
     GAIN_FLOAT32_FUNCTIONS , \
@@ -79,58 +81,59 @@ extern "C" {
     { 5, &x2cModel.blocks.bConst0 } , \
     { 6, &x2cModel.blocks.bConst6 } , \
     { 7, &x2cModel.blocks.bConstCurrentInit } , \
-    { 8, &x2cModel.blocks.bConstSpeedInit } , \
-    { 9, &x2cModel.blocks.bCurrentDesired } , \
-    { 10, &x2cModel.blocks.bCurrentIaFilter } , \
-    { 11, &x2cModel.blocks.bCurrentLimit } , \
-    { 12, &x2cModel.blocks.bCurrentReg } , \
-    { 13, &x2cModel.blocks.bDiv2 } , \
-    { 14, &x2cModel.blocks.bNegation } , \
-    { 15, &x2cModel.blocks.bNegation2 } , \
-    { 16, &x2cModel.blocks.bNegation3 } , \
-    { 17, &x2cModel.blocks.bNot } , \
-    { 18, &x2cModel.blocks.bOmega } , \
-    { 19, &x2cModel.blocks.bOmegaFilter } , \
-    { 20, &x2cModel.blocks.bOr } , \
-    { 21, &x2cModel.blocks.bOutputVoltage } , \
-    { 22, &x2cModel.blocks.bOutputVoltasgeLimit } , \
-    { 23, &x2cModel.blocks.bPhi2Rpm } , \
-    { 24, &x2cModel.blocks.bPulseGenConst1 } , \
-    { 25, &x2cModel.blocks.bPulseGenDCVal } , \
-    { 26, &x2cModel.blocks.bPulseGenFreq } , \
-    { 27, &x2cModel.blocks.bPulseGenHi } , \
-    { 28, &x2cModel.blocks.bPulseGenLo } , \
-    { 29, &x2cModel.blocks.bPulseGenOutput } , \
-    { 30, &x2cModel.blocks.bPulseGenSin } , \
-    { 31, &x2cModel.blocks.bRateLimiter } , \
-    { 32, &x2cModel.blocks.bSaturation } , \
-    { 33, &x2cModel.blocks.bSaturation2 } , \
-    { 34, &x2cModel.blocks.bSpeedDesired } , \
-    { 35, &x2cModel.blocks.bSpeedDesiredConst } , \
-    { 36, &x2cModel.blocks.bSpeedReg } , \
-    { 37, &x2cModel.blocks.bSub1 } , \
-    { 38, &x2cModel.blocks.bSub2 } , \
-    { 39, &x2cModel.blocks.bTFlipFlop } , \
-    { 55, &x2cScope }
+    { 8, &x2cModel.blocks.bConstFalse } , \
+    { 9, &x2cModel.blocks.bConstSpeedInit } , \
+    { 10, &x2cModel.blocks.bCurrentDesired } , \
+    { 11, &x2cModel.blocks.bCurrentIaFilter } , \
+    { 12, &x2cModel.blocks.bCurrentLimit } , \
+    { 13, &x2cModel.blocks.bCurrentReg } , \
+    { 14, &x2cModel.blocks.bDiv2 } , \
+    { 15, &x2cModel.blocks.bNegation } , \
+    { 16, &x2cModel.blocks.bNegation2 } , \
+    { 17, &x2cModel.blocks.bNegation3 } , \
+    { 18, &x2cModel.blocks.bNot } , \
+    { 19, &x2cModel.blocks.bOmega } , \
+    { 20, &x2cModel.blocks.bOmegaFilter } , \
+    { 21, &x2cModel.blocks.bOr } , \
+    { 22, &x2cModel.blocks.bOutputVoltage } , \
+    { 23, &x2cModel.blocks.bOutputVoltasgeLimit } , \
+    { 24, &x2cModel.blocks.bPhi2Rpm } , \
+    { 25, &x2cModel.blocks.bPulseGenConst1 } , \
+    { 26, &x2cModel.blocks.bPulseGenDCVal } , \
+    { 27, &x2cModel.blocks.bPulseGenFreq } , \
+    { 28, &x2cModel.blocks.bPulseGenHi } , \
+    { 29, &x2cModel.blocks.bPulseGenLo } , \
+    { 30, &x2cModel.blocks.bPulseGenOutput } , \
+    { 31, &x2cModel.blocks.bPulseGenSin } , \
+    { 32, &x2cModel.blocks.bRateLimiter } , \
+    { 33, &x2cModel.blocks.bSaturation } , \
+    { 34, &x2cModel.blocks.bSaturation2 } , \
+    { 35, &x2cModel.blocks.bSpeedDesired } , \
+    { 36, &x2cModel.blocks.bSpeedDesiredConst } , \
+    { 37, &x2cModel.blocks.bSpeedReg } , \
+    { 38, &x2cModel.blocks.bSub1 } , \
+    { 39, &x2cModel.blocks.bSub2 } , \
+    { 40, &x2cModel.blocks.bTFlipFlop } , \
+    { 56, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
-    { 40, 1, &x2cModel.inports.bInButton } , \
-    { 41, 1, &x2cModel.inports.bInEnable } , \
-    { 42, 4, &x2cModel.inports.bInIa } , \
-    { 43, 4, &x2cModel.inports.bInIb } , \
-    { 44, 4, &x2cModel.inports.bInIc } , \
-    { 45, 4, &x2cModel.inports.bInPositionEncoder1 } , \
-    { 46, 4, &x2cModel.inports.bInPositionEncoder2 } , \
-    { 47, 4, &x2cModel.inports.bInPositionResolver } , \
-    { 48, 1, &x2cModel.inports.bInPwmFault } , \
-    { 49, 4, &x2cModel.inports.bInVdc } 
+    { 41, 1, &x2cModel.inports.bInButton } , \
+    { 42, 1, &x2cModel.inports.bInEnable } , \
+    { 43, 4, &x2cModel.inports.bInIa } , \
+    { 44, 4, &x2cModel.inports.bInIb } , \
+    { 45, 4, &x2cModel.inports.bInIc } , \
+    { 46, 4, &x2cModel.inports.bInPositionEncoder1 } , \
+    { 47, 4, &x2cModel.inports.bInPositionEncoder2 } , \
+    { 48, 4, &x2cModel.inports.bInPositionResolver } , \
+    { 49, 1, &x2cModel.inports.bInPwmFault } , \
+    { 50, 4, &x2cModel.inports.bInVdc } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 50, 1, &x2cModel.outports.bOutErrClear } , \
-    { 51, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 52, 4, &x2cModel.outports.bOutPWMa } , \
-    { 53, 4, &x2cModel.outports.bOutPWMb } , \
-    { 54, 4, &x2cModel.outports.bOutPWMc } 
+    { 51, 1, &x2cModel.outports.bOutErrClear } , \
+    { 52, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 53, 4, &x2cModel.outports.bOutPWMa } , \
+    { 54, 4, &x2cModel.outports.bOutPWMb } , \
+    { 55, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -146,6 +149,7 @@ struct x2cModel {
         CONSTANT_FLOAT32 bConst0;
         CONSTANT_FLOAT32 bConst6;
         CONSTANT_FLOAT32 bConstCurrentInit;
+        CONSTANT_BOOL bConstFalse;
         CONSTANT_FLOAT32 bConstSpeedInit;
         MANUALSWITCH_FLOAT32 bCurrentDesired;
         PT1_FLOAT32 bCurrentIaFilter;

@@ -32,12 +32,6 @@ static uint8 bufferLNet[LNET_BUFFERSIZE];
 
 #define APPLICATION_VERSION (1U)
 
-/**********************/
-//extern HRTIM_HandleTypeDef hhrtim1;
-//extern TIM_HandleTypeDef htim2;
-//extern ADC_HandleTypeDef hadc1;
-//extern ADC_HandleTypeDef hadc2;
-//extern ADC_HandleTypeDef hadc3;
 /************************/
 adcData_typedef rawAdcData[CYCLES_TO_RUN];
 /**************************/
@@ -93,20 +87,6 @@ void stand_im_init_2(void) {
 	HrtimEnDis.In = x2cModel.outports.bOutPWMEnable;
 
 	/*
-	HAL_HRTIM_WaveformCountStart_IT(&hhrtim1,
-	HRTIM_TIMERID_MASTER |
-	HRTIM_TIMERID_TIMER_A |
-	HRTIM_TIMERID_TIMER_B |
-	HRTIM_TIMERID_TIMER_C);
-	 */
-
-
-	/*LL_HRTIM_EnableOutput(HRTIM1, \
-			LL_HRTIM_OUTPUT_TA1 | LL_HRTIM_OUTPUT_TA2 |\
-			LL_HRTIM_OUTPUT_TB1 | LL_HRTIM_OUTPUT_TB2 );
-	 */
-
-	/*
 	 * Spusteni kalibrace pro single-ended rezim.
 	 * Kdyby se pouzival differential, tak je to tu potreba zmenit.
 	 */
@@ -120,12 +100,7 @@ void stand_im_init_2(void) {
 			;
 	while(LL_ADC_IsCalibrationOnGoing(ADC3))
 		;
-	//HAL_ADC_EnableBufferSensor_Cmd(ENABLE);
-	//HAL_ADC_EnableBuffer_Cmd(ENABLE);
-	/*HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &rawAdcData[0].adc1, ADC1_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc2, (uint32_t*) &rawAdcData[0].adc2, ADC2_NUM_OF_SAMPLES);
-	HAL_ADC_Start_DMA(&hadc3, (uint32_t*) &rawAdcData[0].adc3, ADC3_NUM_OF_SAMPLES);
-*/
+
 	LL_ADC_Enable(ADC1);
 	LL_ADC_Enable(ADC2);
 	LL_ADC_Enable(ADC3);
@@ -170,7 +145,6 @@ void stand_im_init_2(void) {
 	LL_DMA_ClearFlag_TC1(DMA1);
 	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
 
-
 	LL_mDelay(1);
 
 	// Nutno zakazat blanking: CubeMX generuje povolovaci kod, ikdyz je to zakazano.
@@ -183,7 +157,6 @@ void stand_im_init_2(void) {
 	/*
 	 * TIM2: Simulovany enkoder z AD2S1200
 	 */
-	//HAL_TIM_Base_Start(&htim2);
 	LL_TIM_EnableCounter(TIM2);
 	LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2 | LL_TIM_CHANNEL_CH3);
 
@@ -229,10 +202,6 @@ void DMA1_Channel1_IRQHandler(void) {
 
 	// Pri zapnutem oversamplingu je nutne offset odecitat rucne
 	float Ia;
-
-
-
-
 	float Ic;
 	Ia = -((float) (rawAdcData[0].adc12.samples.Ic1 - (int32_t)ADCOffsetAccum[0])
 			* ADC_CURRENT_GAIN);
