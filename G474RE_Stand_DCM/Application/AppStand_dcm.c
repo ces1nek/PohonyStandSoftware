@@ -55,7 +55,11 @@ uint32_t ADCOffsetAccum[2];
 getVelocityPosition_typedef VelocityPosition = {.TIM_Period = TIM5, .TIM_Position = TIM2};
 
 /*********/
-uint32_t TestCntr1, TestCntr2, TestCntr3;
+uint32_t TestCntr1, TestCntr2, TestCntr3, TestCntr_1ms;
+/**********************************/
+int16_t CntCount1, CntCount2;
+int16_t CntCount;
+int32_t CntPeriod;
 
 /*********************************/
 
@@ -178,13 +182,18 @@ void stand_im_init_2(void) {
 	LL_TIM_EnableCounter(TIM5);
 	LL_TIM_CC_EnableChannel(TIM5, LL_TIM_CHANNEL_CH1);
 
+	/*
+	 * TIM6 : Periodicke preruseni pro mereni rychlosti
+	 */
+	LL_TIM_EnableCounter(TIM6);
+	LL_TIM_ClearFlag_UPDATE(TIM6);
+	LL_TIM_EnableIT_UPDATE(TIM6);
+
 	TableStruct->DSPState = INIT_STATE;
 	//TableStruct->DSPState = RUN_STATE_POWER_ON;
 
 	// Init SPI for AD2S1200:
 	//AD2S1200_SPIInit();
-
-	getVelocityInit(&VelocityPosition);
 }
 
 /*
@@ -211,7 +220,7 @@ void DMA1_Channel1_IRQHandler(void) {
 	 */
 	//AD2S1200_SampleStop();
 
-	getVelocity(&VelocityPosition);
+
 	x2cModel.inports.bInVelocity = VelocityPosition.Velocity1;
 	x2cModel.inports.bInVelocity2  = VelocityPosition.Velocity2;
 	x2cModel.inports.bInPositionEncoder1 = VelocityPosition.Position;
@@ -294,5 +303,24 @@ void HRTIM1_Master_IRQHandler(void) {
 	LL_HRTIM_ClearFlag_CMP1(HRTIM1, LL_HRTIM_TIMER_MASTER);
 	TestCntr1++;
 	GPIOA->BRR = LL_GPIO_PIN_6;
+
+}
+
+/*
+ * TIM6 Interrupt service routine
+ * period: 1ms
+ */
+void TIM6_DAC_IRQHandler(void){
+	getVelocity(&VelocityPosition);
+	LL_TIM_ClearFlag_UPDATE(TIM6);
+
+		TestCntr_1ms++;
+
+}
+/*
+ * TIM2 : velmi rychle a kratke preruseni,
+ * sl;ouzi k precteni hodnot z capture a zakazani preruseni
+ */
+void TIM2_IRQHandler(void){
 
 }

@@ -54,13 +54,14 @@ static void MX_ADC3_Init(void);
 static void MX_HRTIM1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_TIM5_Init(void);
+static void MX_TIM6_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_LPUART1_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_IWDG_Init(void);
-static void MX_TIM5_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -76,6 +77,7 @@ static void MX_TIM5_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -113,13 +115,14 @@ int main(void)
   MX_HRTIM1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_TIM5_Init();
+  MX_TIM6_Init();
   MX_I2C1_Init();
   MX_SPI1_Init();
   MX_USART3_UART_Init();
   MX_LPUART1_UART_Init();
   MX_USART1_UART_Init();
   MX_IWDG_Init();
-  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
   stand_im_init_2();
   /* USER CODE END 2 */
@@ -1450,7 +1453,7 @@ static void MX_TIM5_Init(void)
   LL_TIM_DisableARRPreload(TIM5);
   LL_TIM_SetClockSource(TIM5, LL_TIM_CLOCKSOURCE_INTERNAL);
   LL_TIM_SetTriggerInput(TIM5, LL_TIM_TS_ITR1);
-  LL_TIM_SetSlaveMode(TIM5, LL_TIM_SLAVEMODE_RESET);
+  LL_TIM_SetSlaveMode(TIM5, LL_TIM_SLAVEMODE_TRIGGER);
   LL_TIM_DisableIT_TRIG(TIM5);
   LL_TIM_DisableDMAReq_TRIG(TIM5);
   LL_TIM_SetTriggerOutput(TIM5, LL_TIM_TRGO_RESET);
@@ -1462,6 +1465,43 @@ static void MX_TIM5_Init(void)
   /* USER CODE BEGIN TIM5_Init 2 */
 
   /* USER CODE END TIM5_Init 2 */
+
+}
+
+/**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  LL_TIM_InitTypeDef TIM_InitStruct = {0};
+
+  /* Peripheral clock enable */
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM6);
+
+  /* TIM6 interrupt Init */
+  NVIC_SetPriority(TIM6_DAC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),12, 0));
+  NVIC_EnableIRQ(TIM6_DAC_IRQn);
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  TIM_InitStruct.Prescaler = 169;
+  TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
+  TIM_InitStruct.Autoreload = 999;
+  LL_TIM_Init(TIM6, &TIM_InitStruct);
+  LL_TIM_DisableARRPreload(TIM6);
+  LL_TIM_SetTriggerOutput(TIM6, LL_TIM_TRGO_RESET);
+  LL_TIM_DisableMasterSlaveMode(TIM6);
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
 
 }
 
