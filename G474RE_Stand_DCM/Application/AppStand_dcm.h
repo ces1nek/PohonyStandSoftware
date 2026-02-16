@@ -185,7 +185,8 @@ static inline void getVelocity(getVelocityPosition_typedef *S){
 	S->Position_old = Position;
 
 	float Velo = 0.0f;
-	Velo = S->PosDiff * 170000/ S->Period;
+	if(S->Period != 0)
+		Velo = S->PosDiff * 170000/ S->Period;
 //	if(Period == 0){
 //		Velo = 0;
 //	}else{

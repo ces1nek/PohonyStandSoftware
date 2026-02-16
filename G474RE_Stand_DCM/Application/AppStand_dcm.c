@@ -152,7 +152,7 @@ void stand_im_init_2(void) {
 			LL_DMA_PRIORITY_HIGH);
 
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
+	// LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3);
 
 	LL_DMA_ClearFlag_TC1(DMA1);
@@ -175,12 +175,23 @@ void stand_im_init_2(void) {
 	LL_TIM_EnableCounter(TIM2);
 	LL_TIM_CC_EnableChannel(TIM2,
 			LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2 | LL_TIM_CHANNEL_CH3);
-
+//	LL_TIM_ClearFlag_CC1(TIM2);
+//	LL_TIM_ClearFlag_CC2(TIM2);
+//	LL_TIM_EnableIT_CC1(TIM2);
+//	LL_TIM_EnableIT_CC2(TIM2);
 	/*
 	 * TIM5 : Mereni delky periody vstupniho enkoderoveho signalu
 	 */
 	LL_TIM_EnableCounter(TIM5);
 	LL_TIM_CC_EnableChannel(TIM5, LL_TIM_CHANNEL_CH1);
+
+	LL_DMA_SetMemoryAddress(DMA2, LL_DMA_CHANNEL_4, (uint32_t)&CntPeriod );
+	LL_DMA_SetPeriphAddress(DMA2, LL_DMA_CHANNEL_4, (uint32_t)&TIM5->CCR1);
+	LL_DMA_SetDataLength(DMA2, LL_DMA_CHANNEL_4, 1);
+	LL_DMA_EnableChannel(DMA2, LL_DMA_CHANNEL_4);
+	LL_DMA_SetMode(DMA2, LL_DMA_CHANNEL_4, LL_DMA_MODE_NORMAL);
+	LL_TIM_EnableDMAReq_CC1(TIM5);
+	LL_TIM_EnableIT_CC1(TIM5);
 
 	/*
 	 * TIM6 : Periodicke preruseni pro mereni rychlosti
@@ -311,16 +322,29 @@ void HRTIM1_Master_IRQHandler(void) {
  * period: 1ms
  */
 void TIM6_DAC_IRQHandler(void){
-	getVelocity(&VelocityPosition);
 	LL_TIM_ClearFlag_UPDATE(TIM6);
+	getVelocity(&VelocityPosition);
+	LL_DMA_ClearFlag_TC4(DMA2);
+	LL_DMA_DisableChannel(DMA2, LL_DMA_CHANNEL_4);
+	LL_DMA_SetDataLength(DMA2, LL_DMA_CHANNEL_4, 1);
+	LL_DMA_EnableChannel(DMA2, LL_DMA_CHANNEL_4);
+	//LL_TIM_EnableDMAReq_CC1(TIM5);
 
-		TestCntr_1ms++;
-
+	// LL_TIM_EnableIT_CC1(TIM5);
+//	TestCntr_1ms++;
 }
 /*
  * TIM2 : velmi rychle a kratke preruseni,
  * sl;ouzi k precteni hodnot z capture a zakazani preruseni
  */
 void TIM2_IRQHandler(void){
+	LL_TIM_ClearFlag_CC1(TIM2);
+	LL_TIM_ClearFlag_CC2(TIM2);
+	TestCntr_1ms++;
+}
 
+void TIM5_IRQHandler(void){
+	LL_TIM_ClearFlag_CC1(TIM5);
+	//LL_TIM_DisableIT_CC1(TIM5);
+	TestCntr_1ms++;
 }
