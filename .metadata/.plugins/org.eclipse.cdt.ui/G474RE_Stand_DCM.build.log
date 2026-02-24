@@ -1,4 +1,4 @@
-11:43:33 **** Incremental Build of configuration Debug for project G474RE_Stand_DCM ****
+15:31:12 **** Incremental Build of configuration Debug for project G474RE_Stand_DCM ****
 make -j4 all 
 arm-none-eabi-gcc "../X2CCode/FlashTable.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32G474xx -DSCOPE_SIZE=32768 -DUSER_VECT_TAB_ADDRESS -DX2C_STM32G474RE -DUSE_FULL_LL_DRIVER -DHSE_VALUE=24000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DEXTERNAL_CLOCK_VALUE=12288000 -DHSI_VALUE=16000000 -DLSI_VALUE=32000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Application -I../X2CCode -I"C:/LCM/X2C/v6.4.2961/Library/General/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/Math/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/Control/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Controller/Driver/Serial" -I"C:/LCM/X2C/v6.4.2961/Controller/Protocol/LNet" -I"C:/LCM/X2C/v6.4.2961/Controller/CRC" -I"C:/LCM/X2C/v6.4.2961/Controller/Services" -I"C:/LCM/X2C/v6.4.2961/Controller/Common" -I"C:/LCM/X2C/v6.4.2961/Library/MotorControl/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/StateControl/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/Filter/Controller/inc" -O2 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"X2CCode/FlashTable.d" -MT"X2CCode/FlashTable.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "X2CCode/FlashTable.o"
 arm-none-eabi-gcc "../X2CCode/RamTable.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32G474xx -DSCOPE_SIZE=32768 -DUSER_VECT_TAB_ADDRESS -DX2C_STM32G474RE -DUSE_FULL_LL_DRIVER -DHSE_VALUE=24000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DEXTERNAL_CLOCK_VALUE=12288000 -DHSI_VALUE=16000000 -DLSI_VALUE=32000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Application -I../X2CCode -I"C:/LCM/X2C/v6.4.2961/Library/General/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/Math/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/Control/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Controller/Driver/Serial" -I"C:/LCM/X2C/v6.4.2961/Controller/Protocol/LNet" -I"C:/LCM/X2C/v6.4.2961/Controller/CRC" -I"C:/LCM/X2C/v6.4.2961/Controller/Services" -I"C:/LCM/X2C/v6.4.2961/Controller/Common" -I"C:/LCM/X2C/v6.4.2961/Library/MotorControl/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/StateControl/Controller/inc" -I"C:/LCM/X2C/v6.4.2961/Library/Filter/Controller/inc" -O2 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"X2CCode/RamTable.d" -MT"X2CCode/RamTable.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "X2CCode/RamTable.o"
@@ -11,11 +11,11 @@ Finished building target: G474RE_Stand_DCM.elf
 arm-none-eabi-size  G474RE_Stand_DCM.elf 
 arm-none-eabi-objdump -h -S G474RE_Stand_DCM.elf  > "G474RE_Stand_DCM.list"
    text	   data	    bss	    dec	    hex	filename
-  33728	     52	  35888	  69668	  11024	G474RE_Stand_DCM.elf
+  33448	     52	  35872	  69372	  10efc	G474RE_Stand_DCM.elf
 Finished building: default.size.stdout
  
 Finished building: G474RE_Stand_DCM.list
  
 
-11:43:35 Build Finished. 0 errors, 1 warnings. (took 1s.805ms)
+15:31:14 Build Finished. 0 errors, 1 warnings. (took 2s.509ms)
 

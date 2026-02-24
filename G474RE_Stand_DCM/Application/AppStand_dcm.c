@@ -222,9 +222,9 @@ void DMA1_Channel1_IRQHandler(void) {
 	Ic = -((float) (rawAdcData[0].adc12.samples.Ia1
 			- (int32_t) ADCOffsetAccum[1]) * ADC_CURRENT_GAIN);
 
-	x2cModel.inports.bInIa = (Ia + Ic) / 2;
+	x2cModel.inports.bInIa = (Ia);// + Ic) / 2;
 	x2cModel.inports.bInIb = 0.0f;
-	x2cModel.inports.bInIc = 0.0f;
+	x2cModel.inports.bInIc = Ic; //0.0f;
 	x2cModel.inports.bInVdc = ((float) (rawAdcData[0].adc3.samples.Vdc)
 			* ADC_VOLTAGE_GAIN);
 

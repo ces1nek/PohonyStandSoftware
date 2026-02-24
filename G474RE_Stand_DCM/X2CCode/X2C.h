@@ -2,7 +2,7 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2026-02-24 11:43
+ * Date:  2026-02-24 15:31
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
@@ -10,7 +10,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-24 11:43                                                                                            */
+/* Date:  2026-02-24 15:31                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -27,7 +27,6 @@ extern "C" {
 /**********************************************************************************************************************/
 /* Common includes                                                                                                    */
 #include "Constant_Bool.h"
-#include "PT1_Float32.h"
 #include "ManualSwitch_Float32.h"
 #include "Gain_Float32.h"
 #include "RateLimiter_Float32.h"
@@ -40,8 +39,8 @@ extern "C" {
 #include "And_Bool.h"
 #include "Not_Bool.h"
 #include "Or_Bool.h"
-#include "Sub_Float32.h"
 #include "TFlipFlop_Bool.h"
+#include "Sub_Float32.h"
 #include "AutoSwitch_Float32.h"
 #include "Negation_Float32.h"
 #include "LowpassBiQ_Float32.h"
@@ -53,7 +52,6 @@ extern "C" {
 /**********************************************************************************************************************/
 #define FUNCTIONS \
     CONSTANT_BOOL_FUNCTIONS , \
-    PT1_FLOAT32_FUNCTIONS , \
     MANUALSWITCH_FLOAT32_FUNCTIONS , \
     GAIN_FLOAT32_FUNCTIONS , \
     RATELIMITER_FLOAT32_FUNCTIONS , \
@@ -66,78 +64,75 @@ extern "C" {
     AND_BOOL_FUNCTIONS , \
     NOT_BOOL_FUNCTIONS , \
     OR_BOOL_FUNCTIONS , \
-    SUB_FLOAT32_FUNCTIONS , \
     TFLIPFLOP_BOOL_FUNCTIONS , \
+    SUB_FLOAT32_FUNCTIONS , \
     AUTOSWITCH_FLOAT32_FUNCTIONS , \
     NEGATION_FLOAT32_FUNCTIONS , \
     LOWPASSBIQ_FLOAT32_FUNCTIONS , \
     SCOPE_MAIN_FUNCTIONS
 
 #define PARAMETER_TABLE \
-    { 1, &x2cModel.blocks.sSubCurrent.bAnd } , \
-    { 2, &x2cModel.blocks.sSubCurrent.bCFiIa } , \
-    { 3, &x2cModel.blocks.sSubCurrent.bConst0 } , \
-    { 4, &x2cModel.blocks.sSubCurrent.bConstCurrentInit } , \
-    { 5, &x2cModel.blocks.sSubCurrent.bConstFalse } , \
-    { 6, &x2cModel.blocks.sSubCurrent.bCurrentIaFilter } , \
-    { 7, &x2cModel.blocks.sSubCurrent.bCurrentReg } , \
-    { 8, &x2cModel.blocks.sSubCurrent.bDiv2 } , \
-    { 9, &x2cModel.blocks.sSubCurrent.bNegation } , \
-    { 10, &x2cModel.blocks.sSubCurrent.bNegation2 } , \
-    { 11, &x2cModel.blocks.sSubCurrent.bNot } , \
-    { 12, &x2cModel.blocks.sSubCurrent.bOr } , \
-    { 13, &x2cModel.blocks.sSubCurrent.bOutputVoltage } , \
-    { 14, &x2cModel.blocks.sSubCurrent.bOutputVoltasgeLimit } , \
-    { 15, &x2cModel.blocks.sSubCurrent.bSaturation } , \
-    { 16, &x2cModel.blocks.sSubCurrent.bSaturation2 } , \
-    { 17, &x2cModel.blocks.sSubCurrent.bSub1 } , \
-    { 18, &x2cModel.blocks.sSubCurrent.bTFlipFlop } , \
-    { 19, &x2cModel.blocks.sSubVelocity.bAutoSwitch } , \
-    { 20, &x2cModel.blocks.sSubVelocity.bCFiOmega } , \
-    { 21, &x2cModel.blocks.sSubVelocity.bConst6 } , \
-    { 22, &x2cModel.blocks.sSubVelocity.bConstSpeedInit } , \
-    { 23, &x2cModel.blocks.sSubVelocity.bCurrentDesired } , \
-    { 24, &x2cModel.blocks.sSubVelocity.bCurrentLimit } , \
-    { 25, &x2cModel.blocks.sSubVelocity.bMeasVelocity } , \
-    { 26, &x2cModel.blocks.sSubVelocity.bNegation3 } , \
-    { 27, &x2cModel.blocks.sSubVelocity.bOmega } , \
-    { 28, &x2cModel.blocks.sSubVelocity.bOmegaFilter } , \
-    { 29, &x2cModel.blocks.sSubVelocity.bOmegaFilter1 } , \
-    { 30, &x2cModel.blocks.sSubVelocity.bPhi2Rpm } , \
-    { 31, &x2cModel.blocks.sSubVelocity.bPulseGenConst1 } , \
-    { 32, &x2cModel.blocks.sSubVelocity.bPulseGenDCVal } , \
-    { 33, &x2cModel.blocks.sSubVelocity.bPulseGenFreq } , \
-    { 34, &x2cModel.blocks.sSubVelocity.bPulseGenHi } , \
-    { 35, &x2cModel.blocks.sSubVelocity.bPulseGenLo } , \
-    { 36, &x2cModel.blocks.sSubVelocity.bPulseGenOutput } , \
-    { 37, &x2cModel.blocks.sSubVelocity.bPulseGenSin } , \
-    { 38, &x2cModel.blocks.sSubVelocity.bRateLimiter } , \
-    { 39, &x2cModel.blocks.sSubVelocity.bSpeedDesired } , \
-    { 40, &x2cModel.blocks.sSubVelocity.bSpeedDesiredConst } , \
-    { 41, &x2cModel.blocks.sSubVelocity.bSpeedReg } , \
-    { 42, &x2cModel.blocks.sSubVelocity.bSub2 } , \
-    { 60, &x2cScope }
+    { 1, &x2cModel.blocks.bAutoSwitch } , \
+    { 2, &x2cModel.blocks.bConst6 } , \
+    { 3, &x2cModel.blocks.sCtlLogic.bAnd } , \
+    { 4, &x2cModel.blocks.sCtlLogic.bConstFalse } , \
+    { 5, &x2cModel.blocks.sCtlLogic.bNot } , \
+    { 6, &x2cModel.blocks.sCtlLogic.bOr } , \
+    { 7, &x2cModel.blocks.sCtlLogic.bTFlipFlop } , \
+    { 8, &x2cModel.blocks.bPulseGenConst1 } , \
+    { 9, &x2cModel.blocks.bPulseGenDCVal } , \
+    { 10, &x2cModel.blocks.bPulseGenFreq } , \
+    { 11, &x2cModel.blocks.bPulseGenHi } , \
+    { 12, &x2cModel.blocks.bPulseGenLo } , \
+    { 13, &x2cModel.blocks.bPulseGenOutput } , \
+    { 14, &x2cModel.blocks.bPulseGenSin } , \
+    { 15, &x2cModel.blocks.sPwmGen.bConstant } , \
+    { 16, &x2cModel.blocks.sPwmGen.bDiv2 } , \
+    { 17, &x2cModel.blocks.sPwmGen.bNegation } , \
+    { 18, &x2cModel.blocks.sPwmGen.bSaturation } , \
+    { 19, &x2cModel.blocks.sPwmGen.bSaturation2 } , \
+    { 20, &x2cModel.blocks.bRateLimiter } , \
+    { 21, &x2cModel.blocks.sRegCurrent.bConstCurrentInit } , \
+    { 22, &x2cModel.blocks.sRegCurrent.bCurrentReg } , \
+    { 23, &x2cModel.blocks.sRegCurrent.bNegation2 } , \
+    { 24, &x2cModel.blocks.sRegCurrent.bOutputVoltasgeLimit } , \
+    { 25, &x2cModel.blocks.sRegCurrent.bSub1 } , \
+    { 26, &x2cModel.blocks.sSubVelocity.bCFiOmega } , \
+    { 27, &x2cModel.blocks.sSubVelocity.bConstSpeedInit } , \
+    { 28, &x2cModel.blocks.sSubVelocity.bCurrentLimit } , \
+    { 29, &x2cModel.blocks.sSubVelocity.bMeasVelocity } , \
+    { 30, &x2cModel.blocks.sSubVelocity.bNegation3 } , \
+    { 31, &x2cModel.blocks.sSubVelocity.bOmega } , \
+    { 32, &x2cModel.blocks.sSubVelocity.bOmegaFilter } , \
+    { 33, &x2cModel.blocks.sSubVelocity.bOmegaFilter1 } , \
+    { 34, &x2cModel.blocks.sSubVelocity.bPhi2Rpm } , \
+    { 35, &x2cModel.blocks.sSubVelocity.bSpeedReg } , \
+    { 36, &x2cModel.blocks.sSubVelocity.bSub2 } , \
+    { 37, &x2cModel.blocks.bSwIsetpoint } , \
+    { 38, &x2cModel.blocks.bSwVoltSet } , \
+    { 39, &x2cModel.blocks.sTorqueCalc.bCFiIa } , \
+    { 40, &x2cModel.blocks.sTorqueCalc.bIaFilter } , \
+    { 57, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
-    { 43, 1, &x2cModel.inports.bInButton } , \
-    { 44, 1, &x2cModel.inports.bInEnable } , \
-    { 45, 4, &x2cModel.inports.bInIa } , \
-    { 46, 4, &x2cModel.inports.bInIb } , \
-    { 47, 4, &x2cModel.inports.bInIc } , \
-    { 48, 4, &x2cModel.inports.bInPosition1 } , \
-    { 49, 4, &x2cModel.inports.bInPosition2 } , \
-    { 50, 1, &x2cModel.inports.bInPwmFault } , \
-    { 51, 4, &x2cModel.inports.bInVdc } , \
-    { 52, 4, &x2cModel.inports.bInVelocity } , \
-    { 53, 4, &x2cModel.inports.bInVelocity1_radps } , \
-    { 54, 4, &x2cModel.inports.bInVelocity1_rpm } 
+    { 41, 1, &x2cModel.inports.bInButton } , \
+    { 42, 1, &x2cModel.inports.bInEnable } , \
+    { 43, 4, &x2cModel.inports.bInIa } , \
+    { 44, 4, &x2cModel.inports.bInIb } , \
+    { 45, 4, &x2cModel.inports.bInIc } , \
+    { 46, 4, &x2cModel.inports.bInPosition1 } , \
+    { 47, 4, &x2cModel.inports.bInPosition2 } , \
+    { 48, 1, &x2cModel.inports.bInPwmFault } , \
+    { 49, 4, &x2cModel.inports.bInVdc } , \
+    { 50, 4, &x2cModel.inports.bInVelocity1_radps } , \
+    { 51, 4, &x2cModel.inports.bInVelocity1_rpm } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 55, 1, &x2cModel.outports.bOutErrClear } , \
-    { 56, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 57, 4, &x2cModel.outports.bOutPWMa } , \
-    { 58, 4, &x2cModel.outports.bOutPWMb } , \
-    { 59, 4, &x2cModel.outports.bOutPWMc } 
+    { 52, 1, &x2cModel.outports.bOutErrClear } , \
+    { 53, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 54, 4, &x2cModel.outports.bOutPWMa } , \
+    { 55, 4, &x2cModel.outports.bOutPWMb } , \
+    { 56, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -146,34 +141,34 @@ extern "C" {
 struct x2cModel {
 /*  Control Blocks                                                                                                    */
     struct {
-/*      Sub-system SubCurrent                                                                                         */
+/*      Sub-system CtlLogic                                                                                           */
         struct {
             AND_BOOL bAnd;
-            GAIN_FLOAT32 bCFiIa;
-            CONSTANT_FLOAT32 bConst0;
-            CONSTANT_FLOAT32 bConstCurrentInit;
             CONSTANT_BOOL bConstFalse;
-            PT1_FLOAT32 bCurrentIaFilter;
-            PILIMIT_FLOAT32 bCurrentReg;
-            DIV_FLOAT32 bDiv2;
-            NEGATION_FLOAT32 bNegation;
-            NEGATION_FLOAT32 bNegation2;
             NOT_BOOL bNot;
             OR_BOOL bOr;
-            MANUALSWITCH_FLOAT32 bOutputVoltage;
-            CONSTANT_FLOAT32 bOutputVoltasgeLimit;
+            TFLIPFLOP_BOOL bTFlipFlop;
+        } sCtlLogic;
+/*      Sub-system PwmGen                                                                                             */
+        struct {
+            CONSTANT_FLOAT32 bConstant;
+            DIV_FLOAT32 bDiv2;
+            NEGATION_FLOAT32 bNegation;
             SATURATION_FLOAT32 bSaturation;
             SATURATION_FLOAT32 bSaturation2;
+        } sPwmGen;
+/*      Sub-system RegCurrent                                                                                         */
+        struct {
+            CONSTANT_FLOAT32 bConstCurrentInit;
+            PILIMIT_FLOAT32 bCurrentReg;
+            NEGATION_FLOAT32 bNegation2;
+            CONSTANT_FLOAT32 bOutputVoltasgeLimit;
             SUB_FLOAT32 bSub1;
-            TFLIPFLOP_BOOL bTFlipFlop;
-        } sSubCurrent;
+        } sRegCurrent;
 /*      Sub-system SubVelocity                                                                                        */
         struct {
-            AUTOSWITCH_FLOAT32 bAutoSwitch;
             GAIN_FLOAT32 bCFiOmega;
-            CONSTANT_FLOAT32 bConst6;
             CONSTANT_FLOAT32 bConstSpeedInit;
-            MANUALSWITCH_FLOAT32 bCurrentDesired;
             CONSTANT_FLOAT32 bCurrentLimit;
             MANUALSWITCH_FLOAT32 bMeasVelocity;
             NEGATION_FLOAT32 bNegation3;
@@ -181,19 +176,26 @@ struct x2cModel {
             LOWPASSBIQ_FLOAT32 bOmegaFilter;
             LOWPASSBIQ_FLOAT32 bOmegaFilter1;
             PHI2SPEED_FLOAT32 bPhi2Rpm;
-            CONSTANT_FLOAT32 bPulseGenConst1;
-            CONSTANT_FLOAT32 bPulseGenDCVal;
-            CONSTANT_FLOAT32 bPulseGenFreq;
-            CONSTANT_FLOAT32 bPulseGenHi;
-            CONSTANT_FLOAT32 bPulseGenLo;
-            MANUALSWITCH_FLOAT32 bPulseGenOutput;
-            SINGEN_FLOAT32 bPulseGenSin;
-            RATELIMITER_FLOAT32 bRateLimiter;
-            MANUALSWITCH_FLOAT32 bSpeedDesired;
-            CONSTANT_FLOAT32 bSpeedDesiredConst;
             PILIMIT_FLOAT32 bSpeedReg;
             SUB_FLOAT32 bSub2;
         } sSubVelocity;
+/*      Sub-system TorqueCalc                                                                                         */
+        struct {
+            GAIN_FLOAT32 bCFiIa;
+            LOWPASSBIQ_FLOAT32 bIaFilter;
+        } sTorqueCalc;
+        AUTOSWITCH_FLOAT32 bAutoSwitch;
+        CONSTANT_FLOAT32 bConst6;
+        CONSTANT_FLOAT32 bPulseGenConst1;
+        CONSTANT_FLOAT32 bPulseGenDCVal;
+        CONSTANT_FLOAT32 bPulseGenFreq;
+        CONSTANT_FLOAT32 bPulseGenHi;
+        CONSTANT_FLOAT32 bPulseGenLo;
+        MANUALSWITCH_FLOAT32 bPulseGenOutput;
+        SINGEN_FLOAT32 bPulseGenSin;
+        RATELIMITER_FLOAT32 bRateLimiter;
+        MANUALSWITCH_FLOAT32 bSwIsetpoint;
+        MANUALSWITCH_FLOAT32 bSwVoltSet;
     } blocks;
 /*  Inports                                                                                                           */
     struct {
@@ -206,7 +208,6 @@ struct x2cModel {
         float32 bInPosition2;
         bool bInPwmFault;
         float32 bInVdc;
-        float32 bInVelocity;
         float32 bInVelocity1_radps;
         float32 bInVelocity1_rpm;
     } inports;
