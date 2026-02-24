@@ -3,6 +3,11 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="TestCntr_1ms"/>
+		<item value="TestCntr3"/>
+		<item value="TestCntr2"/>
+		<item value="TestHrtim"/>
+		<item value="TestCntr1"/>
 		<item value="get"/>
 		<item value="TestCntr"/>
 		<item value="TIM2_"/>

@@ -1,6 +1,5 @@
 x2cModel.inports
 x2cModel.outports
-x2cModel.blocks.bPhi2Rpm.n
+x2cModel.blocks
 VelocityPosition
-TestCntr_1ms
-CntPeriod
+Cntr

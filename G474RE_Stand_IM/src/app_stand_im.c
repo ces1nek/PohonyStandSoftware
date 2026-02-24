@@ -39,7 +39,7 @@ extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
 extern ADC_HandleTypeDef hadc3;
 /************************/
-adcData_typedef rawAdcData[CYCLES_TO_RUN];
+adcData_typedef rawAdcData[ADC_CYCLES_TO_RUN];
 /**************************/
 controlHrtimPWM_EnDis_typedef HrtimEnDis;
 uint8_t GlobalEnable;
@@ -48,8 +48,8 @@ uint8_t faultHrtim;
 uint8_t inBtn;
 uint8_t inEnable;
 
-#define ADCOffsetShift 4
-uint32_t ADCOffsetCntr = 1 << ADCOffsetShift;
+#define ADC_OFFSET_SHIFT 4
+uint32_t ADCOffsetCntr = 1 << ADC_OFFSET_SHIFT;
 uint32_t ADCOffsetAccum[2];
 
 #define PositionEncoder1BitRes 11
@@ -205,8 +205,8 @@ void stand_im_periodic_isr(void) {
 			ADCOffsetAccum[0] += rawAdcData[0].adc1.samples.Ic;
 			ADCOffsetAccum[1] += rawAdcData[0].adc2.samples.Ia;
 		} else {
-			ADCOffsetAccum[0] >>= ADCOffsetShift;
-			ADCOffsetAccum[1] >>= ADCOffsetShift;
+			ADCOffsetAccum[0] >>= ADC_OFFSET_SHIFT;
+			ADCOffsetAccum[1] >>= ADC_OFFSET_SHIFT;
 
 			// Nastaveni Offsetu
 			hadc1.Instance->OFR1 &= ~ADC_OFR1_OFFSET1;

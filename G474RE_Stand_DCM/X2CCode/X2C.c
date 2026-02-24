@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-13 17:23                                                                                            */
+/* Date:  2026-02-24 11:43                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -68,198 +68,218 @@ void X2C_Init(void)
     /**                                          Initialize Block Parameters                                         **/
     /******************************************************************************************************************/
 
-    /* Block: And                                                                                                     */
+    /* Block: SubCurrent/And                                                                                          */
 
-    /* Block: AutoSwitch                                                                                              */
-    /* Thresh_up = 0.01                                                                                               */
-    /* Thresh_down = -0.01                                                                                            */
-    x2cModel.blocks.bAutoSwitch.Thresh_up = 0.01;
-    x2cModel.blocks.bAutoSwitch.Thresh_down = -0.01;
-    x2cModel.blocks.bAutoSwitch.Status = &RamTable_float32[0];
-
-    /* Block: CFiIa                                                                                                   */
+    /* Block: SubCurrent/CFiIa                                                                                        */
     /* Gain = 0.0661                                                                                                  */
-    x2cModel.blocks.bCFiIa.V = 0.0661;
+    x2cModel.blocks.sSubCurrent.bCFiIa.V = 0.0661;
 
-    /* Block: CFiOmega                                                                                                */
-    /* Gain = 0.0661                                                                                                  */
-    x2cModel.blocks.bCFiOmega.V = 0.0661;
-
-    /* Block: Const0                                                                                                  */
+    /* Block: SubCurrent/Const0                                                                                       */
     /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bConst0.K = 0;
+    x2cModel.blocks.sSubCurrent.bConst0.K = 0;
 
-    /* Block: Const6                                                                                                  */
+    /* Block: SubCurrent/ConstCurrentInit                                                                             */
     /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bConst6.K = 0;
+    x2cModel.blocks.sSubCurrent.bConstCurrentInit.K = 0;
 
-    /* Block: ConstCurrentInit                                                                                        */
+    /* Block: SubCurrent/ConstFalse                                                                                   */
     /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bConstCurrentInit.K = 0;
+    x2cModel.blocks.sSubCurrent.bConstFalse.K = 0;
 
-    /* Block: ConstFalse                                                                                              */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bConstFalse.K = 0;
-
-    /* Block: ConstSpeedInit                                                                                          */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bConstSpeedInit.K = 0;
-
-    /* Block: CurrentDesired                                                                                          */
-    /* Toggle = 0.0                                                                                                   */
-    x2cModel.blocks.bCurrentDesired.Toggle = 0;
-
-    /* Block: CurrentIaFilter                                                                                         */
+    /* Block: SubCurrent/CurrentIaFilter                                                                              */
     /* V = 1.0                                                                                                        */
     /* fc = 10.0                                                                                                      */
     /* ts_fact = 1.0                                                                                                  */
     /* method = zoh                                                                                                   */
-    x2cModel.blocks.bCurrentIaFilter.b0 = 0.00313666301504589;
-    x2cModel.blocks.bCurrentIaFilter.b1 = 0;
-    x2cModel.blocks.bCurrentIaFilter.a0 = -0.9968633369849541;
-    x2cModel.blocks.bCurrentIaFilter.in_old = 0;
+    x2cModel.blocks.sSubCurrent.bCurrentIaFilter.b0 = 0.00313666301504589;
+    x2cModel.blocks.sSubCurrent.bCurrentIaFilter.b1 = 0;
+    x2cModel.blocks.sSubCurrent.bCurrentIaFilter.a0 = -0.9968633369849541;
+    x2cModel.blocks.sSubCurrent.bCurrentIaFilter.in_old = 0;
 
-    /* Block: CurrentLimit                                                                                            */
-    /* Value = 30.0                                                                                                   */
-    x2cModel.blocks.bCurrentLimit.K = 30;
-
-    /* Block: CurrentReg                                                                                              */
+    /* Block: SubCurrent/CurrentReg                                                                                   */
     /* Kp = 3.6373333333333333                                                                                        */
     /* Ki = 1653.3333333333333                                                                                        */
     /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bCurrentReg.b0 = 0.08266666666666667;
-    x2cModel.blocks.bCurrentReg.b1 = 3.6373333333333333;
-    x2cModel.blocks.bCurrentReg.i_old = 0;
-    x2cModel.blocks.bCurrentReg.enable_old = 0;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.b0 = 0.08266666666666667;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.b1 = 3.6373333333333333;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.i_old = 0;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.enable_old = 0;
 
-    /* Block: Div2                                                                                                    */
+    /* Block: SubCurrent/Div2                                                                                         */
 
-    /* Block: Negation                                                                                                */
+    /* Block: SubCurrent/Negation                                                                                     */
 
-    /* Block: Negation2                                                                                               */
+    /* Block: SubCurrent/Negation2                                                                                    */
 
-    /* Block: Negation3                                                                                               */
+    /* Block: SubCurrent/Not                                                                                          */
 
-    /* Block: Not                                                                                                     */
+    /* Block: SubCurrent/Or                                                                                           */
 
-    /* Block: Omega                                                                                                   */
+    /* Block: SubCurrent/OutputVoltage                                                                                */
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.sSubCurrent.bOutputVoltage.Toggle = 0;
+
+    /* Block: SubCurrent/OutputVoltasgeLimit                                                                          */
+    /* Value = 25.0                                                                                                   */
+    x2cModel.blocks.sSubCurrent.bOutputVoltasgeLimit.K = 25;
+
+    /* Block: SubCurrent/Saturation                                                                                   */
+    /* max = 0.999999                                                                                                 */
+    /* min = -0.999999                                                                                                */
+    x2cModel.blocks.sSubCurrent.bSaturation.max = 0.999999;
+    x2cModel.blocks.sSubCurrent.bSaturation.min = -0.999999;
+
+    /* Block: SubCurrent/Saturation2                                                                                  */
+    /* max = 60.0                                                                                                     */
+    /* min = 10.0                                                                                                     */
+    x2cModel.blocks.sSubCurrent.bSaturation2.max = 60;
+    x2cModel.blocks.sSubCurrent.bSaturation2.min = 10;
+
+    /* Block: SubCurrent/Sub1                                                                                         */
+
+    /* Block: SubCurrent/TFlipFlop                                                                                    */
+    x2cModel.blocks.sSubCurrent.bTFlipFlop.toggle_old = 0;
+
+    /* Block: SubVelocity/AutoSwitch                                                                                  */
+    /* Thresh_up = 0.01                                                                                               */
+    /* Thresh_down = -0.01                                                                                            */
+    x2cModel.blocks.sSubVelocity.bAutoSwitch.Thresh_up = 0.01;
+    x2cModel.blocks.sSubVelocity.bAutoSwitch.Thresh_down = -0.01;
+    x2cModel.blocks.sSubVelocity.bAutoSwitch.Status = &RamTable_float32[0];
+
+    /* Block: SubVelocity/CFiOmega                                                                                    */
+    /* Gain = 0.0661                                                                                                  */
+    x2cModel.blocks.sSubVelocity.bCFiOmega.V = 0.0661;
+
+    /* Block: SubVelocity/Const6                                                                                      */
+    /* Value = 0.0                                                                                                    */
+    x2cModel.blocks.sSubVelocity.bConst6.K = 0;
+
+    /* Block: SubVelocity/ConstSpeedInit                                                                              */
+    /* Value = 0.0                                                                                                    */
+    x2cModel.blocks.sSubVelocity.bConstSpeedInit.K = 0;
+
+    /* Block: SubVelocity/CurrentDesired                                                                              */
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.sSubVelocity.bCurrentDesired.Toggle = 0;
+
+    /* Block: SubVelocity/CurrentLimit                                                                                */
+    /* Value = 30.0                                                                                                   */
+    x2cModel.blocks.sSubVelocity.bCurrentLimit.K = 30;
+
+    /* Block: SubVelocity/MeasVelocity                                                                                */
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.sSubVelocity.bMeasVelocity.Toggle = 0;
+
+    /* Block: SubVelocity/Negation3                                                                                   */
+
+    /* Block: SubVelocity/Omega                                                                                       */
     /* Gain = 0.10471975511965977                                                                                     */
-    x2cModel.blocks.bOmega.V = 0.10471975511965977;
+    x2cModel.blocks.sSubVelocity.bOmega.V = 0.10471975511965977;
 
-    /* Block: OmegaFilter                                                                                             */
+    /* Block: SubVelocity/OmegaFilter                                                                                 */
     /* characteristic = Chebyshev II                                                                                  */
     /* fc = 100.0                                                                                                     */
     /* rp = 1.0                                                                                                       */
     /* rs = 20.0                                                                                                      */
-    /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bOmegaFilter.b0 = 0.09911029508053501;
-    x2cModel.blocks.bOmegaFilter.b1 = -0.19802501862141741;
-    x2cModel.blocks.bOmegaFilter.b2 = 0.09911029508053501;
-    x2cModel.blocks.bOmegaFilter.a1 = -1.981130258142612;
-    x2cModel.blocks.bOmegaFilter.a2 = 0.9813258296822646;
-    x2cModel.blocks.bOmegaFilter.in_old = 0;
-    x2cModel.blocks.bOmegaFilter.in_veryold = 0;
-    x2cModel.blocks.bOmegaFilter.out_old = 0;
-    x2cModel.blocks.bOmegaFilter.out_veryold = 0;
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.b0 = 0.0995953541992128;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.b1 = -0.1297387042800058;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.b2 = 0.09959535419921278;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.a1 = -1.6099210613329478;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.a2 = 0.6793730654513674;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.in_old = 0;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.in_veryold = 0;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.out_old = 0;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.out_veryold = 0;
 
-    /* Block: Or                                                                                                      */
+    /* Block: SubVelocity/OmegaFilter1                                                                                */
+    /* characteristic = Chebyshev II                                                                                  */
+    /* fc = 100.0                                                                                                     */
+    /* rp = 1.0                                                                                                       */
+    /* rs = 20.0                                                                                                      */
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.b0 = 0.0995953541992128;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.b1 = -0.1297387042800058;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.b2 = 0.09959535419921278;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.a1 = -1.6099210613329478;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.a2 = 0.6793730654513674;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.in_old = 0;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.in_veryold = 0;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.out_old = 0;
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.out_veryold = 0;
 
-    /* Block: OutputVoltage                                                                                           */
-    /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bOutputVoltage.Toggle = 1;
-
-    /* Block: OutputVoltasgeLimit                                                                                     */
-    /* Value = 25.0                                                                                                   */
-    x2cModel.blocks.bOutputVoltasgeLimit.K = 25;
-
-    /* Block: Phi2Rpm                                                                                                 */
+    /* Block: SubVelocity/Phi2Rpm                                                                                     */
     /* n_max = 3000.0                                                                                                 */
     /* p = 1.0                                                                                                        */
     /* fc = 200.0                                                                                                     */
-    /* ts_fact = 1.0                                                                                                  */
+    /* ts_fact = 20.0                                                                                                 */
     /* method = tustin                                                                                                */
-    x2cModel.blocks.bPhi2Rpm.b = 11634.491664582947;
-    x2cModel.blocks.bPhi2Rpm.a0 = -0.9390819440971575;
-    x2cModel.blocks.bPhi2Rpm.phi_old = 0;
-    x2cModel.blocks.bPhi2Rpm.n_old = 0;
+    x2cModel.blocks.sSubVelocity.bPhi2Rpm.b = 7369.565458859551;
+    x2cModel.blocks.sSubVelocity.bPhi2Rpm.a0 = -0.2282609098099249;
+    x2cModel.blocks.sSubVelocity.bPhi2Rpm.phi_old = 0;
+    x2cModel.blocks.sSubVelocity.bPhi2Rpm.n_old = 0;
 
-    /* Block: PulseGenConst1                                                                                          */
+    /* Block: SubVelocity/PulseGenConst1                                                                              */
     /* Value = 1.0                                                                                                    */
-    x2cModel.blocks.bPulseGenConst1.K = 1;
+    x2cModel.blocks.sSubVelocity.bPulseGenConst1.K = 1;
 
-    /* Block: PulseGenDCVal                                                                                           */
+    /* Block: SubVelocity/PulseGenDCVal                                                                               */
     /* Value = 20.0                                                                                                   */
-    x2cModel.blocks.bPulseGenDCVal.K = 20;
+    x2cModel.blocks.sSubVelocity.bPulseGenDCVal.K = 20;
 
-    /* Block: PulseGenFreq                                                                                            */
-    /* Value = 0.4                                                                                                    */
-    x2cModel.blocks.bPulseGenFreq.K = 0.4;
+    /* Block: SubVelocity/PulseGenFreq                                                                                */
+    /* Value = 0.25                                                                                                   */
+    x2cModel.blocks.sSubVelocity.bPulseGenFreq.K = 0.25;
 
-    /* Block: PulseGenHi                                                                                              */
-    /* Value = 50.0                                                                                                   */
-    x2cModel.blocks.bPulseGenHi.K = 50;
+    /* Block: SubVelocity/PulseGenHi                                                                                  */
+    /* Value = 5.0                                                                                                    */
+    x2cModel.blocks.sSubVelocity.bPulseGenHi.K = 5;
 
-    /* Block: PulseGenLo                                                                                              */
-    /* Value = 10.0                                                                                                   */
-    x2cModel.blocks.bPulseGenLo.K = 10;
+    /* Block: SubVelocity/PulseGenLo                                                                                  */
+    /* Value = -5.0                                                                                                   */
+    x2cModel.blocks.sSubVelocity.bPulseGenLo.K = -5;
 
-    /* Block: PulseGenOutput                                                                                          */
+    /* Block: SubVelocity/PulseGenOutput                                                                              */
     /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bPulseGenOutput.Toggle = 1;
+    x2cModel.blocks.sSubVelocity.bPulseGenOutput.Toggle = 1;
 
-    /* Block: PulseGenSin                                                                                             */
+    /* Block: SubVelocity/PulseGenSin                                                                                 */
     /* fmax = 1000.0                                                                                                  */
     /* Offset = 0.0                                                                                                   */
     /* Phase = 0.0                                                                                                    */
-    /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bPulseGenSin.delta_phi = 0.00031415926535898;
-    x2cModel.blocks.bPulseGenSin.phase = 0;
-    x2cModel.blocks.bPulseGenSin.offset = 0;
-    x2cModel.blocks.bPulseGenSin.phi = 0;
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.sSubVelocity.bPulseGenSin.delta_phi = 0.00628318530717959;
+    x2cModel.blocks.sSubVelocity.bPulseGenSin.phase = 0;
+    x2cModel.blocks.sSubVelocity.bPulseGenSin.offset = 0;
+    x2cModel.blocks.sSubVelocity.bPulseGenSin.phi = 0;
 
-    /* Block: RateLimiter                                                                                             */
+    /* Block: SubVelocity/RateLimiter                                                                                 */
     /* Tr = 0.1                                                                                                       */
     /* Tf = 0.1                                                                                                       */
-    /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bRateLimiter.RateUp = 0.0005;
-    x2cModel.blocks.bRateLimiter.RateDown = 0.0005;
-    x2cModel.blocks.bRateLimiter.enable_old = 0;
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.sSubVelocity.bRateLimiter.RateUp = 0.01;
+    x2cModel.blocks.sSubVelocity.bRateLimiter.RateDown = 0.01;
+    x2cModel.blocks.sSubVelocity.bRateLimiter.enable_old = 0;
 
-    /* Block: Saturation                                                                                              */
-    /* max = 0.999999                                                                                                 */
-    /* min = -0.999999                                                                                                */
-    x2cModel.blocks.bSaturation.max = 0.999999;
-    x2cModel.blocks.bSaturation.min = -0.999999;
-
-    /* Block: Saturation2                                                                                             */
-    /* max = 60.0                                                                                                     */
-    /* min = 10.0                                                                                                     */
-    x2cModel.blocks.bSaturation2.max = 60;
-    x2cModel.blocks.bSaturation2.min = 10;
-
-    /* Block: SpeedDesired                                                                                            */
+    /* Block: SubVelocity/SpeedDesired                                                                                */
     /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bSpeedDesired.Toggle = 1;
+    x2cModel.blocks.sSubVelocity.bSpeedDesired.Toggle = 1;
 
-    /* Block: SpeedDesiredConst                                                                                       */
+    /* Block: SubVelocity/SpeedDesiredConst                                                                           */
     /* Value = 50.0                                                                                                   */
-    x2cModel.blocks.bSpeedDesiredConst.K = 50;
+    x2cModel.blocks.sSubVelocity.bSpeedDesiredConst.K = 50;
 
-    /* Block: SpeedReg                                                                                                */
+    /* Block: SubVelocity/SpeedReg                                                                                    */
     /* Kp = 1.5252932814489535                                                                                        */
     /* Ki = 69.90133872365556                                                                                         */
-    /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.bSpeedReg.b0 = 0.00349506693618278;
-    x2cModel.blocks.bSpeedReg.b1 = 1.5252932814489535;
-    x2cModel.blocks.bSpeedReg.i_old = 0;
-    x2cModel.blocks.bSpeedReg.enable_old = 0;
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.sSubVelocity.bSpeedReg.b0 = 0.06990133872365556;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.b1 = 1.5252932814489535;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.i_old = 0;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.enable_old = 0;
 
-    /* Block: Sub1                                                                                                    */
-
-    /* Block: Sub2                                                                                                    */
-
-    /* Block: TFlipFlop                                                                                               */
-    x2cModel.blocks.bTFlipFlop.toggle_old = 0;
+    /* Block: SubVelocity/Sub2                                                                                        */
 
 
     /* Initialize RAM table content */
@@ -273,120 +293,149 @@ void X2C_Init(void)
     x2cModel.inports.bInIa = (float32)0;
     x2cModel.inports.bInIb = (float32)0;
     x2cModel.inports.bInIc = (float32)0;
-    x2cModel.inports.bInPositionEncoder1 = (float32)0;
-    x2cModel.inports.bInPositionEncoder2 = (float32)0;
+    x2cModel.inports.bInPosition1 = (float32)0;
+    x2cModel.inports.bInPosition2 = (float32)0;
     x2cModel.inports.bInPwmFault = false;
     x2cModel.inports.bInVdc = (float32)0;
     x2cModel.inports.bInVelocity = (float32)0;
-    x2cModel.inports.bInVelocity2 = (float32)0;
+    x2cModel.inports.bInVelocity1_radps = (float32)0;
+    x2cModel.inports.bInVelocity1_rpm = (float32)0;
 
     /******************************************************************************************************************/
     /**                                               Link Block Inputs                                              **/
     /******************************************************************************************************************/
 
     /* Block And                                                                                                      */
-    x2cModel.blocks.bAnd.In1 =
-        &x2cModel.blocks.bOr.Out;
-    x2cModel.blocks.bAnd.In2 =
-        &x2cModel.blocks.bTFlipFlop.Q;
-
-    /* Block AutoSwitch                                                                                               */
-    x2cModel.blocks.bAutoSwitch.In1 =
-        &x2cModel.blocks.bPulseGenHi.Out;
-    x2cModel.blocks.bAutoSwitch.Switch =
-        &x2cModel.blocks.bPulseGenSin.u;
-    x2cModel.blocks.bAutoSwitch.In3 =
-        &x2cModel.blocks.bPulseGenLo.Out;
+    x2cModel.blocks.sSubCurrent.bAnd.In1 =
+        &x2cModel.blocks.sSubCurrent.bOr.Out;
+    x2cModel.blocks.sSubCurrent.bAnd.In2 =
+        &x2cModel.blocks.sSubCurrent.bTFlipFlop.Q;
 
     /* Block CFiIa                                                                                                    */
-    x2cModel.blocks.bCFiIa.In =
+    x2cModel.blocks.sSubCurrent.bCFiIa.In =
         &x2cModel.inports.bInIa;
 
-    /* Block CFiOmega                                                                                                 */
-    x2cModel.blocks.bCFiOmega.In =
-        &x2cModel.blocks.bOmega.Out;
-
     /* Block Const0                                                                                                   */
-
-    /* Block Const6                                                                                                   */
 
     /* Block ConstCurrentInit                                                                                         */
 
     /* Block ConstFalse                                                                                               */
 
-    /* Block ConstSpeedInit                                                                                           */
-
-    /* Block CurrentDesired                                                                                           */
-    x2cModel.blocks.bCurrentDesired.In1 =
-        &x2cModel.blocks.bSpeedReg.Out;
-    x2cModel.blocks.bCurrentDesired.In2 =
-        &x2cModel.blocks.bPulseGenOutput.Out;
-
     /* Block CurrentIaFilter                                                                                          */
-    x2cModel.blocks.bCurrentIaFilter.In =
+    x2cModel.blocks.sSubCurrent.bCurrentIaFilter.In =
         &x2cModel.inports.bInIa;
 
-    /* Block CurrentLimit                                                                                             */
-
     /* Block CurrentReg                                                                                               */
-    x2cModel.blocks.bCurrentReg.In =
-        &x2cModel.blocks.bSub1.Out;
-    x2cModel.blocks.bCurrentReg.Init =
-        &x2cModel.blocks.bConstCurrentInit.Out;
-    x2cModel.blocks.bCurrentReg.max =
-        &x2cModel.blocks.bOutputVoltasgeLimit.Out;
-    x2cModel.blocks.bCurrentReg.min =
-        &x2cModel.blocks.bNegation2.Out;
-    x2cModel.blocks.bCurrentReg.Enable =
-        &x2cModel.blocks.bAnd.Out;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.In =
+        &x2cModel.blocks.sSubCurrent.bSub1.Out;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.Init =
+        &x2cModel.blocks.sSubCurrent.bConstCurrentInit.Out;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.max =
+        &x2cModel.blocks.sSubCurrent.bOutputVoltasgeLimit.Out;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.min =
+        &x2cModel.blocks.sSubCurrent.bNegation2.Out;
+    x2cModel.blocks.sSubCurrent.bCurrentReg.Enable =
+        &x2cModel.blocks.sSubCurrent.bAnd.Out;
 
     /* Block Div2                                                                                                     */
-    x2cModel.blocks.bDiv2.Num =
-        &x2cModel.blocks.bOutputVoltage.Out;
-    x2cModel.blocks.bDiv2.Den =
-        &x2cModel.blocks.bSaturation2.Out;
+    x2cModel.blocks.sSubCurrent.bDiv2.Num =
+        &x2cModel.blocks.sSubCurrent.bOutputVoltage.Out;
+    x2cModel.blocks.sSubCurrent.bDiv2.Den =
+        &x2cModel.blocks.sSubCurrent.bSaturation2.Out;
 
     /* Block Negation                                                                                                 */
-    x2cModel.blocks.bNegation.In =
-        &x2cModel.blocks.bSaturation.Out;
+    x2cModel.blocks.sSubCurrent.bNegation.In =
+        &x2cModel.blocks.sSubCurrent.bSaturation.Out;
 
     /* Block Negation2                                                                                                */
-    x2cModel.blocks.bNegation2.In =
-        &x2cModel.blocks.bOutputVoltasgeLimit.Out;
-
-    /* Block Negation3                                                                                                */
-    x2cModel.blocks.bNegation3.In =
-        &x2cModel.blocks.bCurrentLimit.Out;
+    x2cModel.blocks.sSubCurrent.bNegation2.In =
+        &x2cModel.blocks.sSubCurrent.bOutputVoltasgeLimit.Out;
 
     /* Block Not                                                                                                      */
-    x2cModel.blocks.bNot.In =
-        &x2cModel.blocks.bConstFalse.Out;
-
-    /* Block Omega                                                                                                    */
-    x2cModel.blocks.bOmega.In =
-        &x2cModel.blocks.bPhi2Rpm.n;
-
-    /* Block OmegaFilter                                                                                              */
-    x2cModel.blocks.bOmegaFilter.In =
-        &x2cModel.blocks.bOmega.Out;
+    x2cModel.blocks.sSubCurrent.bNot.In =
+        &x2cModel.blocks.sSubCurrent.bConstFalse.Out;
 
     /* Block Or                                                                                                       */
-    x2cModel.blocks.bOr.In1 =
+    x2cModel.blocks.sSubCurrent.bOr.In1 =
         &x2cModel.inports.bInEnable;
-    x2cModel.blocks.bOr.In2 =
-        &x2cModel.blocks.bNot.Out;
+    x2cModel.blocks.sSubCurrent.bOr.In2 =
+        &x2cModel.blocks.sSubCurrent.bNot.Out;
 
     /* Block OutputVoltage                                                                                            */
-    x2cModel.blocks.bOutputVoltage.In1 =
-        &x2cModel.blocks.bCurrentReg.Out;
-    x2cModel.blocks.bOutputVoltage.In2 =
-        &x2cModel.blocks.bPulseGenOutput.Out;
+    x2cModel.blocks.sSubCurrent.bOutputVoltage.In1 =
+        &x2cModel.blocks.sSubCurrent.bCurrentReg.Out;
+    x2cModel.blocks.sSubCurrent.bOutputVoltage.In2 =
+        &x2cModel.blocks.sSubVelocity.bPulseGenOutput.Out;
 
     /* Block OutputVoltasgeLimit                                                                                      */
 
+    /* Block Saturation                                                                                               */
+    x2cModel.blocks.sSubCurrent.bSaturation.In =
+        &x2cModel.blocks.sSubCurrent.bDiv2.Out;
+
+    /* Block Saturation2                                                                                              */
+    x2cModel.blocks.sSubCurrent.bSaturation2.In =
+        &x2cModel.inports.bInVdc;
+
+    /* Block Sub1                                                                                                     */
+    x2cModel.blocks.sSubCurrent.bSub1.Plus =
+        &x2cModel.blocks.sSubVelocity.bCurrentDesired.Out;
+    x2cModel.blocks.sSubCurrent.bSub1.Minus =
+        &x2cModel.inports.bInIa;
+
+    /* Block TFlipFlop                                                                                                */
+    x2cModel.blocks.sSubCurrent.bTFlipFlop.T =
+        &x2cModel.inports.bInButton;
+
+    /* Block AutoSwitch                                                                                               */
+    x2cModel.blocks.sSubVelocity.bAutoSwitch.In1 =
+        &x2cModel.blocks.sSubVelocity.bPulseGenHi.Out;
+    x2cModel.blocks.sSubVelocity.bAutoSwitch.Switch =
+        &x2cModel.blocks.sSubVelocity.bPulseGenSin.u;
+    x2cModel.blocks.sSubVelocity.bAutoSwitch.In3 =
+        &x2cModel.blocks.sSubVelocity.bPulseGenLo.Out;
+
+    /* Block CFiOmega                                                                                                 */
+    x2cModel.blocks.sSubVelocity.bCFiOmega.In =
+        &x2cModel.blocks.sSubVelocity.bOmega.Out;
+
+    /* Block Const6                                                                                                   */
+
+    /* Block ConstSpeedInit                                                                                           */
+
+    /* Block CurrentDesired                                                                                           */
+    x2cModel.blocks.sSubVelocity.bCurrentDesired.In1 =
+        &x2cModel.blocks.sSubVelocity.bSpeedReg.Out;
+    x2cModel.blocks.sSubVelocity.bCurrentDesired.In2 =
+        &x2cModel.blocks.sSubVelocity.bPulseGenOutput.Out;
+
+    /* Block CurrentLimit                                                                                             */
+
+    /* Block MeasVelocity                                                                                             */
+    x2cModel.blocks.sSubVelocity.bMeasVelocity.In1 =
+        &x2cModel.blocks.sSubVelocity.bOmegaFilter1.Out;
+    x2cModel.blocks.sSubVelocity.bMeasVelocity.In2 =
+        &x2cModel.blocks.sSubVelocity.bOmegaFilter.Out;
+
+    /* Block Negation3                                                                                                */
+    x2cModel.blocks.sSubVelocity.bNegation3.In =
+        &x2cModel.blocks.sSubVelocity.bCurrentLimit.Out;
+
+    /* Block Omega                                                                                                    */
+    x2cModel.blocks.sSubVelocity.bOmega.In =
+        &x2cModel.blocks.sSubVelocity.bPhi2Rpm.n;
+
+    /* Block OmegaFilter                                                                                              */
+    x2cModel.blocks.sSubVelocity.bOmegaFilter.In =
+        &x2cModel.blocks.sSubVelocity.bOmega.Out;
+
+    /* Block OmegaFilter1                                                                                             */
+    x2cModel.blocks.sSubVelocity.bOmegaFilter1.In =
+        &x2cModel.inports.bInVelocity1_radps;
+
     /* Block Phi2Rpm                                                                                                  */
-    x2cModel.blocks.bPhi2Rpm.phi =
-        &x2cModel.inports.bInPositionEncoder1;
+    x2cModel.blocks.sSubVelocity.bPhi2Rpm.phi =
+        &x2cModel.inports.bInPosition1;
 
     /* Block PulseGenConst1                                                                                           */
 
@@ -399,68 +448,50 @@ void X2C_Init(void)
     /* Block PulseGenLo                                                                                               */
 
     /* Block PulseGenOutput                                                                                           */
-    x2cModel.blocks.bPulseGenOutput.In1 =
-        &x2cModel.blocks.bAutoSwitch.Out;
-    x2cModel.blocks.bPulseGenOutput.In2 =
-        &x2cModel.blocks.bRateLimiter.Out;
+    x2cModel.blocks.sSubVelocity.bPulseGenOutput.In1 =
+        &x2cModel.blocks.sSubVelocity.bAutoSwitch.Out;
+    x2cModel.blocks.sSubVelocity.bPulseGenOutput.In2 =
+        &x2cModel.blocks.sSubVelocity.bRateLimiter.Out;
 
     /* Block PulseGenSin                                                                                              */
-    x2cModel.blocks.bPulseGenSin.A =
-        &x2cModel.blocks.bPulseGenConst1.Out;
-    x2cModel.blocks.bPulseGenSin.f =
-        &x2cModel.blocks.bPulseGenFreq.Out;
+    x2cModel.blocks.sSubVelocity.bPulseGenSin.A =
+        &x2cModel.blocks.sSubVelocity.bPulseGenConst1.Out;
+    x2cModel.blocks.sSubVelocity.bPulseGenSin.f =
+        &x2cModel.blocks.sSubVelocity.bPulseGenFreq.Out;
 
     /* Block RateLimiter                                                                                              */
-    x2cModel.blocks.bRateLimiter.In =
-        &x2cModel.blocks.bPulseGenDCVal.Out;
-    x2cModel.blocks.bRateLimiter.Init =
-        &x2cModel.blocks.bConst6.Out;
-    x2cModel.blocks.bRateLimiter.Enable =
-        &x2cModel.blocks.bAnd.Out;
-
-    /* Block Saturation                                                                                               */
-    x2cModel.blocks.bSaturation.In =
-        &x2cModel.blocks.bDiv2.Out;
-
-    /* Block Saturation2                                                                                              */
-    x2cModel.blocks.bSaturation2.In =
-        &x2cModel.inports.bInVdc;
+    x2cModel.blocks.sSubVelocity.bRateLimiter.In =
+        &x2cModel.blocks.sSubVelocity.bPulseGenDCVal.Out;
+    x2cModel.blocks.sSubVelocity.bRateLimiter.Init =
+        &x2cModel.blocks.sSubVelocity.bConst6.Out;
+    x2cModel.blocks.sSubVelocity.bRateLimiter.Enable =
+        &x2cModel.blocks.sSubCurrent.bAnd.Out;
 
     /* Block SpeedDesired                                                                                             */
-    x2cModel.blocks.bSpeedDesired.In1 =
-        &x2cModel.blocks.bSpeedDesiredConst.Out;
-    x2cModel.blocks.bSpeedDesired.In2 =
-        &x2cModel.blocks.bPulseGenOutput.Out;
+    x2cModel.blocks.sSubVelocity.bSpeedDesired.In1 =
+        &x2cModel.blocks.sSubVelocity.bSpeedDesiredConst.Out;
+    x2cModel.blocks.sSubVelocity.bSpeedDesired.In2 =
+        &x2cModel.blocks.sSubVelocity.bPulseGenOutput.Out;
 
     /* Block SpeedDesiredConst                                                                                        */
 
     /* Block SpeedReg                                                                                                 */
-    x2cModel.blocks.bSpeedReg.In =
-        &x2cModel.blocks.bSub2.Out;
-    x2cModel.blocks.bSpeedReg.Init =
-        &x2cModel.blocks.bConstSpeedInit.Out;
-    x2cModel.blocks.bSpeedReg.max =
-        &x2cModel.blocks.bCurrentLimit.Out;
-    x2cModel.blocks.bSpeedReg.min =
-        &x2cModel.blocks.bNegation3.Out;
-    x2cModel.blocks.bSpeedReg.Enable =
-        &x2cModel.blocks.bAnd.Out;
-
-    /* Block Sub1                                                                                                     */
-    x2cModel.blocks.bSub1.Plus =
-        &x2cModel.blocks.bCurrentDesired.Out;
-    x2cModel.blocks.bSub1.Minus =
-        &x2cModel.inports.bInIa;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.In =
+        &x2cModel.blocks.sSubVelocity.bSub2.Out;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.Init =
+        &x2cModel.blocks.sSubVelocity.bConstSpeedInit.Out;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.max =
+        &x2cModel.blocks.sSubVelocity.bCurrentLimit.Out;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.min =
+        &x2cModel.blocks.sSubVelocity.bNegation3.Out;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.Enable =
+        &x2cModel.blocks.sSubCurrent.bAnd.Out;
 
     /* Block Sub2                                                                                                     */
-    x2cModel.blocks.bSub2.Plus =
-        &x2cModel.blocks.bSpeedDesired.Out;
-    x2cModel.blocks.bSub2.Minus =
-        &x2cModel.blocks.bOmegaFilter.Out;
-
-    /* Block TFlipFlop                                                                                                */
-    x2cModel.blocks.bTFlipFlop.T =
-        &x2cModel.inports.bInButton;
+    x2cModel.blocks.sSubVelocity.bSub2.Plus =
+        &x2cModel.blocks.sSubVelocity.bSpeedDesired.Out;
+    x2cModel.blocks.sSubVelocity.bSub2.Minus =
+        &x2cModel.blocks.sSubVelocity.bMeasVelocity.Out;
 
     /******************************************************************************************************************/
     /**                                                 Link Outports                                                **/
@@ -468,57 +499,59 @@ void X2C_Init(void)
     x2cModel.outports.bOutErrClear =
         &x2cModel.inports.bInButton;
     x2cModel.outports.bOutPWMEnable =
-        &x2cModel.blocks.bAnd.Out;
+        &x2cModel.blocks.sSubCurrent.bAnd.Out;
     x2cModel.outports.bOutPWMa =
-        &x2cModel.blocks.bSaturation.Out;
+        &x2cModel.blocks.sSubCurrent.bSaturation.Out;
     x2cModel.outports.bOutPWMb =
-        &x2cModel.blocks.bNegation.Out;
+        &x2cModel.blocks.sSubCurrent.bNegation.Out;
     x2cModel.outports.bOutPWMc =
-        &x2cModel.blocks.bConst0.Out;
+        &x2cModel.blocks.sSubCurrent.bConst0.Out;
 
     /******************************************************************************************************************/
     /**                                           Run Block Init Functions                                           **/
     /******************************************************************************************************************/
-    And_Bool_Init(&x2cModel.blocks.bAnd);
-    AutoSwitch_Float32_Init(&x2cModel.blocks.bAutoSwitch);
-    Gain_Float32_Init(&x2cModel.blocks.bCFiIa);
-    Gain_Float32_Init(&x2cModel.blocks.bCFiOmega);
-    Constant_Float32_Init(&x2cModel.blocks.bConst0);
-    Constant_Float32_Init(&x2cModel.blocks.bConst6);
-    Constant_Float32_Init(&x2cModel.blocks.bConstCurrentInit);
-    Constant_Bool_Init(&x2cModel.blocks.bConstFalse);
-    Constant_Float32_Init(&x2cModel.blocks.bConstSpeedInit);
-    ManualSwitch_Float32_Init(&x2cModel.blocks.bCurrentDesired);
-    PT1_Float32_Init(&x2cModel.blocks.bCurrentIaFilter);
-    Constant_Float32_Init(&x2cModel.blocks.bCurrentLimit);
-    PILimit_Float32_Init(&x2cModel.blocks.bCurrentReg);
-    Div_Float32_Init(&x2cModel.blocks.bDiv2);
-    Negation_Float32_Init(&x2cModel.blocks.bNegation);
-    Negation_Float32_Init(&x2cModel.blocks.bNegation2);
-    Negation_Float32_Init(&x2cModel.blocks.bNegation3);
-    Not_Bool_Init(&x2cModel.blocks.bNot);
-    Gain_Float32_Init(&x2cModel.blocks.bOmega);
-    LowpassBiQ_Float32_Init(&x2cModel.blocks.bOmegaFilter);
-    Or_Bool_Init(&x2cModel.blocks.bOr);
-    ManualSwitch_Float32_Init(&x2cModel.blocks.bOutputVoltage);
-    Constant_Float32_Init(&x2cModel.blocks.bOutputVoltasgeLimit);
-    Phi2Speed_Float32_Init(&x2cModel.blocks.bPhi2Rpm);
-    Constant_Float32_Init(&x2cModel.blocks.bPulseGenConst1);
-    Constant_Float32_Init(&x2cModel.blocks.bPulseGenDCVal);
-    Constant_Float32_Init(&x2cModel.blocks.bPulseGenFreq);
-    Constant_Float32_Init(&x2cModel.blocks.bPulseGenHi);
-    Constant_Float32_Init(&x2cModel.blocks.bPulseGenLo);
-    ManualSwitch_Float32_Init(&x2cModel.blocks.bPulseGenOutput);
-    SinGen_Float32_Init(&x2cModel.blocks.bPulseGenSin);
-    RateLimiter_Float32_Init(&x2cModel.blocks.bRateLimiter);
-    Saturation_Float32_Init(&x2cModel.blocks.bSaturation);
-    Saturation_Float32_Init(&x2cModel.blocks.bSaturation2);
-    ManualSwitch_Float32_Init(&x2cModel.blocks.bSpeedDesired);
-    Constant_Float32_Init(&x2cModel.blocks.bSpeedDesiredConst);
-    PILimit_Float32_Init(&x2cModel.blocks.bSpeedReg);
-    Sub_Float32_Init(&x2cModel.blocks.bSub1);
-    Sub_Float32_Init(&x2cModel.blocks.bSub2);
-    TFlipFlop_Bool_Init(&x2cModel.blocks.bTFlipFlop);
+    And_Bool_Init(&x2cModel.blocks.sSubCurrent.bAnd);
+    Gain_Float32_Init(&x2cModel.blocks.sSubCurrent.bCFiIa);
+    Constant_Float32_Init(&x2cModel.blocks.sSubCurrent.bConst0);
+    Constant_Float32_Init(&x2cModel.blocks.sSubCurrent.bConstCurrentInit);
+    Constant_Bool_Init(&x2cModel.blocks.sSubCurrent.bConstFalse);
+    PT1_Float32_Init(&x2cModel.blocks.sSubCurrent.bCurrentIaFilter);
+    PILimit_Float32_Init(&x2cModel.blocks.sSubCurrent.bCurrentReg);
+    Div_Float32_Init(&x2cModel.blocks.sSubCurrent.bDiv2);
+    Negation_Float32_Init(&x2cModel.blocks.sSubCurrent.bNegation);
+    Negation_Float32_Init(&x2cModel.blocks.sSubCurrent.bNegation2);
+    Not_Bool_Init(&x2cModel.blocks.sSubCurrent.bNot);
+    Or_Bool_Init(&x2cModel.blocks.sSubCurrent.bOr);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.sSubCurrent.bOutputVoltage);
+    Constant_Float32_Init(&x2cModel.blocks.sSubCurrent.bOutputVoltasgeLimit);
+    Saturation_Float32_Init(&x2cModel.blocks.sSubCurrent.bSaturation);
+    Saturation_Float32_Init(&x2cModel.blocks.sSubCurrent.bSaturation2);
+    Sub_Float32_Init(&x2cModel.blocks.sSubCurrent.bSub1);
+    TFlipFlop_Bool_Init(&x2cModel.blocks.sSubCurrent.bTFlipFlop);
+    AutoSwitch_Float32_Init(&x2cModel.blocks.sSubVelocity.bAutoSwitch);
+    Gain_Float32_Init(&x2cModel.blocks.sSubVelocity.bCFiOmega);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bConst6);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bConstSpeedInit);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.sSubVelocity.bCurrentDesired);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bCurrentLimit);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.sSubVelocity.bMeasVelocity);
+    Negation_Float32_Init(&x2cModel.blocks.sSubVelocity.bNegation3);
+    Gain_Float32_Init(&x2cModel.blocks.sSubVelocity.bOmega);
+    LowpassBiQ_Float32_Init(&x2cModel.blocks.sSubVelocity.bOmegaFilter);
+    LowpassBiQ_Float32_Init(&x2cModel.blocks.sSubVelocity.bOmegaFilter1);
+    Phi2Speed_Float32_Init(&x2cModel.blocks.sSubVelocity.bPhi2Rpm);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenConst1);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenDCVal);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenFreq);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenHi);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenLo);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenOutput);
+    SinGen_Float32_Init(&x2cModel.blocks.sSubVelocity.bPulseGenSin);
+    RateLimiter_Float32_Init(&x2cModel.blocks.sSubVelocity.bRateLimiter);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.sSubVelocity.bSpeedDesired);
+    Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bSpeedDesiredConst);
+    PILimit_Float32_Init(&x2cModel.blocks.sSubVelocity.bSpeedReg);
+    Sub_Float32_Init(&x2cModel.blocks.sSubVelocity.bSub2);
     Scope_Main_Init(&x2cScope);
 
     /* Initialize TableStruct tables                                                                                  */
@@ -533,42 +566,43 @@ void X2C_Init(void)
 /**********************************************************************************************************************/
 /**                                            Run Block Update Functions                                            **/
 /**********************************************************************************************************************/
-void X2C_Update(void)
-{
-    X2C_Update_1();
-
-}
-
 /* X2C_Update for blocks with 1*Ts                                                                                    */
 void X2C_Update_1(void)
 {
-    SinGen_Float32_Update(&x2cModel.blocks.bPulseGenSin);
-    AutoSwitch_Float32_Update(&x2cModel.blocks.bAutoSwitch);
-    Phi2Speed_Float32_Update(&x2cModel.blocks.bPhi2Rpm);
-    Gain_Float32_Update(&x2cModel.blocks.bOmega);
-    LowpassBiQ_Float32_Update(&x2cModel.blocks.bOmegaFilter);
-    Negation_Float32_Update(&x2cModel.blocks.bNegation3);
-    Negation_Float32_Update(&x2cModel.blocks.bNegation2);
-    Not_Bool_Update(&x2cModel.blocks.bNot);
-    Saturation_Float32_Update(&x2cModel.blocks.bSaturation2);
-    Or_Bool_Update(&x2cModel.blocks.bOr);
-    Gain_Float32_Update(&x2cModel.blocks.bCFiIa);
-    Gain_Float32_Update(&x2cModel.blocks.bCFiOmega);
-    PT1_Float32_Update(&x2cModel.blocks.bCurrentIaFilter);
-    TFlipFlop_Bool_Update(&x2cModel.blocks.bTFlipFlop);
-    And_Bool_Update(&x2cModel.blocks.bAnd);
-    RateLimiter_Float32_Update(&x2cModel.blocks.bRateLimiter);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bPulseGenOutput);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bSpeedDesired);
-    Sub_Float32_Update(&x2cModel.blocks.bSub2);
-    PILimit_Float32_Update(&x2cModel.blocks.bSpeedReg);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bCurrentDesired);
-    Sub_Float32_Update(&x2cModel.blocks.bSub1);
-    PILimit_Float32_Update(&x2cModel.blocks.bCurrentReg);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bOutputVoltage);
-    Div_Float32_Update(&x2cModel.blocks.bDiv2);
-    Saturation_Float32_Update(&x2cModel.blocks.bSaturation);
-    Negation_Float32_Update(&x2cModel.blocks.bNegation);
+    AutoSwitch_Float32_Update(&x2cModel.blocks.sSubVelocity.bAutoSwitch);
+    Negation_Float32_Update(&x2cModel.blocks.sSubCurrent.bNegation2);
+    Not_Bool_Update(&x2cModel.blocks.sSubCurrent.bNot);
+    Saturation_Float32_Update(&x2cModel.blocks.sSubCurrent.bSaturation2);
+    Or_Bool_Update(&x2cModel.blocks.sSubCurrent.bOr);
+    PT1_Float32_Update(&x2cModel.blocks.sSubCurrent.bCurrentIaFilter);
+    TFlipFlop_Bool_Update(&x2cModel.blocks.sSubCurrent.bTFlipFlop);
+    And_Bool_Update(&x2cModel.blocks.sSubCurrent.bAnd);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.sSubVelocity.bPulseGenOutput);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.sSubVelocity.bCurrentDesired);
+    Sub_Float32_Update(&x2cModel.blocks.sSubCurrent.bSub1);
+    PILimit_Float32_Update(&x2cModel.blocks.sSubCurrent.bCurrentReg);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.sSubCurrent.bOutputVoltage);
+    Div_Float32_Update(&x2cModel.blocks.sSubCurrent.bDiv2);
+    Saturation_Float32_Update(&x2cModel.blocks.sSubCurrent.bSaturation);
+    Negation_Float32_Update(&x2cModel.blocks.sSubCurrent.bNegation);
     Scope_Main_Update(&x2cScope);
+}
+
+/* X2C_Update for blocks with 20*Ts                                                                                   */
+void X2C_Update_20(void)
+{
+    Phi2Speed_Float32_Update(&x2cModel.blocks.sSubVelocity.bPhi2Rpm);
+    SinGen_Float32_Update(&x2cModel.blocks.sSubVelocity.bPulseGenSin);
+    Gain_Float32_Update(&x2cModel.blocks.sSubVelocity.bOmega);
+    LowpassBiQ_Float32_Update(&x2cModel.blocks.sSubVelocity.bOmegaFilter);
+    LowpassBiQ_Float32_Update(&x2cModel.blocks.sSubVelocity.bOmegaFilter1);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.sSubVelocity.bMeasVelocity);
+    Negation_Float32_Update(&x2cModel.blocks.sSubVelocity.bNegation3);
+    Gain_Float32_Update(&x2cModel.blocks.sSubCurrent.bCFiIa);
+    Gain_Float32_Update(&x2cModel.blocks.sSubVelocity.bCFiOmega);
+    RateLimiter_Float32_Update(&x2cModel.blocks.sSubVelocity.bRateLimiter);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.sSubVelocity.bSpeedDesired);
+    Sub_Float32_Update(&x2cModel.blocks.sSubVelocity.bSub2);
+    PILimit_Float32_Update(&x2cModel.blocks.sSubVelocity.bSpeedReg);
 }
 

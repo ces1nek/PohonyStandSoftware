@@ -63,21 +63,23 @@
 			& HRTIM_PhAll_ODSR ? 1 : 0)
 
 typedef struct {
-	bool *In;
+	bool Enable;
 	bool lastState;
 } controlHrtimPWM_EnDis_typedef;
 
 static inline void controlHrtimPWM_EnDis(controlHrtimPWM_EnDis_typedef *S) {
 	// zapinani nabeznou hranou
-	if (*S->In) {
+	if (S->Enable) {
 		if (S->lastState == 0)
 			HRTIM1->sCommonRegs.OENR |= HRTIM_PhAll_OENR;
 	} else
 		// vypinani stavem 0
 		HRTIM1->sCommonRegs.ODISR |= HRTIM_PhAll_ODISR;
 
-	S->lastState = *S->In;
+	S->lastState = S->Enable;
 }
+//static inline void
+
 
 #if !defined(HRTIM_PERIOD)
 #error HRTIM_PERIOD has to be defined in STM32CubeMX GUI
@@ -122,7 +124,7 @@ static inline uint32_t modToCmp(float x){
 //#define CURRENT_OFFSET2 2001
 
 // Pocet PWM period pro spusteni vypoctu a vzorku ADC pro prumerovani
-#define CYCLES_TO_RUN 1
+#define ADC_CYCLES_TO_RUN 1
 // Pocet vzorku v AD sekvenci
 #define ADC12_NUM_OF_SAMPLES 1
 #define ADC3_NUM_OF_SAMPLES 1
@@ -158,48 +160,64 @@ typedef struct {
 
 /****************************************************************/
 
-extern adcData_typedef rawAdcData[CYCLES_TO_RUN];
+extern adcData_typedef rawAdcData[ADC_CYCLES_TO_RUN];
 /************************** Konec ADC ****************************************/
 
-#define TIM_BASE_FREQ 170000000
-#define ENCODER_RESOLUTION_BITS 11
+/*
+ * Definice konstant pro mereni frekvence
+ */
+#define TIM_BASE_FREQ (170000000)
+#define ENCODER_RESOLUTION_BITS (11)
 #define ENCODER_RESOLUTION (1<<ENCODER_RESOLUTION_BITS)
-#define EVAL_PERIOD 1e-3f
+#define EVAL_FREQ (1000)
+#define EVAL_TIM_PERIOD (TIM_BASE_FREQ/EVAL_FREQ - 1)
+#define EVAL_TIM_PWMPER (EVAL_TIM_PERIOD - 1)
 
-typedef struct{
+typedef volatile struct{
 	TIM_TypeDef *TIM_Position;
 	TIM_TypeDef *TIM_Period;
-	float Velocity1;
-	float Velocity2;
-	float Position;
-	uint32_t Period;
-	int16_t PosDiff;
-	int16_t Position_old;
+	float Velocity_rpm;
+	float Velocity_radps;
+	float Position_rad;
+	uint32_t ulPeriod;
+	uint32_t ulPosition;
+	int16_t sPosDiff;
+	int16_t sPosition_old;
 }getVelocityPosition_typedef;
-
+/*
+ * getVelocity:
+ * Spocita aktualni rychlost z polohy a poctu inkrementu za danou periodu
+ */
 static inline void getVelocity(getVelocityPosition_typedef *S){
-	int16_t Position = (int16_t) (S->TIM_Position->CNT << (16 - ENCODER_RESOLUTION_BITS));
-	S->Period =  S->TIM_Period->CCR1;
-	S->TIM_Period->CNT =0; // reset counter
-	S->PosDiff = Position - S->Position_old;
-	S->Position_old = Position;
+	// Precte se jaky byl pocet inkrementu v okamziku pulzu
+	int16_t sPosition = (int16_t) (S->ulPosition << (16 - ENCODER_RESOLUTION_BITS));
+	S->sPosDiff = sPosition - S->sPosition_old;
+	S->sPosition_old = sPosition;
+
+	// Pricist nebo odecist 1 inkrement
+	if(S->sPosDiff > 0)
+		S->sPosDiff -= (1 << (16 - ENCODER_RESOLUTION_BITS));
+	else if(S->sPosDiff < 0)
+		S->sPosDiff += (1 << (16 - ENCODER_RESOLUTION_BITS));
 
 	float Velo = 0.0f;
-	if(S->Period != 0)
-		Velo = S->PosDiff * 170000/ S->Period;
-//	if(Period == 0){
-//		Velo = 0;
-//	}else{
-//		Velo = (float)TIM_BASE_FREQ * (float)PosDiff / (float)ENCODER_RESOLUTION / (float)Period / EVAL_PERIOD;
-//	}
-
-	S->Velocity1 = Velo;
-	//S->Velocity2 = (float)PosDiff;
-
-	// Evaluate Position -PI..+PI
-	S->Position = Position * (float) (M_PI / (1 << 15));
-
-	// Save old values
+	float VeloRad = 0.0f;
+	if(S->ulPeriod != 0){
+		Velo = (float)S->sPosDiff / (float)S->ulPeriod;
+		VeloRad = Velo * TIM_BASE_FREQ/65536*2*M_PI;
+		Velo = Velo * TIM_BASE_FREQ/65536*60;
+	}
+	S->Velocity_rpm = Velo;
+	S->Velocity_radps = VeloRad;
+}
+/*
+ * getPosition:
+ * Precte aktualni polohu z inkrementalniho cidla.
+ * Nutno volat v periodicke funkci pred regulatorem rychlosti/polohy
+ */
+static inline void getPosition(getVelocityPosition_typedef *S){
+	int16_t sPosition = (S->TIM_Position->CNT << (16 - ENCODER_RESOLUTION_BITS));
+	S->Position_rad = sPosition * (float) (M_PI / (1 << 15));
 }
 
 /***************************************************************************/
