@@ -23,16 +23,16 @@ fn = 50;                %jm. frekvence
 
 wn = 2*pi*fn;
 
-% Parametry Gamma clanku:
+%Impedance:
 R_s = 0.25;              %odpor statoru, [Ohm]
 Lsigma_s = 6.79e-04;          %rozptylova indukcnost, [H]
-Xls = 0.0000001;        %wn*Ls; % Ohm rozptyl statoru (pozite pro model v simscape)
+Xls = 0.0000001;        %wn*Ls; % Ohm rozptyl statoru
 
 R_R = 0.211;             %odpor rotoru (prepocteny na stator), [Ohm]
-Xlr = wn*Lsigma_s;            %rozptyl rotoru, [Ohm] (vyzadovano simscape)
+Xlr = wn*Lsigma_s;            %rozptyl rotoru, [Ohm]
 
-L_s = 0.005498;          %magnetizacni indukcnost (vlastni indukcnost, statorova), [H]
-Xm = wn*L_s;             %magnetizacni impedance, [Ohm]
+L_s = 0.005498;          %magnetizacni indukcnost (vlastni indukcnost), [H]
+Xm = wn*Lm;             %magnetizacni impedance, [Ohm]
 
 X0 = 0;                 %reaktance nulove slozky po dq-transformaci, [Ohm]
 

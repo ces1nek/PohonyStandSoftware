@@ -2,15 +2,15 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2026-03-24 13:07
+ * Date:  2026-03-24 16:20
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
  */
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
-/* Model: stand_IM                                                                                                    */
-/* Date:  2026-03-24 13:07                                                                                            */
+/* Model: stand_IM_LSP_1                                                                                              */
+/* Date:  2026-03-24 16:20                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -27,27 +27,29 @@ extern "C" {
 /**********************************************************************************************************************/
 /* Common includes                                                                                                    */
 #include "Constant_Bool.h"
-#include "Mult_Float32.h"
-#include "PT1_Float32.h"
 #include "Gain_Float32.h"
 #include "InvPark_Float32.h"
-#include "Constant_Float32.h"
-#include "Div_Float32.h"
 #include "Add_Float32.h"
+#include "SinGen_Float32.h"
+#include "SpaceVectorAdjust_Float32.h"
 #include "SpaceVectorMod_Float32.h"
-#include "uGain_Float32.h"
-#include "Saturation_Float32.h"
-#include "And_Bool.h"
 #include "uI_Float32.h"
 #include "Not_Bool.h"
 #include "Or_Bool.h"
 #include "Sub_Float32.h"
 #include "TFlipFlop_Bool.h"
 #include "AutoSwitch_Float32.h"
-#include "EnableSwitch_Float32.h"
-#include "Negation_Float32.h"
 #include "ClarkeNPark_Float32.h"
-#include "Sqrt_Float32.h"
+#include "ManualSwitch_Float32.h"
+#include "Mult_Float32.h"
+#include "RateLimiter_Float32.h"
+#include "VectorNormLimit_Float32.h"
+#include "Constant_Float32.h"
+#include "PILimit_Float32.h"
+#include "uGain_Float32.h"
+#include "Saturation_Float32.h"
+#include "And_Bool.h"
+#include "Negation_Float32.h"
 #include "LowpassBiQ_Float32.h"
 #include "Scope_Main.h"
 #include "CommonFcts.h"
@@ -57,99 +59,103 @@ extern "C" {
 /**********************************************************************************************************************/
 #define FUNCTIONS \
     CONSTANT_BOOL_FUNCTIONS , \
-    MULT_FLOAT32_FUNCTIONS , \
-    PT1_FLOAT32_FUNCTIONS , \
     GAIN_FLOAT32_FUNCTIONS , \
     INVPARK_FLOAT32_FUNCTIONS , \
-    CONSTANT_FLOAT32_FUNCTIONS , \
-    DIV_FLOAT32_FUNCTIONS , \
     ADD_FLOAT32_FUNCTIONS , \
+    SINGEN_FLOAT32_FUNCTIONS , \
+    SPACEVECTORADJUST_FLOAT32_FUNCTIONS , \
     SPACEVECTORMOD_FLOAT32_FUNCTIONS , \
-    UGAIN_FLOAT32_FUNCTIONS , \
-    SATURATION_FLOAT32_FUNCTIONS , \
-    AND_BOOL_FUNCTIONS , \
     UI_FLOAT32_FUNCTIONS , \
     NOT_BOOL_FUNCTIONS , \
     OR_BOOL_FUNCTIONS , \
     SUB_FLOAT32_FUNCTIONS , \
     TFLIPFLOP_BOOL_FUNCTIONS , \
     AUTOSWITCH_FLOAT32_FUNCTIONS , \
-    ENABLESWITCH_FLOAT32_FUNCTIONS , \
-    NEGATION_FLOAT32_FUNCTIONS , \
     CLARKENPARK_FLOAT32_FUNCTIONS , \
-    SQRT_FLOAT32_FUNCTIONS , \
+    MANUALSWITCH_FLOAT32_FUNCTIONS , \
+    MULT_FLOAT32_FUNCTIONS , \
+    RATELIMITER_FLOAT32_FUNCTIONS , \
+    VECTORNORMLIMIT_FLOAT32_FUNCTIONS , \
+    CONSTANT_FLOAT32_FUNCTIONS , \
+    PILIMIT_FLOAT32_FUNCTIONS , \
+    UGAIN_FLOAT32_FUNCTIONS , \
+    SATURATION_FLOAT32_FUNCTIONS , \
+    AND_BOOL_FUNCTIONS , \
+    NEGATION_FLOAT32_FUNCTIONS , \
     LOWPASSBIQ_FLOAT32_FUNCTIONS , \
     SCOPE_MAIN_FUNCTIONS
 
 #define PARAMETER_TABLE \
     { 1, &x2cModel.blocks.bAdd } , \
-    { 2, &x2cModel.blocks.bAdd1 } , \
-    { 3, &x2cModel.blocks.bAmplitude1 } , \
-    { 4, &x2cModel.blocks.bAnd } , \
-    { 5, &x2cModel.blocks.bAronPower1 } , \
-    { 6, &x2cModel.blocks.bAutoSwitch } , \
-    { 7, &x2cModel.blocks.bClarkeNPark } , \
-    { 8, &x2cModel.blocks.bDiv2 } , \
-    { 9, &x2cModel.blocks.bEnable } , \
-    { 10, &x2cModel.blocks.bEnableSwitch } , \
-    { 11, &x2cModel.blocks.bGain1 } , \
-    { 12, &x2cModel.blocks.bGain2 } , \
-    { 13, &x2cModel.blocks.bGain4 } , \
-    { 14, &x2cModel.blocks.bGain5 } , \
-    { 15, &x2cModel.blocks.bI1rms } , \
-    { 16, &x2cModel.blocks.bInit } , \
-    { 17, &x2cModel.blocks.bInvPark } , \
-    { 18, &x2cModel.blocks.bMult } , \
-    { 19, &x2cModel.blocks.bMult1 } , \
-    { 20, &x2cModel.blocks.bMult2 } , \
-    { 21, &x2cModel.blocks.bMult3 } , \
-    { 22, &x2cModel.blocks.bMult4 } , \
-    { 23, &x2cModel.blocks.bMult5 } , \
-    { 24, &x2cModel.blocks.bMult6 } , \
-    { 25, &x2cModel.blocks.bNegation } , \
-    { 26, &x2cModel.blocks.bNegation1 } , \
-    { 27, &x2cModel.blocks.bNegation2 } , \
-    { 28, &x2cModel.blocks.bNegation3 } , \
-    { 29, &x2cModel.blocks.bNot } , \
-    { 30, &x2cModel.blocks.bOmeToFreq } , \
-    { 31, &x2cModel.blocks.bOmegaFilter } , \
-    { 32, &x2cModel.blocks.bOr } , \
-    { 33, &x2cModel.blocks.bPT1 } , \
-    { 34, &x2cModel.blocks.bPT2 } , \
-    { 35, &x2cModel.blocks.bSaturation1 } , \
-    { 36, &x2cModel.blocks.bSaturation2 } , \
-    { 37, &x2cModel.blocks.bSkluz } , \
-    { 38, &x2cModel.blocks.bSkluz1 } , \
-    { 39, &x2cModel.blocks.bSpace_Vector_Modulation } , \
-    { 40, &x2cModel.blocks.bSub1 } , \
-    { 41, &x2cModel.blocks.bSub2 } , \
-    { 42, &x2cModel.blocks.bTFlipFlop } , \
-    { 43, &x2cModel.blocks.bU12rms } , \
-    { 44, &x2cModel.blocks.bVoltage } , \
-    { 45, &x2cModel.blocks.bf_to_per } , \
-    { 46, &x2cModel.blocks.buGain } , \
-    { 47, &x2cModel.blocks.buI1 } , \
-    { 64, &x2cScope }
+    { 2, &x2cModel.blocks.bAnd } , \
+    { 3, &x2cModel.blocks.bAutoSwitch } , \
+    { 4, &x2cModel.blocks.bClarkeNPark } , \
+    { 5, &x2cModel.blocks.bConst6 } , \
+    { 6, &x2cModel.blocks.bEna1 } , \
+    { 7, &x2cModel.blocks.bEna2 } , \
+    { 8, &x2cModel.blocks.bEnable } , \
+    { 9, &x2cModel.blocks.bInit } , \
+    { 10, &x2cModel.blocks.bInvPark } , \
+    { 11, &x2cModel.blocks.bIqFilter } , \
+    { 12, &x2cModel.blocks.bManualSwitch } , \
+    { 13, &x2cModel.blocks.bMax } , \
+    { 14, &x2cModel.blocks.bMax1 } , \
+    { 15, &x2cModel.blocks.bMin } , \
+    { 16, &x2cModel.blocks.bMult } , \
+    { 17, &x2cModel.blocks.bNegation } , \
+    { 18, &x2cModel.blocks.bNegation1 } , \
+    { 19, &x2cModel.blocks.bNegation2 } , \
+    { 20, &x2cModel.blocks.bNot } , \
+    { 21, &x2cModel.blocks.bOme_s } , \
+    { 22, &x2cModel.blocks.bOmegaFilter } , \
+    { 23, &x2cModel.blocks.bOr } , \
+    { 24, &x2cModel.blocks.bPILimit } , \
+    { 25, &x2cModel.blocks.bPsi2Usd } , \
+    { 26, &x2cModel.blocks.bPsiS } , \
+    { 27, &x2cModel.blocks.bPulseGenConst1 } , \
+    { 28, &x2cModel.blocks.bPulseGenDCVal } , \
+    { 29, &x2cModel.blocks.bPulseGenFreq } , \
+    { 30, &x2cModel.blocks.bPulseGenHi } , \
+    { 31, &x2cModel.blocks.bPulseGenLo } , \
+    { 32, &x2cModel.blocks.bPulseGenOutput } , \
+    { 33, &x2cModel.blocks.bPulseGenSin } , \
+    { 34, &x2cModel.blocks.bRateLimiter } , \
+    { 35, &x2cModel.blocks.bRs } , \
+    { 36, &x2cModel.blocks.bSkluzovaOme } , \
+    { 37, &x2cModel.blocks.bSpaceVectorAdjust } , \
+    { 38, &x2cModel.blocks.bSpaceVectorMod } , \
+    { 39, &x2cModel.blocks.bSub } , \
+    { 40, &x2cModel.blocks.bTFlipFlop } , \
+    { 41, &x2cModel.blocks.bUq } , \
+    { 42, &x2cModel.blocks.bVdcFilter } , \
+    { 43, &x2cModel.blocks.bVdcSaturation } , \
+    { 44, &x2cModel.blocks.bVectorLimit } , \
+    { 45, &x2cModel.blocks.bVectorNormLimit } , \
+    { 46, &x2cModel.blocks.bVphase } , \
+    { 47, &x2cModel.blocks.bpp } , \
+    { 48, &x2cModel.blocks.buGain } , \
+    { 49, &x2cModel.blocks.buI1 } , \
+    { 66, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
-    { 48, 1, &x2cModel.inports.bInButton } , \
-    { 49, 1, &x2cModel.inports.bInEnable } , \
-    { 50, 4, &x2cModel.inports.bInIa } , \
-    { 51, 4, &x2cModel.inports.bInIb } , \
-    { 52, 4, &x2cModel.inports.bInIc } , \
-    { 53, 4, &x2cModel.inports.bInPosition1 } , \
-    { 54, 4, &x2cModel.inports.bInPosition2 } , \
-    { 55, 1, &x2cModel.inports.bInPwmFault } , \
-    { 56, 4, &x2cModel.inports.bInVdc } , \
-    { 57, 4, &x2cModel.inports.bInVelocity1_radps } , \
-    { 58, 4, &x2cModel.inports.bInVelocity1_rpm } 
+    { 50, 1, &x2cModel.inports.bInButton } , \
+    { 51, 1, &x2cModel.inports.bInEnable } , \
+    { 52, 4, &x2cModel.inports.bInIa } , \
+    { 53, 4, &x2cModel.inports.bInIb } , \
+    { 54, 4, &x2cModel.inports.bInIc } , \
+    { 55, 4, &x2cModel.inports.bInPosition1 } , \
+    { 56, 4, &x2cModel.inports.bInPosition2 } , \
+    { 57, 1, &x2cModel.inports.bInPwmFault } , \
+    { 58, 4, &x2cModel.inports.bInVdc } , \
+    { 59, 4, &x2cModel.inports.bInVelocity1_radps } , \
+    { 60, 4, &x2cModel.inports.bInVelocity1_rpm } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 59, 1, &x2cModel.outports.bOutErrClear } , \
-    { 60, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 61, 4, &x2cModel.outports.bOutPWMa } , \
-    { 62, 4, &x2cModel.outports.bOutPWMb } , \
-    { 63, 4, &x2cModel.outports.bOutPWMc } 
+    { 61, 1, &x2cModel.outports.bOutErrClear } , \
+    { 62, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 63, 4, &x2cModel.outports.bOutPWMa } , \
+    { 64, 4, &x2cModel.outports.bOutPWMb } , \
+    { 65, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -159,50 +165,52 @@ struct x2cModel {
 /*  Control Blocks                                                                                                    */
     struct {
         ADD_FLOAT32 bAdd;
-        ADD_FLOAT32 bAdd1;
-        CONSTANT_FLOAT32 bAmplitude1;
         AND_BOOL bAnd;
-        ADD_FLOAT32 bAronPower1;
         AUTOSWITCH_FLOAT32 bAutoSwitch;
         CLARKENPARK_FLOAT32 bClarkeNPark;
-        DIV_FLOAT32 bDiv2;
+        CONSTANT_FLOAT32 bConst6;
+        CONSTANT_BOOL bEna1;
+        CONSTANT_BOOL bEna2;
         CONSTANT_BOOL bEnable;
-        ENABLESWITCH_FLOAT32 bEnableSwitch;
-        GAIN_FLOAT32 bGain1;
-        GAIN_FLOAT32 bGain2;
-        GAIN_FLOAT32 bGain4;
-        GAIN_FLOAT32 bGain5;
-        SQRT_FLOAT32 bI1rms;
         CONSTANT_FLOAT32 bInit;
         INVPARK_FLOAT32 bInvPark;
+        LOWPASSBIQ_FLOAT32 bIqFilter;
+        MANUALSWITCH_FLOAT32 bManualSwitch;
+        CONSTANT_FLOAT32 bMax;
+        CONSTANT_FLOAT32 bMax1;
+        CONSTANT_FLOAT32 bMin;
         MULT_FLOAT32 bMult;
-        MULT_FLOAT32 bMult1;
-        MULT_FLOAT32 bMult2;
-        MULT_FLOAT32 bMult3;
-        MULT_FLOAT32 bMult4;
-        MULT_FLOAT32 bMult5;
-        MULT_FLOAT32 bMult6;
         NEGATION_FLOAT32 bNegation;
         NEGATION_FLOAT32 bNegation1;
         NEGATION_FLOAT32 bNegation2;
-        NEGATION_FLOAT32 bNegation3;
         NOT_BOOL bNot;
-        GAIN_FLOAT32 bOmeToFreq;
+        ADD_FLOAT32 bOme_s;
         LOWPASSBIQ_FLOAT32 bOmegaFilter;
         OR_BOOL bOr;
-        PT1_FLOAT32 bPT1;
-        PT1_FLOAT32 bPT2;
-        SATURATION_FLOAT32 bSaturation1;
-        SATURATION_FLOAT32 bSaturation2;
-        CONSTANT_FLOAT32 bSkluz;
-        CONSTANT_FLOAT32 bSkluz1;
-        SPACEVECTORMOD_FLOAT32 bSpace_Vector_Modulation;
-        SUB_FLOAT32 bSub1;
-        SUB_FLOAT32 bSub2;
+        PILIMIT_FLOAT32 bPILimit;
+        GAIN_FLOAT32 bPsi2Usd;
+        CONSTANT_FLOAT32 bPsiS;
+        CONSTANT_FLOAT32 bPulseGenConst1;
+        CONSTANT_FLOAT32 bPulseGenDCVal;
+        CONSTANT_FLOAT32 bPulseGenFreq;
+        CONSTANT_FLOAT32 bPulseGenHi;
+        CONSTANT_FLOAT32 bPulseGenLo;
+        MANUALSWITCH_FLOAT32 bPulseGenOutput;
+        SINGEN_FLOAT32 bPulseGenSin;
+        RATELIMITER_FLOAT32 bRateLimiter;
+        GAIN_FLOAT32 bRs;
+        CONSTANT_FLOAT32 bSkluzovaOme;
+        SPACEVECTORADJUST_FLOAT32 bSpaceVectorAdjust;
+        SPACEVECTORMOD_FLOAT32 bSpaceVectorMod;
+        SUB_FLOAT32 bSub;
         TFLIPFLOP_BOOL bTFlipFlop;
-        SQRT_FLOAT32 bU12rms;
-        CONSTANT_FLOAT32 bVoltage;
-        GAIN_FLOAT32 bf_to_per;
+        ADD_FLOAT32 bUq;
+        LOWPASSBIQ_FLOAT32 bVdcFilter;
+        SATURATION_FLOAT32 bVdcSaturation;
+        CONSTANT_FLOAT32 bVectorLimit;
+        VECTORNORMLIMIT_FLOAT32 bVectorNormLimit;
+        GAIN_FLOAT32 bVphase;
+        GAIN_FLOAT32 bpp;
         UGAIN_FLOAT32 buGain;
         UI_FLOAT32 buI1;
     } blocks;
