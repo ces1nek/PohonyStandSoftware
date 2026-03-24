@@ -1,4 +1,4 @@
-10:41:53 **** Clean-only build of configuration Debug for project G474RE_Stand_DCM ****
+10:44:55 **** Clean-only build of configuration Debug for project G474RE_Stand_DCM ****
 make -j4 clean 
 rm -rf ./X2CCode/FlashTable.cyclo ./X2CCode/FlashTable.d ./X2CCode/FlashTable.o ./X2CCode/FlashTable.su ./X2CCode/RamTable.cyclo ./X2CCode/RamTable.d ./X2CCode/RamTable.o ./X2CCode/RamTable.su ./X2CCode/X2C.cyclo ./X2CCode/X2C.d ./X2CCode/X2C.o ./X2CCode/X2C.su
 rm -rf ./X2C-Core/BlockServices.cyclo ./X2C-Core/BlockServices.d ./X2C-Core/BlockServices.o ./X2C-Core/BlockServices.su ./X2C-Core/CRC.cyclo ./X2C-Core/CRC.d ./X2C-Core/CRC.o ./X2C-Core/CRC.su ./X2C-Core/CRC8CCITT.cyclo ./X2C-Core/CRC8CCITT.d ./X2C-Core/CRC8CCITT.o ./X2C-Core/CRC8CCITT.su ./X2C-Core/CommonFcts.cyclo ./X2C-Core/CommonFcts.d ./X2C-Core/CommonFcts.o ./X2C-Core/CommonFcts.su ./X2C-Core/LNet.cyclo ./X2C-Core/LNet.d ./X2C-Core/LNet.o ./X2C-Core/LNet.su ./X2C-Core/Scope_Main.cyclo ./X2C-Core/Scope_Main.d ./X2C-Core/Scope_Main.o ./X2C-Core/Scope_Main.su ./X2C-Core/SerialGeneric.cyclo ./X2C-Core/SerialGeneric.d ./X2C-Core/SerialGeneric.o ./X2C-Core/SerialGeneric.su ./X2C-Core/Services.cyclo ./X2C-Core/Services.d ./X2C-Core/Services.o ./X2C-Core/Services.su ./X2C-Core/TableStruct.cyclo ./X2C-Core/TableStruct.d ./X2C-Core/TableStruct.o ./X2C-Core/TableStruct.su ./X2C-Core/VersionInfo.cyclo ./X2C-Core/VersionInfo.d ./X2C-Core/VersionInfo.o ./X2C-Core/VersionInfo.su
@@ -10,5 +10,5 @@ rm -rf ./Application/AppStand_dcm.cyclo ./Application/AppStand_dcm.d ./Applicati
 rm -rf G474RE_Stand_DCM.elf G474RE_Stand_DCM.list G474RE_Stand_DCM.map default.size.stdout
  
 
-10:41:54 Build Finished. 0 errors, 0 warnings. (took 868ms)
+10:44:55 Build Finished. 0 errors, 0 warnings. (took 256ms)
 
