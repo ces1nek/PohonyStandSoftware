@@ -2,7 +2,7 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2026-02-24 15:31
+ * Date:  2026-03-24 10:39
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
@@ -10,7 +10,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-02-24 15:31                                                                                            */
+/* Date:  2026-03-24 10:39                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -93,46 +93,48 @@ extern "C" {
     { 19, &x2cModel.blocks.sPwmGen.bSaturation2 } , \
     { 20, &x2cModel.blocks.bRateLimiter } , \
     { 21, &x2cModel.blocks.sRegCurrent.bConstCurrentInit } , \
-    { 22, &x2cModel.blocks.sRegCurrent.bCurrentReg } , \
-    { 23, &x2cModel.blocks.sRegCurrent.bNegation2 } , \
-    { 24, &x2cModel.blocks.sRegCurrent.bOutputVoltasgeLimit } , \
-    { 25, &x2cModel.blocks.sRegCurrent.bSub1 } , \
-    { 26, &x2cModel.blocks.sSubVelocity.bCFiOmega } , \
-    { 27, &x2cModel.blocks.sSubVelocity.bConstSpeedInit } , \
-    { 28, &x2cModel.blocks.sSubVelocity.bCurrentLimit } , \
-    { 29, &x2cModel.blocks.sSubVelocity.bMeasVelocity } , \
-    { 30, &x2cModel.blocks.sSubVelocity.bNegation3 } , \
-    { 31, &x2cModel.blocks.sSubVelocity.bOmega } , \
-    { 32, &x2cModel.blocks.sSubVelocity.bOmegaFilter } , \
-    { 33, &x2cModel.blocks.sSubVelocity.bOmegaFilter1 } , \
-    { 34, &x2cModel.blocks.sSubVelocity.bPhi2Rpm } , \
-    { 35, &x2cModel.blocks.sSubVelocity.bSpeedReg } , \
-    { 36, &x2cModel.blocks.sSubVelocity.bSub2 } , \
-    { 37, &x2cModel.blocks.bSwIsetpoint } , \
-    { 38, &x2cModel.blocks.bSwVoltSet } , \
-    { 39, &x2cModel.blocks.sTorqueCalc.bCFiIa } , \
-    { 40, &x2cModel.blocks.sTorqueCalc.bIaFilter } , \
-    { 57, &x2cScope }
+    { 22, &x2cModel.blocks.sRegCurrent.bConstEnable } , \
+    { 23, &x2cModel.blocks.sRegCurrent.bConstIsetpointInit } , \
+    { 24, &x2cModel.blocks.sRegCurrent.bCurrentReg } , \
+    { 25, &x2cModel.blocks.sRegCurrent.bNegation2 } , \
+    { 26, &x2cModel.blocks.sRegCurrent.bOutputVoltasgeLimit } , \
+    { 27, &x2cModel.blocks.sRegCurrent.bRateLimiter } , \
+    { 28, &x2cModel.blocks.sRegCurrent.bSub1 } , \
+    { 29, &x2cModel.blocks.sSubVelocity.bCFiOmega } , \
+    { 30, &x2cModel.blocks.sSubVelocity.bConstSpeedInit } , \
+    { 31, &x2cModel.blocks.sSubVelocity.bCurrentLimit } , \
+    { 32, &x2cModel.blocks.sSubVelocity.bMeasVelocity } , \
+    { 33, &x2cModel.blocks.sSubVelocity.bNegation3 } , \
+    { 34, &x2cModel.blocks.sSubVelocity.bOmega } , \
+    { 35, &x2cModel.blocks.sSubVelocity.bOmegaFilter } , \
+    { 36, &x2cModel.blocks.sSubVelocity.bPhi2Rpm } , \
+    { 37, &x2cModel.blocks.sSubVelocity.bSpeedReg } , \
+    { 38, &x2cModel.blocks.sSubVelocity.bSub2 } , \
+    { 39, &x2cModel.blocks.bSwIsetpoint } , \
+    { 40, &x2cModel.blocks.bSwVoltSet } , \
+    { 41, &x2cModel.blocks.sTorqueCalc.bCFiIa } , \
+    { 42, &x2cModel.blocks.sTorqueCalc.bIaFilter } , \
+    { 59, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
-    { 41, 1, &x2cModel.inports.bInButton } , \
-    { 42, 1, &x2cModel.inports.bInEnable } , \
-    { 43, 4, &x2cModel.inports.bInIa } , \
-    { 44, 4, &x2cModel.inports.bInIb } , \
-    { 45, 4, &x2cModel.inports.bInIc } , \
-    { 46, 4, &x2cModel.inports.bInPosition1 } , \
-    { 47, 4, &x2cModel.inports.bInPosition2 } , \
-    { 48, 1, &x2cModel.inports.bInPwmFault } , \
-    { 49, 4, &x2cModel.inports.bInVdc } , \
-    { 50, 4, &x2cModel.inports.bInVelocity1_radps } , \
-    { 51, 4, &x2cModel.inports.bInVelocity1_rpm } 
+    { 43, 1, &x2cModel.inports.bInButton } , \
+    { 44, 1, &x2cModel.inports.bInEnable } , \
+    { 45, 4, &x2cModel.inports.bInIa } , \
+    { 46, 4, &x2cModel.inports.bInIb } , \
+    { 47, 4, &x2cModel.inports.bInIc } , \
+    { 48, 4, &x2cModel.inports.bInPosition1 } , \
+    { 49, 4, &x2cModel.inports.bInPosition2 } , \
+    { 50, 1, &x2cModel.inports.bInPwmFault } , \
+    { 51, 4, &x2cModel.inports.bInVdc } , \
+    { 52, 4, &x2cModel.inports.bInVelocity1_radps } , \
+    { 53, 4, &x2cModel.inports.bInVelocity1_rpm } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 52, 1, &x2cModel.outports.bOutErrClear } , \
-    { 53, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 54, 4, &x2cModel.outports.bOutPWMa } , \
-    { 55, 4, &x2cModel.outports.bOutPWMb } , \
-    { 56, 4, &x2cModel.outports.bOutPWMc } 
+    { 54, 1, &x2cModel.outports.bOutErrClear } , \
+    { 55, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 56, 4, &x2cModel.outports.bOutPWMa } , \
+    { 57, 4, &x2cModel.outports.bOutPWMb } , \
+    { 58, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -160,9 +162,12 @@ struct x2cModel {
 /*      Sub-system RegCurrent                                                                                         */
         struct {
             CONSTANT_FLOAT32 bConstCurrentInit;
+            CONSTANT_BOOL bConstEnable;
+            CONSTANT_FLOAT32 bConstIsetpointInit;
             PILIMIT_FLOAT32 bCurrentReg;
             NEGATION_FLOAT32 bNegation2;
             CONSTANT_FLOAT32 bOutputVoltasgeLimit;
+            RATELIMITER_FLOAT32 bRateLimiter;
             SUB_FLOAT32 bSub1;
         } sRegCurrent;
 /*      Sub-system SubVelocity                                                                                        */
@@ -174,7 +179,6 @@ struct x2cModel {
             NEGATION_FLOAT32 bNegation3;
             GAIN_FLOAT32 bOmega;
             LOWPASSBIQ_FLOAT32 bOmegaFilter;
-            LOWPASSBIQ_FLOAT32 bOmegaFilter1;
             PHI2SPEED_FLOAT32 bPhi2Rpm;
             PILIMIT_FLOAT32 bSpeedReg;
             SUB_FLOAT32 bSub2;
