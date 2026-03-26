@@ -86,6 +86,11 @@
 			<locationURI>X2C_ROOT/Library/Control/Controller/src/ILimit_Float32.c</locationURI>
 		</link>
 		<link>
+			<name>X2C-Blocks/Int2Real_Bool_Float32.c</name>
+			<type>1</type>
+			<locationURI>X2C_ROOT/Library/General/Controller/src/Int2Real_Bool_Float32.c</locationURI>
+		</link>
+		<link>
 			<name>X2C-Blocks/Limitation_Float32.c</name>
 			<type>1</type>
 			<locationURI>X2C_ROOT/Library/General/Controller/src/Limitation_Float32.c</locationURI>

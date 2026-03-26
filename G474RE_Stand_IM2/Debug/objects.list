@@ -30,6 +30,7 @@
 "./X2C-Blocks/Div_Float32.o"
 "./X2C-Blocks/Gain_Float32.o"
 "./X2C-Blocks/ILimit_Float32.o"
+"./X2C-Blocks/Int2Real_Bool_Float32.o"
 "./X2C-Blocks/Limitation_Float32.o"
 "./X2C-Blocks/LowpassBiQ_Float32.o"
 "./X2C-Blocks/ManualSwitch_Bool.o"
