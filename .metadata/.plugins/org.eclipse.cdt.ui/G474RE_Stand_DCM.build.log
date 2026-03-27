@@ -1,4 +1,4 @@
-13:30:40 **** Incremental Build of configuration Debug for project G474RE_Stand_DCM ****
+09:25:14 **** Incremental Build of configuration Debug for project G474RE_Stand_DCM ****
 make -j4 all 
 arm-none-eabi-size  G474RE_Stand_DCM.elf 
    text	   data	    bss	    dec	    hex	filename
@@ -6,5 +6,5 @@ arm-none-eabi-size  G474RE_Stand_DCM.elf
 Finished building: default.size.stdout
  
 
-13:30:41 Build Finished. 0 errors, 0 warnings. (took 467ms)
+09:25:15 Build Finished. 0 errors, 0 warnings. (took 625ms)
 

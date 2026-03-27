@@ -22,6 +22,7 @@ pp = 2;                 %pocet polovych dvojic, [-]
 fn = 50;                %jm. frekvence
 In = 9.5                %jm. proud
 wn = 2*pi*fn;
+Ufamp = Un*sqrt(2/3)   % amplituda faz napeti
 
 % Parametry Gamma clanku:
 AsmParam.PsiS_n = 0.055            % Jmenovity statorovy tok
