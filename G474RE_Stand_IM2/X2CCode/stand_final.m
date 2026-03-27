@@ -20,22 +20,29 @@ Pn = 180;               %jm. prikon
 Un = 23.4;              %jm. napeti
 pp = 2;                 %pocet polovych dvojic, [-]
 fn = 50;                %jm. frekvence
-
+In = 9.5                %jm. proud
 wn = 2*pi*fn;
 
 % Parametry Gamma clanku:
-R_s = 0.25;              %odpor statoru, [Ohm]
-Lsigma_s = 6.79e-04;          %rozptylova indukcnost, [H]
-Xls = 0.0000001;        %wn*Ls; % Ohm rozptyl statoru (pozite pro model v simscape)
+AsmParam.PsiS_n = 0.055            % Jmenovity statorovy tok
+AsmParam.R_s = 0.25;              %odpor statoru, [Ohm]
+AsmParam.Lsigma_R = 6.79e-04;          %rozptylova indukcnost, [H]
+AsmParam.Xls = 0.0000001;        %wn*Ls; % Ohm rozptyl statoru (pozite pro model v simscape)
 
-R_R = 0.211;             %odpor rotoru (prepocteny na stator), [Ohm]
-Xlr = wn*Lsigma_s;            %rozptyl rotoru, [Ohm] (vyzadovano simscape)
+AsmParam.R_R = 0.211;             %odpor rotoru (prepocteny na stator), [Ohm]
+AsmParam.Xlr = wn*AsmParam.Lsigma_R;            %rozptyl rotoru, [Ohm] (vyzadovano simscape)
 
-L_s = 0.005498;          %magnetizacni indukcnost (vlastni indukcnost, statorova), [H]
-Xm = wn*L_s;             %magnetizacni impedance, [Ohm]
+AsmParam.L_s = 0.005498;          %magnetizacni indukcnost (vlastni indukcnost, statorova), [H]
+AsmParam.Xm = wn*AsmParam.L_s;             %magnetizacni impedance, [Ohm]
 
-X0 = 0;                 %reaktance nulove slozky po dq-transformaci, [Ohm]
+%AamGama.X0 = 0;                 %reaktance nulove slozky po dq-transformaci, [Ohm]
 
+% Parametry inverzniho Gamma clanku:
+AsmParam.k = sqrt(AsmParam.L_s/(AsmParam.L_s+AsmParam.Lsigma_R));  % cinitel rozptylu
+AsmParam.L_R = AsmParam.k^2*AsmParam.L_s;                  % rotorova indukcnost inv gama clanku
+AsmParam.Lsigma_s = AsmParam.L_s*(1-AsmParam.k^2);          % rozptylova indukcnost inv gama clanku
+AsmParam.R_R_ig = AsmParam.R_R*AsmParam.k^4;              % rotorovy odpor inv gama clanku                        
+AsmParam.PsiR_n = AsmParam.PsiS_n - AsmParam.Lsigma_s*In;  % Jmenovity rotorovy tok
 %% Parametry menice:
 Ud = 35;                %napeti meziobvodu, [V]
 Fpwm = 20e3;            %frekvence PWM, [Hz]
@@ -95,3 +102,14 @@ SpeedRegI = Jm/cfi/8/t_sigmaI^2;
 
 %SpeedRegP = 4;
 %SpeedRegI = 50;
+
+
+
+%% regulace ASM - vekrorove rizeni s orientaci na rotorovy tok
+%% Regulace proudu
+
+AsmParam.Re_ig = AsmParam.R_s+AsmParam.R_R_ig;  % ekvivalentni odpor proudove smycky
+AsmParam.Tau_mot_asm_ig = AsmParam.Lsigma_s/AsmParam.Re_ig; % casova konstanta motoru
+AsmParam.Ctrl_I.Ks = Kmen*Kci/AsmParam.Re_ig;              % zesileni soustavy prodove smycky;
+AsmParam.Ctrl_I.CurrentRegP = AsmParam.Tau_mot_asm_ig/(2*t_sigma*AsmParam.Ctrl_I.Ks);  %proporcionalni slozka
+AsmParam.Ctrl_I.CurrentRegI = 1/(2*t_sigma*AsmParam.Ctrl_I.Ks);   %integracni slozka
