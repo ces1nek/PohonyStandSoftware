@@ -43,7 +43,7 @@ AsmParam.k = sqrt(AsmParam.L_s/(AsmParam.L_s+AsmParam.Lsigma_R));  % cinitel roz
 AsmParam.L_R = AsmParam.k^2*AsmParam.L_s;                  % rotorova indukcnost inv gama clanku
 AsmParam.Lsigma_s = AsmParam.L_s*(1-AsmParam.k^2);          % rozptylova indukcnost inv gama clanku
 AsmParam.R_R_ig = AsmParam.R_R*AsmParam.k^4;              % rotorovy odpor inv gama clanku                        
-AsmParam.PsiR_n = AsmParam.PsiS_n - AsmParam.Lsigma_s*In;  % Jmenovity rotorovy tok
+AsmParam.PsiR_n =0.9*(AsmParam.PsiS_n - AsmParam.Lsigma_s*In);  % Jmenovity rotorovy tok
 %% Parametry menice:
 Ud = 35;                %napeti meziobvodu, [V]
 Fpwm = 20e3;            %frekvence PWM, [Hz]
@@ -114,3 +114,12 @@ AsmParam.Tau_mot_asm_ig = AsmParam.Lsigma_s/AsmParam.Re_ig; % casova konstanta m
 AsmParam.Ctrl_I.Ks = Kmen*Kci/AsmParam.Re_ig;              % zesileni soustavy prodove smycky;
 AsmParam.Ctrl_I.CurrentRegP = AsmParam.Tau_mot_asm_ig/(2*t_sigma*AsmParam.Ctrl_I.Ks);  %proporcionalni slozka
 AsmParam.Ctrl_I.CurrentRegI = 1/(2*t_sigma*AsmParam.Ctrl_I.Ks);   %integracni slozka
+
+%% regulace otacek
+
+AsmParam.Ctrl_W.cfi = 3*pp*AsmParam.PsiR_n/2;  % momentova konstanta motoru
+AsmParam.Ctrl_W.t_suma = 2*t_men + 15e-3;  % souctova konstanta rychlostni smycky
+AsmParam.Ctrl_W.SpeedRegP = Jm/AsmParam.Ctrl_W.cfi/2/AsmParam.Ctrl_W.t_suma;  %proporcionalni slozka
+AsmParam.Ctrl_W.SpeedRegI = Jm/AsmParam.Ctrl_W.cfi/8/AsmParam.Ctrl_W.t_suma^2; %integracni slozka
+AsmParam.Ctrl_W.Imax = In*sqrt(2);  % omezeni proudu
+AsmParam.Ctrl_W.wr_max = wn*0.15;   % omezeni rotorove frekvence

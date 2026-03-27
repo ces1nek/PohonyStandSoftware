@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: stand_IM_LSP_2_FOC                                                                                          */
-/* Date:  2026-03-27 09:32                                                                                            */
+/* Date:  2026-03-27 13:49                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -79,6 +79,22 @@ void X2C_Init(void)
     x2cModel.blocks.bAutoSwitch.Thresh_down = -0.01;
     x2cModel.blocks.bAutoSwitch.Status = &RamTable_float32[0];
 
+    /* Block: Average                                                                                                 */
+    /* n = 4                                                                                                          */
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.bAverage.n = 4;
+    x2cModel.blocks.bAverage.sum = 0;
+    x2cModel.blocks.bAverage.count = 0;
+    x2cModel.blocks.bAverage.avg = &RamTable_float32[1];
+
+    /* Block: Average1                                                                                                */
+    /* n = 16                                                                                                         */
+    /* ts_fact = 1.0                                                                                                  */
+    x2cModel.blocks.bAverage1.n = 16;
+    x2cModel.blocks.bAverage1.sum = 0;
+    x2cModel.blocks.bAverage1.count = 0;
+    x2cModel.blocks.bAverage1.avg = &RamTable_float32[257];
+
     /* Block: ClarkeNPark                                                                                             */
 
     /* Block: Const6                                                                                                  */
@@ -103,6 +119,8 @@ void X2C_Init(void)
     x2cModel.blocks.bCurrentPI_Q.i_old = 0;
     x2cModel.blocks.bCurrentPI_Q.enable_old = 0;
 
+    /* Block: Div                                                                                                     */
+
     /* Block: Ena2                                                                                                    */
     /* Value = 1.0                                                                                                    */
     x2cModel.blocks.bEna2.K = 1;
@@ -115,17 +133,21 @@ void X2C_Init(void)
     /* Value = 1.0                                                                                                    */
     x2cModel.blocks.bEna4.K = 1;
 
-    /* Block: Ena5                                                                                                    */
+    /* Block: Ena7                                                                                                    */
     /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bEna5.K = 0;
+    x2cModel.blocks.bEna7.K = 0;
 
-    /* Block: Ena6                                                                                                    */
+    /* Block: Ena8                                                                                                    */
     /* Value = 1.0                                                                                                    */
-    x2cModel.blocks.bEna6.K = 1;
+    x2cModel.blocks.bEna8.K = 1;
 
     /* Block: Enable                                                                                                  */
     /* Value = 1.0                                                                                                    */
     x2cModel.blocks.bEnable.K = 1;
+
+    /* Block: Imag                                                                                                    */
+    /* Value = 9.059252999304883                                                                                      */
+    x2cModel.blocks.bImag.K = 9.059252999304883;
 
     /* Block: Init                                                                                                    */
     /* Value = 0.0                                                                                                    */
@@ -135,7 +157,19 @@ void X2C_Init(void)
     /* Value = 0.0                                                                                                    */
     x2cModel.blocks.bInitCurr.K = 0;
 
+    /* Block: InitPsi                                                                                                 */
+    /* Value = 0.0                                                                                                    */
+    x2cModel.blocks.bInitPsi.K = 0;
+
+    /* Block: InitSpeed                                                                                               */
+    /* Value = 0.0                                                                                                    */
+    x2cModel.blocks.bInitSpeed.K = 0;
+
     /* Block: InvPark                                                                                                 */
+
+    /* Block: LoopBreaker                                                                                             */
+
+    /* Block: LoopBreaker1                                                                                            */
 
     /* Block: ManualSwitch                                                                                            */
     /* Toggle = 0.0                                                                                                   */
@@ -146,24 +180,36 @@ void X2C_Init(void)
     x2cModel.blocks.bManualSwitch1.Toggle = 1;
 
     /* Block: ManualSwitch2                                                                                           */
-    /* Toggle = 0.0                                                                                                   */
-    x2cModel.blocks.bManualSwitch2.Toggle = 0;
+    /* Toggle = 1.0                                                                                                   */
+    x2cModel.blocks.bManualSwitch2.Toggle = 1;
 
     /* Block: ManualSwitch3                                                                                           */
     /* Toggle = 0.0                                                                                                   */
     x2cModel.blocks.bManualSwitch3.Toggle = 0;
 
     /* Block: ManualSwitch4                                                                                           */
+    /* Toggle = 0.0                                                                                                   */
+    x2cModel.blocks.bManualSwitch4.Toggle = 0;
+
+    /* Block: ManualSwitch5                                                                                           */
     /* Toggle = 1.0                                                                                                   */
-    x2cModel.blocks.bManualSwitch4.Toggle = 1;
+    x2cModel.blocks.bManualSwitch5.Toggle = 1;
 
     /* Block: Max                                                                                                     */
     /* Value = 19.106019993708788                                                                                     */
     x2cModel.blocks.bMax.K = 19.106019993708788;
 
+    /* Block: MaxSpeed                                                                                                */
+    /* Value = 13.435028842544403                                                                                     */
+    x2cModel.blocks.bMaxSpeed.K = 13.435028842544403;
+
     /* Block: Min                                                                                                     */
     /* Value = -19.106019993708788                                                                                    */
     x2cModel.blocks.bMin.K = -19.106019993708788;
+
+    /* Block: MinSpeed                                                                                                */
+    /* Value = -13.435028842544403                                                                                    */
+    x2cModel.blocks.bMinSpeed.K = -13.435028842544403;
 
     /* Block: Negation                                                                                                */
 
@@ -193,6 +239,13 @@ void X2C_Init(void)
 
     /* Block: Or                                                                                                      */
 
+    /* Block: PsiR_est                                                                                                */
+    /* Ki = 1.0                                                                                                       */
+    /* ts_fact = 1.0                                                                                                  */
+    x2cModel.blocks.bPsiR_est.b0 = 0.00005;
+    x2cModel.blocks.bPsiR_est.i_old = 0;
+    x2cModel.blocks.bPsiR_est.enable_old = 0;
+
     /* Block: PulseGenConst1                                                                                          */
     /* Value = 1.0                                                                                                    */
     x2cModel.blocks.bPulseGenConst1.K = 1;
@@ -202,16 +255,16 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenDCVal.K = 0;
 
     /* Block: PulseGenFreq                                                                                            */
-    /* Value = 10.0                                                                                                   */
-    x2cModel.blocks.bPulseGenFreq.K = 10;
+    /* Value = 0.5                                                                                                    */
+    x2cModel.blocks.bPulseGenFreq.K = 0.5;
 
     /* Block: PulseGenHi                                                                                              */
-    /* Value = 1.0                                                                                                    */
-    x2cModel.blocks.bPulseGenHi.K = 1;
+    /* Value = 80.0                                                                                                   */
+    x2cModel.blocks.bPulseGenHi.K = 80;
 
     /* Block: PulseGenLo                                                                                              */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bPulseGenLo.K = 0;
+    /* Value = 50.0                                                                                                   */
+    x2cModel.blocks.bPulseGenLo.K = 50;
 
     /* Block: PulseGenOutput                                                                                          */
     /* Toggle = 0.0                                                                                                   */
@@ -227,6 +280,18 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenSin.offset = 0;
     x2cModel.blocks.bPulseGenSin.phi = 0;
 
+    /* Block: RR_ig                                                                                                   */
+    /* Gain = 0.16716167862161535                                                                                     */
+    x2cModel.blocks.bRR_ig.V = 0.16716167862161535;
+
+    /* Block: RR_ig1                                                                                                  */
+    /* Gain = 0.16716167862161535                                                                                     */
+    x2cModel.blocks.bRR_ig1.V = 0.16716167862161535;
+
+    /* Block: RR_ig_L_R                                                                                               */
+    /* Gain = 34.15897684960337                                                                                       */
+    x2cModel.blocks.bRR_ig_L_R.V = 34.15897684960337;
+
     /* Block: RateLimiter                                                                                             */
     /* Tr = 0.1                                                                                                       */
     /* Tf = 0.1                                                                                                       */
@@ -239,27 +304,28 @@ void X2C_Init(void)
     /* Value = 0.0                                                                                                    */
     x2cModel.blocks.bSkluzovaOme.K = 0;
 
-    /* Block: SkluzovaOme1                                                                                            */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bSkluzovaOme1.K = 0;
-
-    /* Block: SkluzovaOme2                                                                                            */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bSkluzovaOme2.K = 0;
-
-    /* Block: SkluzovaOme3                                                                                            */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.bSkluzovaOme3.K = 0;
-
     /* Block: SpaceVectorAdjust                                                                                       */
 
     /* Block: SpaceVectorMod                                                                                          */
     /* method = Alternating reversing                                                                                 */
     x2cModel.blocks.bSpaceVectorMod.method = 0;
 
-    /* Block: Sub                                                                                                     */
+    /* Block: SpeedPI                                                                                                 */
+    /* Kp = 0.274321505678709                                                                                         */
+    /* Ki = 4.549278701139453                                                                                         */
+    /* ts_fact = 20.0                                                                                                 */
+    x2cModel.blocks.bSpeedPI.b0 = 0.00454927870113945;
+    x2cModel.blocks.bSpeedPI.b1 = 0.274321505678709;
+    x2cModel.blocks.bSpeedPI.i_old = 0;
+    x2cModel.blocks.bSpeedPI.enable_old = 0;
 
-    /* Block: Sub1                                                                                                    */
+    /* Block: SubId                                                                                                   */
+
+    /* Block: SubId1                                                                                                  */
+
+    /* Block: SubIq                                                                                                   */
+
+    /* Block: SubSpeed                                                                                                */
 
     /* Block: TFlipFlop                                                                                               */
     x2cModel.blocks.bTFlipFlop.toggle_old = 0;
@@ -297,8 +363,8 @@ void X2C_Init(void)
     x2cModel.blocks.bVphase.V = 0.5773502691896258;
 
     /* Block: pp                                                                                                      */
-    /* Gain = 0.0                                                                                                     */
-    x2cModel.blocks.bpp.V = 0;
+    /* Gain = 2.0                                                                                                     */
+    x2cModel.blocks.bpp.V = 2;
 
     /* Block: uI1                                                                                                     */
     /* Ki = 1.0                                                                                                       */
@@ -306,6 +372,12 @@ void X2C_Init(void)
     x2cModel.blocks.buI1.b0 = 0.00005;
     x2cModel.blocks.buI1.i_old = 0;
     x2cModel.blocks.buI1.enable_old = 0;
+
+    /* Block: wr_Sat                                                                                                  */
+    /* max = 47.1238898038469                                                                                         */
+    /* min = -47.1238898038469                                                                                        */
+    x2cModel.blocks.bwr_Sat.max = 47.1238898038469;
+    x2cModel.blocks.bwr_Sat.min = -47.1238898038469;
 
 
     /* Initialize RAM table content */
@@ -350,6 +422,14 @@ void X2C_Init(void)
     x2cModel.blocks.bAutoSwitch.In3 =
         &x2cModel.blocks.bPulseGenLo.Out;
 
+    /* Block Average                                                                                                  */
+    x2cModel.blocks.bAverage.In =
+        &x2cModel.blocks.bNegation2.Out;
+
+    /* Block Average1                                                                                                 */
+    x2cModel.blocks.bAverage1.In =
+        &x2cModel.blocks.bClarkeNPark.q;
+
     /* Block ClarkeNPark                                                                                              */
     x2cModel.blocks.bClarkeNPark.A =
         &x2cModel.inports.bInIa;
@@ -364,7 +444,7 @@ void X2C_Init(void)
 
     /* Block CurrentPI_D                                                                                              */
     x2cModel.blocks.bCurrentPI_D.In =
-        &x2cModel.blocks.bSub.Out;
+        &x2cModel.blocks.bSubId.Out;
     x2cModel.blocks.bCurrentPI_D.Init =
         &x2cModel.blocks.bInitCurr.Out;
     x2cModel.blocks.bCurrentPI_D.max =
@@ -376,7 +456,7 @@ void X2C_Init(void)
 
     /* Block CurrentPI_Q                                                                                              */
     x2cModel.blocks.bCurrentPI_Q.In =
-        &x2cModel.blocks.bSub1.Out;
+        &x2cModel.blocks.bSubIq.Out;
     x2cModel.blocks.bCurrentPI_Q.Init =
         &x2cModel.blocks.bInitCurr.Out;
     x2cModel.blocks.bCurrentPI_Q.max =
@@ -384,7 +464,13 @@ void X2C_Init(void)
     x2cModel.blocks.bCurrentPI_Q.min =
         &x2cModel.blocks.bMin.Out;
     x2cModel.blocks.bCurrentPI_Q.Enable =
-        &x2cModel.blocks.bManualSwitch4.Out;
+        &x2cModel.blocks.bManualSwitch1.Out;
+
+    /* Block Div                                                                                                      */
+    x2cModel.blocks.bDiv.Num =
+        &x2cModel.blocks.bRR_ig1.Out;
+    x2cModel.blocks.bDiv.Den =
+        &x2cModel.blocks.bPsiR_est.Out;
 
     /* Block Ena2                                                                                                     */
 
@@ -392,15 +478,21 @@ void X2C_Init(void)
 
     /* Block Ena4                                                                                                     */
 
-    /* Block Ena5                                                                                                     */
+    /* Block Ena7                                                                                                     */
 
-    /* Block Ena6                                                                                                     */
+    /* Block Ena8                                                                                                     */
 
     /* Block Enable                                                                                                   */
+
+    /* Block Imag                                                                                                     */
 
     /* Block Init                                                                                                     */
 
     /* Block InitCurr                                                                                                 */
+
+    /* Block InitPsi                                                                                                  */
+
+    /* Block InitSpeed                                                                                                */
 
     /* Block InvPark                                                                                                  */
     x2cModel.blocks.bInvPark.d =
@@ -410,9 +502,17 @@ void X2C_Init(void)
     x2cModel.blocks.bInvPark.phi =
         &x2cModel.blocks.buI1.Out;
 
+    /* Block LoopBreaker                                                                                              */
+    x2cModel.blocks.bLoopBreaker.In =
+        &x2cModel.blocks.bwr_Sat.Out;
+
+    /* Block LoopBreaker1                                                                                             */
+    x2cModel.blocks.bLoopBreaker1.In =
+        &x2cModel.blocks.bRR_ig_L_R.Out;
+
     /* Block ManualSwitch                                                                                             */
     x2cModel.blocks.bManualSwitch.In1 =
-        &x2cModel.blocks.bSkluzovaOme1.Out;
+        &x2cModel.blocks.bLoopBreaker.Out;
     x2cModel.blocks.bManualSwitch.In2 =
         &x2cModel.blocks.bSkluzovaOme.Out;
 
@@ -426,23 +526,33 @@ void X2C_Init(void)
     x2cModel.blocks.bManualSwitch2.In1 =
         &x2cModel.blocks.bPulseGenOutput.Out;
     x2cModel.blocks.bManualSwitch2.In2 =
-        &x2cModel.blocks.bSkluzovaOme2.Out;
+        &x2cModel.blocks.bImag.Out;
 
     /* Block ManualSwitch3                                                                                            */
     x2cModel.blocks.bManualSwitch3.In1 =
-        &x2cModel.blocks.bPulseGenOutput.Out;
+        &x2cModel.blocks.bSpeedPI.Out;
     x2cModel.blocks.bManualSwitch3.In2 =
-        &x2cModel.blocks.bSkluzovaOme3.Out;
+        &x2cModel.blocks.bPulseGenOutput.Out;
 
     /* Block ManualSwitch4                                                                                            */
     x2cModel.blocks.bManualSwitch4.In1 =
-        &x2cModel.blocks.bEna6.Out;
+        &x2cModel.blocks.bAverage.Out;
     x2cModel.blocks.bManualSwitch4.In2 =
-        &x2cModel.blocks.bEna5.Out;
+        &x2cModel.blocks.bOmegaFilter.Out;
+
+    /* Block ManualSwitch5                                                                                            */
+    x2cModel.blocks.bManualSwitch5.In1 =
+        &x2cModel.blocks.bEna8.Out;
+    x2cModel.blocks.bManualSwitch5.In2 =
+        &x2cModel.blocks.bEna7.Out;
 
     /* Block Max                                                                                                      */
 
+    /* Block MaxSpeed                                                                                                 */
+
     /* Block Min                                                                                                      */
+
+    /* Block MinSpeed                                                                                                 */
 
     /* Block Negation                                                                                                 */
     x2cModel.blocks.bNegation.In =
@@ -476,6 +586,14 @@ void X2C_Init(void)
     x2cModel.blocks.bOr.In2 =
         &x2cModel.blocks.bNot.Out;
 
+    /* Block PsiR_est                                                                                                 */
+    x2cModel.blocks.bPsiR_est.In =
+        &x2cModel.blocks.bSubId1.Out;
+    x2cModel.blocks.bPsiR_est.Init =
+        &x2cModel.blocks.bInitPsi.Out;
+    x2cModel.blocks.bPsiR_est.Enable =
+        &x2cModel.blocks.bAnd.Out;
+
     /* Block PulseGenConst1                                                                                           */
 
     /* Block PulseGenDCVal                                                                                            */
@@ -498,6 +616,18 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenSin.f =
         &x2cModel.blocks.bPulseGenFreq.Out;
 
+    /* Block RR_ig                                                                                                    */
+    x2cModel.blocks.bRR_ig.In =
+        &x2cModel.blocks.bClarkeNPark.d;
+
+    /* Block RR_ig1                                                                                                   */
+    x2cModel.blocks.bRR_ig1.In =
+        &x2cModel.blocks.bAverage1.Out;
+
+    /* Block RR_ig_L_R                                                                                                */
+    x2cModel.blocks.bRR_ig_L_R.In =
+        &x2cModel.blocks.bPsiR_est.Out;
+
     /* Block RateLimiter                                                                                              */
     x2cModel.blocks.bRateLimiter.In =
         &x2cModel.blocks.bPulseGenDCVal.Out;
@@ -507,12 +637,6 @@ void X2C_Init(void)
         &x2cModel.blocks.bEna2.Out;
 
     /* Block SkluzovaOme                                                                                              */
-
-    /* Block SkluzovaOme1                                                                                             */
-
-    /* Block SkluzovaOme2                                                                                             */
-
-    /* Block SkluzovaOme3                                                                                             */
 
     /* Block SpaceVectorAdjust                                                                                        */
     x2cModel.blocks.bSpaceVectorAdjust.d =
@@ -528,17 +652,41 @@ void X2C_Init(void)
     x2cModel.blocks.bSpaceVectorMod.Q =
         &x2cModel.blocks.bInvPark.Q;
 
-    /* Block Sub                                                                                                      */
-    x2cModel.blocks.bSub.Plus =
+    /* Block SpeedPI                                                                                                  */
+    x2cModel.blocks.bSpeedPI.In =
+        &x2cModel.blocks.bSubSpeed.Out;
+    x2cModel.blocks.bSpeedPI.Init =
+        &x2cModel.blocks.bInitSpeed.Out;
+    x2cModel.blocks.bSpeedPI.max =
+        &x2cModel.blocks.bMaxSpeed.Out;
+    x2cModel.blocks.bSpeedPI.min =
+        &x2cModel.blocks.bMinSpeed.Out;
+    x2cModel.blocks.bSpeedPI.Enable =
+        &x2cModel.blocks.bManualSwitch5.Out;
+
+    /* Block SubId                                                                                                    */
+    x2cModel.blocks.bSubId.Plus =
         &x2cModel.blocks.bManualSwitch2.Out;
-    x2cModel.blocks.bSub.Minus =
+    x2cModel.blocks.bSubId.Minus =
         &x2cModel.blocks.bClarkeNPark.d;
 
-    /* Block Sub1                                                                                                     */
-    x2cModel.blocks.bSub1.Plus =
+    /* Block SubId1                                                                                                   */
+    x2cModel.blocks.bSubId1.Plus =
+        &x2cModel.blocks.bRR_ig.Out;
+    x2cModel.blocks.bSubId1.Minus =
+        &x2cModel.blocks.bLoopBreaker1.Out;
+
+    /* Block SubIq                                                                                                    */
+    x2cModel.blocks.bSubIq.Plus =
         &x2cModel.blocks.bManualSwitch3.Out;
-    x2cModel.blocks.bSub1.Minus =
+    x2cModel.blocks.bSubIq.Minus =
         &x2cModel.blocks.bClarkeNPark.q;
+
+    /* Block SubSpeed                                                                                                 */
+    x2cModel.blocks.bSubSpeed.Plus =
+        &x2cModel.blocks.bPulseGenOutput.Out;
+    x2cModel.blocks.bSubSpeed.Minus =
+        &x2cModel.blocks.bManualSwitch4.Out;
 
     /* Block TFlipFlop                                                                                                */
     x2cModel.blocks.bTFlipFlop.T =
@@ -568,7 +716,7 @@ void X2C_Init(void)
 
     /* Block pp                                                                                                       */
     x2cModel.blocks.bpp.In =
-        &x2cModel.blocks.bOmegaFilter.Out;
+        &x2cModel.blocks.bManualSwitch4.Out;
 
     /* Block uI1                                                                                                      */
     x2cModel.blocks.buI1.In =
@@ -577,6 +725,10 @@ void X2C_Init(void)
         &x2cModel.blocks.bInit.Out;
     x2cModel.blocks.buI1.Enable =
         &x2cModel.blocks.bAnd.Out;
+
+    /* Block wr_Sat                                                                                                   */
+    x2cModel.blocks.bwr_Sat.In =
+        &x2cModel.blocks.bDiv.Out;
 
     /******************************************************************************************************************/
     /**                                                 Link Outports                                                **/
@@ -598,26 +750,37 @@ void X2C_Init(void)
     Add_Float32_Init(&x2cModel.blocks.bAdd);
     And_Bool_Init(&x2cModel.blocks.bAnd);
     AutoSwitch_Float32_Init(&x2cModel.blocks.bAutoSwitch);
+    Average_Float32_Init(&x2cModel.blocks.bAverage);
+    Average_Float32_Init(&x2cModel.blocks.bAverage1);
     ClarkeNPark_Float32_Init(&x2cModel.blocks.bClarkeNPark);
     Constant_Float32_Init(&x2cModel.blocks.bConst6);
     PILimit_Float32_Init(&x2cModel.blocks.bCurrentPI_D);
     PILimit_Float32_Init(&x2cModel.blocks.bCurrentPI_Q);
+    Div_Float32_Init(&x2cModel.blocks.bDiv);
     Constant_Bool_Init(&x2cModel.blocks.bEna2);
     Constant_Bool_Init(&x2cModel.blocks.bEna3);
     Constant_Bool_Init(&x2cModel.blocks.bEna4);
-    Constant_Bool_Init(&x2cModel.blocks.bEna5);
-    Constant_Bool_Init(&x2cModel.blocks.bEna6);
+    Constant_Bool_Init(&x2cModel.blocks.bEna7);
+    Constant_Bool_Init(&x2cModel.blocks.bEna8);
     Constant_Bool_Init(&x2cModel.blocks.bEnable);
+    Constant_Float32_Init(&x2cModel.blocks.bImag);
     Constant_Float32_Init(&x2cModel.blocks.bInit);
     Constant_Float32_Init(&x2cModel.blocks.bInitCurr);
+    Constant_Float32_Init(&x2cModel.blocks.bInitPsi);
+    Constant_Float32_Init(&x2cModel.blocks.bInitSpeed);
     InvPark_Float32_Init(&x2cModel.blocks.bInvPark);
+    LoopBreaker_Float32_Init(&x2cModel.blocks.bLoopBreaker);
+    LoopBreaker_Float32_Init(&x2cModel.blocks.bLoopBreaker1);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bManualSwitch);
     ManualSwitch_Bool_Init(&x2cModel.blocks.bManualSwitch1);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bManualSwitch2);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bManualSwitch3);
-    ManualSwitch_Bool_Init(&x2cModel.blocks.bManualSwitch4);
+    ManualSwitch_Float32_Init(&x2cModel.blocks.bManualSwitch4);
+    ManualSwitch_Bool_Init(&x2cModel.blocks.bManualSwitch5);
     Constant_Float32_Init(&x2cModel.blocks.bMax);
+    Constant_Float32_Init(&x2cModel.blocks.bMaxSpeed);
     Constant_Float32_Init(&x2cModel.blocks.bMin);
+    Constant_Float32_Init(&x2cModel.blocks.bMinSpeed);
     Negation_Float32_Init(&x2cModel.blocks.bNegation);
     Negation_Float32_Init(&x2cModel.blocks.bNegation1);
     Negation_Float32_Init(&x2cModel.blocks.bNegation2);
@@ -625,6 +788,7 @@ void X2C_Init(void)
     Add_Float32_Init(&x2cModel.blocks.bOme_s);
     LowpassBiQ_Float32_Init(&x2cModel.blocks.bOmegaFilter);
     Or_Bool_Init(&x2cModel.blocks.bOr);
+    uI_Float32_Init(&x2cModel.blocks.bPsiR_est);
     Constant_Float32_Init(&x2cModel.blocks.bPulseGenConst1);
     Constant_Float32_Init(&x2cModel.blocks.bPulseGenDCVal);
     Constant_Float32_Init(&x2cModel.blocks.bPulseGenFreq);
@@ -632,15 +796,18 @@ void X2C_Init(void)
     Constant_Float32_Init(&x2cModel.blocks.bPulseGenLo);
     ManualSwitch_Float32_Init(&x2cModel.blocks.bPulseGenOutput);
     SinGen_Float32_Init(&x2cModel.blocks.bPulseGenSin);
+    Gain_Float32_Init(&x2cModel.blocks.bRR_ig);
+    Gain_Float32_Init(&x2cModel.blocks.bRR_ig1);
+    Gain_Float32_Init(&x2cModel.blocks.bRR_ig_L_R);
     RateLimiter_Float32_Init(&x2cModel.blocks.bRateLimiter);
     Constant_Float32_Init(&x2cModel.blocks.bSkluzovaOme);
-    Constant_Float32_Init(&x2cModel.blocks.bSkluzovaOme1);
-    Constant_Float32_Init(&x2cModel.blocks.bSkluzovaOme2);
-    Constant_Float32_Init(&x2cModel.blocks.bSkluzovaOme3);
     SpaceVectorAdjust_Float32_Init(&x2cModel.blocks.bSpaceVectorAdjust);
     SpaceVectorMod_Float32_Init(&x2cModel.blocks.bSpaceVectorMod);
-    Sub_Float32_Init(&x2cModel.blocks.bSub);
-    Sub_Float32_Init(&x2cModel.blocks.bSub1);
+    PILimit_Float32_Init(&x2cModel.blocks.bSpeedPI);
+    Sub_Float32_Init(&x2cModel.blocks.bSubId);
+    Sub_Float32_Init(&x2cModel.blocks.bSubId1);
+    Sub_Float32_Init(&x2cModel.blocks.bSubIq);
+    Sub_Float32_Init(&x2cModel.blocks.bSubSpeed);
     TFlipFlop_Bool_Init(&x2cModel.blocks.bTFlipFlop);
     LowpassBiQ_Float32_Init(&x2cModel.blocks.bVdcFilter);
     Saturation_Float32_Init(&x2cModel.blocks.bVdcSaturation);
@@ -649,6 +816,7 @@ void X2C_Init(void)
     Gain_Float32_Init(&x2cModel.blocks.bVphase);
     Gain_Float32_Init(&x2cModel.blocks.bpp);
     uI_Float32_Init(&x2cModel.blocks.buI1);
+    Saturation_Float32_Init(&x2cModel.blocks.bwr_Sat);
     Scope_Main_Init(&x2cScope);
 
     /* Initialize TableStruct tables                                                                                  */
@@ -666,31 +834,40 @@ void X2C_Init(void)
 /* X2C_Update for blocks with 1*Ts                                                                                    */
 void X2C_Update_1(void)
 {
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch);
+    LoopBreaker_Float32_Update(&x2cModel.blocks.bLoopBreaker);
+    LoopBreaker_Float32_Update(&x2cModel.blocks.bLoopBreaker1);
     AutoSwitch_Float32_Update(&x2cModel.blocks.bAutoSwitch);
-    Add_Float32_Update(&x2cModel.blocks.bOme_s);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bPulseGenOutput);
-    Add_Float32_Update(&x2cModel.blocks.bAdd);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch2);
-    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch3);
-    LowpassBiQ_Float32_Update(&x2cModel.blocks.bVdcFilter);
-    ManualSwitch_Bool_Update(&x2cModel.blocks.bManualSwitch1);
-    ManualSwitch_Bool_Update(&x2cModel.blocks.bManualSwitch4);
-    Negation_Float32_Update(&x2cModel.blocks.bNegation);
-    Saturation_Float32_Update(&x2cModel.blocks.bVdcSaturation);
-    Gain_Float32_Update(&x2cModel.blocks.bVphase);
     Not_Bool_Update(&x2cModel.blocks.bNot);
     Or_Bool_Update(&x2cModel.blocks.bOr);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.bPulseGenOutput);
     And_Bool_Update(&x2cModel.blocks.bAnd);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch2);
+    LowpassBiQ_Float32_Update(&x2cModel.blocks.bVdcFilter);
+    ManualSwitch_Bool_Update(&x2cModel.blocks.bManualSwitch1);
+    Saturation_Float32_Update(&x2cModel.blocks.bVdcSaturation);
+    Add_Float32_Update(&x2cModel.blocks.bAdd);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch3);
+    Gain_Float32_Update(&x2cModel.blocks.bVphase);
+    Negation_Float32_Update(&x2cModel.blocks.bNegation);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch);
+    Add_Float32_Update(&x2cModel.blocks.bOme_s);
     uI_Float32_Update(&x2cModel.blocks.buI1);
     ClarkeNPark_Float32_Update(&x2cModel.blocks.bClarkeNPark);
-    Sub_Float32_Update(&x2cModel.blocks.bSub);
-    Sub_Float32_Update(&x2cModel.blocks.bSub1);
+    Average_Float32_Update(&x2cModel.blocks.bAverage1);
+    Gain_Float32_Update(&x2cModel.blocks.bRR_ig);
+    Sub_Float32_Update(&x2cModel.blocks.bSubId);
+    Sub_Float32_Update(&x2cModel.blocks.bSubIq);
     PILimit_Float32_Update(&x2cModel.blocks.bCurrentPI_D);
     PILimit_Float32_Update(&x2cModel.blocks.bCurrentPI_Q);
+    Gain_Float32_Update(&x2cModel.blocks.bRR_ig1);
+    Sub_Float32_Update(&x2cModel.blocks.bSubId1);
+    uI_Float32_Update(&x2cModel.blocks.bPsiR_est);
     SpaceVectorAdjust_Float32_Update(&x2cModel.blocks.bSpaceVectorAdjust);
+    Div_Float32_Update(&x2cModel.blocks.bDiv);
+    Gain_Float32_Update(&x2cModel.blocks.bRR_ig_L_R);
     VectorNormLimit_Float32_Update(&x2cModel.blocks.bVectorNormLimit);
     InvPark_Float32_Update(&x2cModel.blocks.bInvPark);
+    Saturation_Float32_Update(&x2cModel.blocks.bwr_Sat);
     SpaceVectorMod_Float32_Update(&x2cModel.blocks.bSpaceVectorMod);
     Scope_Main_Update(&x2cScope);
 }
@@ -699,10 +876,15 @@ void X2C_Update_1(void)
 void X2C_Update_20(void)
 {
     Negation_Float32_Update(&x2cModel.blocks.bNegation2);
+    Average_Float32_Update(&x2cModel.blocks.bAverage);
     LowpassBiQ_Float32_Update(&x2cModel.blocks.bOmegaFilter);
     SinGen_Float32_Update(&x2cModel.blocks.bPulseGenSin);
-    Gain_Float32_Update(&x2cModel.blocks.bpp);
+    ManualSwitch_Float32_Update(&x2cModel.blocks.bManualSwitch4);
+    ManualSwitch_Bool_Update(&x2cModel.blocks.bManualSwitch5);
     RateLimiter_Float32_Update(&x2cModel.blocks.bRateLimiter);
+    Gain_Float32_Update(&x2cModel.blocks.bpp);
+    Sub_Float32_Update(&x2cModel.blocks.bSubSpeed);
+    PILimit_Float32_Update(&x2cModel.blocks.bSpeedPI);
     Negation_Float32_Update(&x2cModel.blocks.bNegation1);
     TFlipFlop_Bool_Update(&x2cModel.blocks.bTFlipFlop);
 }
