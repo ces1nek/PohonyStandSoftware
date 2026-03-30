@@ -2,7 +2,7 @@
  * @file
  * @brief Generated model file.
  * 
- * Date:  2026-03-24 10:39
+ * Date:  2026-03-30 13:04
  * 
  * X2C-Version: 6.4.2961
  * X2C-Edition: Educational
@@ -10,7 +10,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
 /* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-03-24 10:39                                                                                            */
+/* Date:  2026-03-30 13:04                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -97,7 +97,7 @@ extern "C" {
     { 23, &x2cModel.blocks.sRegCurrent.bConstIsetpointInit } , \
     { 24, &x2cModel.blocks.sRegCurrent.bCurrentReg } , \
     { 25, &x2cModel.blocks.sRegCurrent.bNegation2 } , \
-    { 26, &x2cModel.blocks.sRegCurrent.bOutputVoltasgeLimit } , \
+    { 26, &x2cModel.blocks.sRegCurrent.bOutputVoltageLimit } , \
     { 27, &x2cModel.blocks.sRegCurrent.bRateLimiter } , \
     { 28, &x2cModel.blocks.sRegCurrent.bSub1 } , \
     { 29, &x2cModel.blocks.sSubVelocity.bCFiOmega } , \
@@ -114,27 +114,28 @@ extern "C" {
     { 40, &x2cModel.blocks.bSwVoltSet } , \
     { 41, &x2cModel.blocks.sTorqueCalc.bCFiIa } , \
     { 42, &x2cModel.blocks.sTorqueCalc.bIaFilter } , \
-    { 59, &x2cScope }
+    { 43, &x2cModel.blocks.bVdcFilter } , \
+    { 60, &x2cScope }
 
 #define INPORT_PARAMID_TABLE \
-    { 43, 1, &x2cModel.inports.bInButton } , \
-    { 44, 1, &x2cModel.inports.bInEnable } , \
-    { 45, 4, &x2cModel.inports.bInIa } , \
-    { 46, 4, &x2cModel.inports.bInIb } , \
-    { 47, 4, &x2cModel.inports.bInIc } , \
-    { 48, 4, &x2cModel.inports.bInPosition1 } , \
-    { 49, 4, &x2cModel.inports.bInPosition2 } , \
-    { 50, 1, &x2cModel.inports.bInPwmFault } , \
-    { 51, 4, &x2cModel.inports.bInVdc } , \
-    { 52, 4, &x2cModel.inports.bInVelocity1_radps } , \
-    { 53, 4, &x2cModel.inports.bInVelocity1_rpm } 
+    { 44, 1, &x2cModel.inports.bInButton } , \
+    { 45, 1, &x2cModel.inports.bInEnable } , \
+    { 46, 4, &x2cModel.inports.bInIa } , \
+    { 47, 4, &x2cModel.inports.bInIb } , \
+    { 48, 4, &x2cModel.inports.bInIc } , \
+    { 49, 4, &x2cModel.inports.bInPosition1 } , \
+    { 50, 4, &x2cModel.inports.bInPosition2 } , \
+    { 51, 1, &x2cModel.inports.bInPwmFault } , \
+    { 52, 4, &x2cModel.inports.bInVdc } , \
+    { 53, 4, &x2cModel.inports.bInVelocity1_radps } , \
+    { 54, 4, &x2cModel.inports.bInVelocity1_rpm } 
 
 #define OUTPORT_PARAMID_TABLE \
-    { 54, 1, &x2cModel.outports.bOutErrClear } , \
-    { 55, 1, &x2cModel.outports.bOutPWMEnable } , \
-    { 56, 4, &x2cModel.outports.bOutPWMa } , \
-    { 57, 4, &x2cModel.outports.bOutPWMb } , \
-    { 58, 4, &x2cModel.outports.bOutPWMc } 
+    { 55, 1, &x2cModel.outports.bOutErrClear } , \
+    { 56, 1, &x2cModel.outports.bOutPWMEnable } , \
+    { 57, 4, &x2cModel.outports.bOutPWMa } , \
+    { 58, 4, &x2cModel.outports.bOutPWMb } , \
+    { 59, 4, &x2cModel.outports.bOutPWMc } 
 
 
 /**********************************************************************************************************************/
@@ -166,7 +167,7 @@ struct x2cModel {
             CONSTANT_FLOAT32 bConstIsetpointInit;
             PILIMIT_FLOAT32 bCurrentReg;
             NEGATION_FLOAT32 bNegation2;
-            CONSTANT_FLOAT32 bOutputVoltasgeLimit;
+            CONSTANT_FLOAT32 bOutputVoltageLimit;
             RATELIMITER_FLOAT32 bRateLimiter;
             SUB_FLOAT32 bSub1;
         } sRegCurrent;
@@ -200,6 +201,7 @@ struct x2cModel {
         RATELIMITER_FLOAT32 bRateLimiter;
         MANUALSWITCH_FLOAT32 bSwIsetpoint;
         MANUALSWITCH_FLOAT32 bSwVoltSet;
+        LOWPASSBIQ_FLOAT32 bVdcFilter;
     } blocks;
 /*  Inports                                                                                                           */
     struct {

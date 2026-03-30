@@ -217,12 +217,12 @@ void DMA1_Channel1_IRQHandler(void) {
 	// Pri zapnutem oversamplingu je nutne offset odecitat rucne
 	float Ia;
 	float Ic;
-	Ia = -((float) (rawAdcData[0].adc12.samples.Ic1
+	Ia = -((float) (rawAdcData[0].adc12.samples.Ia1
 			- (int32_t) ADCOffsetAccum[0]) * ADC_CURRENT_GAIN);
-	Ic = -((float) (rawAdcData[0].adc12.samples.Ia1
+	Ic = -((float) (rawAdcData[0].adc12.samples.Ic1
 			- (int32_t) ADCOffsetAccum[1]) * ADC_CURRENT_GAIN);
 
-	x2cModel.inports.bInIa = (Ia);// + Ic) / 2;
+	x2cModel.inports.bInIa = Ia;// + Ic) / 2;
 	x2cModel.inports.bInIb = 0.0f;
 	x2cModel.inports.bInIc = Ic; //0.0f;
 	x2cModel.inports.bInVdc = ((float) (rawAdcData[0].adc3.samples.Vdc)
