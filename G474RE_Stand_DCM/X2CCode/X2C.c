@@ -1,7 +1,7 @@
 /* This file is part of X2C. http://x2c.lcm.at/                                                                       */
 
-/* Model: Stand_DCM                                                                                                   */
-/* Date:  2026-03-30 13:04                                                                                            */
+/* Model: stand_DCM                                                                                                   */
+/* Date:  2026-04-10 15:08                                                                                            */
 
 /* X2C-Version: 6.4.2961                                                                                              */
 /* X2C-Edition: Educational                                                                                           */
@@ -101,12 +101,12 @@ void X2C_Init(void)
     x2cModel.blocks.bPulseGenDCVal.K = 0;
 
     /* Block: PulseGenFreq                                                                                            */
-    /* Value = 0.25                                                                                                   */
-    x2cModel.blocks.bPulseGenFreq.K = 0.25;
+    /* Value = 1.0                                                                                                    */
+    x2cModel.blocks.bPulseGenFreq.K = 1;
 
     /* Block: PulseGenHi                                                                                              */
-    /* Value = 2.0                                                                                                    */
-    x2cModel.blocks.bPulseGenHi.K = 2;
+    /* Value = 5.0                                                                                                    */
+    x2cModel.blocks.bPulseGenHi.K = 5;
 
     /* Block: PulseGenLo                                                                                              */
     /* Value = 0.0                                                                                                    */
@@ -158,14 +158,6 @@ void X2C_Init(void)
     /* Value = 0.0                                                                                                    */
     x2cModel.blocks.sRegCurrent.bConstCurrentInit.K = 0;
 
-    /* Block: RegCurrent/ConstEnable                                                                                  */
-    /* Value = 1.0                                                                                                    */
-    x2cModel.blocks.sRegCurrent.bConstEnable.K = 1;
-
-    /* Block: RegCurrent/ConstIsetpointInit                                                                           */
-    /* Value = 0.0                                                                                                    */
-    x2cModel.blocks.sRegCurrent.bConstIsetpointInit.K = 0;
-
     /* Block: RegCurrent/CurrentReg                                                                                   */
     /* Kp = 3.6373333333333333                                                                                        */
     /* Ki = 1653.3333333333333                                                                                        */
@@ -180,14 +172,6 @@ void X2C_Init(void)
     /* Block: RegCurrent/OutputVoltageLimit                                                                           */
     /* Value = 29.0                                                                                                   */
     x2cModel.blocks.sRegCurrent.bOutputVoltageLimit.K = 29;
-
-    /* Block: RegCurrent/RateLimiter                                                                                  */
-    /* Tr = 8.0e-5                                                                                                    */
-    /* Tf = 8.0e-5                                                                                                    */
-    /* ts_fact = 1.0                                                                                                  */
-    x2cModel.blocks.sRegCurrent.bRateLimiter.RateUp = 0.625;
-    x2cModel.blocks.sRegCurrent.bRateLimiter.RateDown = 0.625;
-    x2cModel.blocks.sRegCurrent.bRateLimiter.enable_old = 0;
 
     /* Block: RegCurrent/Sub1                                                                                         */
 
@@ -241,11 +225,11 @@ void X2C_Init(void)
     x2cModel.blocks.sSubVelocity.bPhi2Rpm.n_old = 0;
 
     /* Block: SubVelocity/SpeedReg                                                                                    */
-    /* Kp = 1.5252932814489535                                                                                        */
-    /* Ki = 69.90133872365556                                                                                         */
+    /* Kp = 1.5465560124255766                                                                                        */
+    /* Ki = 71.863784782526                                                                                           */
     /* ts_fact = 20.0                                                                                                 */
-    x2cModel.blocks.sSubVelocity.bSpeedReg.b0 = 0.06990133872365556;
-    x2cModel.blocks.sSubVelocity.bSpeedReg.b1 = 1.5252932814489535;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.b0 = 0.071863784782526;
+    x2cModel.blocks.sSubVelocity.bSpeedReg.b1 = 1.5465560124255766;
     x2cModel.blocks.sSubVelocity.bSpeedReg.i_old = 0;
     x2cModel.blocks.sSubVelocity.bSpeedReg.enable_old = 0;
 
@@ -402,10 +386,6 @@ void X2C_Init(void)
 
     /* Block ConstCurrentInit                                                                                         */
 
-    /* Block ConstEnable                                                                                              */
-
-    /* Block ConstIsetpointInit                                                                                       */
-
     /* Block CurrentReg                                                                                               */
     x2cModel.blocks.sRegCurrent.bCurrentReg.In =
         &x2cModel.blocks.sRegCurrent.bSub1.Out;
@@ -424,17 +404,9 @@ void X2C_Init(void)
 
     /* Block OutputVoltageLimit                                                                                       */
 
-    /* Block RateLimiter                                                                                              */
-    x2cModel.blocks.sRegCurrent.bRateLimiter.In =
-        &x2cModel.blocks.bSwIsetpoint.Out;
-    x2cModel.blocks.sRegCurrent.bRateLimiter.Init =
-        &x2cModel.blocks.sRegCurrent.bConstIsetpointInit.Out;
-    x2cModel.blocks.sRegCurrent.bRateLimiter.Enable =
-        &x2cModel.blocks.sRegCurrent.bConstEnable.Out;
-
     /* Block Sub1                                                                                                     */
     x2cModel.blocks.sRegCurrent.bSub1.Plus =
-        &x2cModel.blocks.sRegCurrent.bRateLimiter.Out;
+        &x2cModel.blocks.bSwIsetpoint.Out;
     x2cModel.blocks.sRegCurrent.bSub1.Minus =
         &x2cModel.inports.bInIa;
 
@@ -548,12 +520,9 @@ void X2C_Init(void)
     Saturation_Float32_Init(&x2cModel.blocks.sPwmGen.bSaturation2);
     RateLimiter_Float32_Init(&x2cModel.blocks.bRateLimiter);
     Constant_Float32_Init(&x2cModel.blocks.sRegCurrent.bConstCurrentInit);
-    Constant_Bool_Init(&x2cModel.blocks.sRegCurrent.bConstEnable);
-    Constant_Float32_Init(&x2cModel.blocks.sRegCurrent.bConstIsetpointInit);
     PILimit_Float32_Init(&x2cModel.blocks.sRegCurrent.bCurrentReg);
     Negation_Float32_Init(&x2cModel.blocks.sRegCurrent.bNegation2);
     Constant_Float32_Init(&x2cModel.blocks.sRegCurrent.bOutputVoltageLimit);
-    RateLimiter_Float32_Init(&x2cModel.blocks.sRegCurrent.bRateLimiter);
     Sub_Float32_Init(&x2cModel.blocks.sRegCurrent.bSub1);
     Gain_Float32_Init(&x2cModel.blocks.sSubVelocity.bCFiOmega);
     Constant_Float32_Init(&x2cModel.blocks.sSubVelocity.bConstSpeedInit);
@@ -595,7 +564,6 @@ void X2C_Update_1(void)
     And_Bool_Update(&x2cModel.blocks.sCtlLogic.bAnd);
     ManualSwitch_Float32_Update(&x2cModel.blocks.bPulseGenOutput);
     ManualSwitch_Float32_Update(&x2cModel.blocks.bSwIsetpoint);
-    RateLimiter_Float32_Update(&x2cModel.blocks.sRegCurrent.bRateLimiter);
     Sub_Float32_Update(&x2cModel.blocks.sRegCurrent.bSub1);
     PILimit_Float32_Update(&x2cModel.blocks.sRegCurrent.bCurrentReg);
     ManualSwitch_Float32_Update(&x2cModel.blocks.bSwVoltSet);

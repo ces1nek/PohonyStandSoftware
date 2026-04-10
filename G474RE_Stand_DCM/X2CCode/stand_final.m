@@ -87,7 +87,7 @@ CurrentRegI = 1/(2*t_sigma*Ks);   %integracni slozka
 
 %% Regulator otacek DC motoru:
 % nahradni souctova casova konstanta podrizene proudove smycky
-t_sigmaI = t_men * 4 + 1/(30*2*pi);
+t_sigmaI = t_men * 2 + 1/(30*2*pi);
 
 % regulator podle SO
 SpeedRegP = Jm/cfi/2/t_sigmaI;
