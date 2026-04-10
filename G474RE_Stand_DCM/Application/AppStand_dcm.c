@@ -206,7 +206,7 @@ void stand_im_loop(void) {
  * f = 20kHz
  */
 void DMA1_Channel1_IRQHandler(void) {
-	//GPIOA->BSRR = GPIO_PIN_6;
+	GPIOA->BSRR = GPIO_BSRR_BS_6;
 	LL_DMA_ClearFlag_TC1(DMA1);
 	Cntr.Period_500us++;
 
@@ -261,7 +261,7 @@ void DMA1_Channel1_IRQHandler(void) {
 
 	HrtimEnDis.Enable = *x2cModel.outports.bOutPWMEnable;
 	controlHrtimPWM_EnDis(&HrtimEnDis);
-	//GPIOA->BRR = GPIO_PIN_6;
+	GPIOA->BRR = GPIO_BSRR_BR_6;
 }
 
 /*
