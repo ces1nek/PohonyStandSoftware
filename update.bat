@@ -6,6 +6,6 @@
 ::
 git clean -fd
 git restore .
-git pull
-git checkout "main"
+git pull origin main
+::git checkout "main"
 pause
