@@ -7,4 +7,5 @@
 git clean -fd
 git restore .
 git pull
+git checkout "main"
 pause
