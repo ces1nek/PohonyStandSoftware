@@ -6,5 +6,5 @@
 ::
 git clean -fd
 git restore .
-git pull
+git pull origin main
 pause
