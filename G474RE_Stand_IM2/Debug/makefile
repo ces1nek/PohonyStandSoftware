@@ -64,8 +64,8 @@ all: main-build
 main-build: G474RE_Stand_IM2.elf secondary-outputs
 
 # Tool invocations
-G474RE_Stand_IM2.elf G474RE_Stand_IM2.map: $(OBJS) $(USER_OBJS) C:\Users\adminLab\Documents\PohonyStandSoftware\G474RE_Stand_IM2\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "G474RE_Stand_IM2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\adminLab\Documents\PohonyStandSoftware\G474RE_Stand_IM2\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="G474RE_Stand_IM2.map" -Wl,--gc-sections -static -L"C:\LCM\X2C\v6.4.2961/Library/MotorControl/Controller/lib" -L"C:\LCM\X2C\v6.4.2961/Library/StateControl/Controller/lib" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+G474RE_Stand_IM2.elf G474RE_Stand_IM2.map: $(OBJS) $(USER_OBJS) C:\Users\knobloch\Documents\VUT\05_PROJEKTY\Standy\PohonyStandSoftware\G474RE_Stand_IM2\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "G474RE_Stand_IM2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\knobloch\Documents\VUT\05_PROJEKTY\Standy\PohonyStandSoftware\G474RE_Stand_IM2\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="G474RE_Stand_IM2.map" -Wl,--gc-sections -static -L"C:\LCM\X2C\v6.6.4297/Library/MotorControl/Controller/lib" -L"C:\LCM\X2C\v6.6.4297/Library/StateControl/Controller/lib" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
