@@ -1,77 +1,69 @@
-# Prerequisites
-*.d
+###############################################################################
+# STM32CubeIDE / Eclipse workspace
+###############################################################################
 
-*.cyclo
+# Workspace metadata - defaultne ignorovat vse
+.metadata/*
 
-# Object files
+# Povolit vybrane preference Eclipse
+!.metadata/.plugins/
+.metadata/.plugins/*
+!.metadata/.plugins/org.eclipse.core.runtime/
+.metadata/.plugins/org.eclipse.core.runtime/*
+!.metadata/.plugins/org.eclipse.core.runtime/.settings/
+.metadata/.plugins/org.eclipse.core.runtime/.settings/*
+
+# Sem pridavat pouze konkretni preference, ktere chceme verzovat
+# Priklady - podle skutecneho obsahu workspace:
+!.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs
+!.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs
+
+###############################################################################
+# Eclipse temporary files and history
+###############################################################################
+
+# Local history and editor state
+.history/
+.localhistory/
+*.bak
+*.tmp
+*.swp
+*.swo
+*~
+
+###############################################################################
+# Build outputs
+###############################################################################
+
+**/Debug/
+**/Release/
+**/build/
+**/Build/
+**/Binaries/
+**/Objects/
+
 *.o
-*.ko
-*.obj
+*.d
 *.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
 *.hex
-
-# Debug files
-*.dSYM/
+*.bin
+*.map
+*.list
+*.cyclo
 *.su
-*.idb
-*.pdb
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+###############################################################################
+# Eclipse / STM32CubeIDE local files
+###############################################################################
 
-# Matlab-simulink cache files
-*.slxc
-slprj*
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# Debug files:
-G474RE_Stand_IM/Debug/
-G474RE_Stand_DCM/Debug/
-
+# Temporary files
 *.log
-*.snap
-*.pdom
-*.bkp
-
-.metadata/.plugins/org.eclipse.core.resources/.history/*
-*history.*
-*.log
-*.markers
-*.tree
-.metadata/*.log
-.metadata/.plugins/org.eclipse.ltk.core.refactoring/*
-.metadata/.plugins/org.eclipse.cdt.ui/*.log
+*.temp
+*.orig
+*.rej
 
